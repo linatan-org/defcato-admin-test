@@ -1,6 +1,6 @@
 // elastic__apm-rum-react.d.ts
 declare module '@elastic/apm-rum-react' {
-    import { Route } from 'react-router-dom';
+  import {Route} from 'react-router-dom';
 
-    export const ApmRoute: typeof Route;
+  export const ApmRoute: typeof Route;
 }
