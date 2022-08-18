@@ -1,7 +1,8 @@
 module.exports = {
     env: {
-        "browser": true,
-        "es2021": true
+        node: true,
+        browser: true,
+        es6: true,
     },
     "extends": [
         "eslint:recommended",
@@ -26,8 +27,9 @@ module.exports = {
             {
                 "endOfLine": "auto",
                 "useTabs": false,
+                'max-len': [1, { code: 10000 }]
             }
         ],
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
     }
 }

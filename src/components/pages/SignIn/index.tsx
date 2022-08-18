@@ -1,9 +1,9 @@
 import MainLayout from '../../layout/MainLayout';
-import { Button } from 'antd';
+import SigninForm from './signin-form';
 export const SignIn = () => {
   return (
     <MainLayout>
-      <Button type="primary">Auth</Button>
+      <SigninForm />
     </MainLayout>
   );
 };
