@@ -52,7 +52,11 @@ export default function SigninForm() {
   };
   return (
     <div className="flex items-center justify-center h-screen">
-      <Form onFinish={onFinish} form={form} className="w-96">
+      <Form
+        onFinish={onFinish}
+        form={form}
+        className="w-96"
+      >
         <Form.Item
           name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}

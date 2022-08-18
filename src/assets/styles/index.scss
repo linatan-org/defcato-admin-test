@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "antd/dist/antd.css";
+@import "react-toastify/dist/ReactToastify.css";
+
+@layer base {
+  html {
+    font-weight: 500;
+  }
+}
+.ant-menu-item:first-child {
+  margin-top: 0;
+}
+.ant-card-body p:last-child {
+  margin-bottom: 0;
+}
+.ant-btn-primary {
+  color: #fff;
+  border-color: #1890ff;
+  background: #1890ff;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+}

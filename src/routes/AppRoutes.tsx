@@ -19,12 +19,21 @@ const AppRoutes = () => {
             authContext.isAuthenticated() || sessionStorage.token ? (
               <Redirect to={routes.dashboard} />
             ) : (
-              <Route path="/" component={SignIn} />
+              <Route
+                path="/"
+                component={SignIn}
+              />
             )
           }
         />
-        <Route path={routes.dashboard} component={Dashboard} />
-        <Route path="*" component={NotFound} />
+        <Route
+          path={routes.dashboard}
+          component={Dashboard}
+        />
+        <Route
+          path="*"
+          component={NotFound}
+        />
       </Switch>
     </>
   );
