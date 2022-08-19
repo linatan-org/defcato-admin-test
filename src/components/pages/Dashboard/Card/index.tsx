@@ -3,7 +3,11 @@ import { Card, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 
-const DashboardCard: React.FC = () => (
+interface Interface {
+  data: { value: string; title: string }[];
+}
+
+const DashboardCard: React.FC<Interface> = ({ data }) => (
   <div className="site-card-border-less-wrapper">
     <Card bodyStyle={{ padding: '20px 24px 8px' }}>
       <div className="flex">
@@ -16,20 +20,17 @@ const DashboardCard: React.FC = () => (
           <InfoCircleOutlined />
         </Tooltip>
       </div>
-      <div className="flex gap-10 text-[20px] align-center justify-between">
-        <p>סה"כ הזמנות</p>
-        <span>text</span>
-      </div>
-      <div className="flex gap-10 text-[20px] align-center justify-between">
-        <p> כמות הזמנות </p>
-        <span>text</span>
-      </div>
-      <div className="border-t-[1px] border-[#f0f0f0] mt-2">
-        <div className="flex gap-10 text-[20px] align-center justify-between">
-          <p> שעת הזמנה אחרונה </p>
-          <span>text</span>
+      {data.map((value, index) => (
+        <div
+          key={index}
+          className={`${
+            index === 2 ? 'border-t-[1px] border-[#f0f0f0] mt-2' : ''
+          } flex gap-10 text-[20px] align-center justify-between`}
+        >
+          <p>{value.title}</p>
+          <span>{value.value}</span>
         </div>
-      </div>
+      ))}
     </Card>
   </div>
 );
