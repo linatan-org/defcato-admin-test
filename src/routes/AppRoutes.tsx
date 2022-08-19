@@ -3,7 +3,7 @@ import { SignIn } from '../components/pages/SignIn';
 import { routes } from '../constants/routes';
 import useAuth from '../contexts/auth/hook';
 import { NotFound } from '../components/pages/NotFound';
-import { Dashboard } from '../components/pages/Dashboard';
+import Dashboard from '../components/pages/Dashboard';
 import { ToastContainer } from 'react-toastify';
 
 const AppRoutes = () => {

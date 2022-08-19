@@ -22,14 +22,10 @@ module.exports = {
     ],
     "rules": {
         "react/react-in-jsx-scope": "off",
-        'prettier/prettier': [
-            'error',
-            {
-                "endOfLine": "auto",
-                "useTabs": false,
-                'max-len': [1, { code: 10000 }]
-            }
-        ],
+        "prettier/prettier": "error",
         "no-unused-vars": "off",
+        "@typescript-eslint/member-delimiter-style": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/indent": ["error", 2]
     }
 }

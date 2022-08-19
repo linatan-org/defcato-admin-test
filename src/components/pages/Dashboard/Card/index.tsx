@@ -16,20 +16,19 @@ const DashboardCard: React.FC = () => (
           <InfoCircleOutlined />
         </Tooltip>
       </div>
-      <div>
-        <p className="flex gap-10 text-[20px] align-center">
-          סה"כ הזמנות <span>text</span>
-        </p>
+      <div className="flex gap-10 text-[20px] align-center justify-between">
+        <p>סה"כ הזמנות</p>
+        <span>text</span>
       </div>
-      <div>
-        <p className="flex gap-10 text-[20px] align-center">
-          כמות הזמנות <span>text</span>
-        </p>
+      <div className="flex gap-10 text-[20px] align-center justify-between">
+        <p> כמות הזמנות </p>
+        <span>text</span>
       </div>
       <div className="border-t-[1px] border-[#f0f0f0] mt-2">
-        <p className="flex gap-10 text-[20px] align-center">
-          שעת הזמנה אחרונה <span>text</span>
-        </p>
+        <div className="flex gap-10 text-[20px] align-center justify-between">
+          <p> שעת הזמנה אחרונה </p>
+          <span>text</span>
+        </div>
       </div>
     </Card>
   </div>

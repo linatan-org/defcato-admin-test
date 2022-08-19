@@ -3,7 +3,6 @@ module.exports = {
   content: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     colors: {},
-    fontSize: {},
     extend: {
       spacing: {},
       lineHeight: {}

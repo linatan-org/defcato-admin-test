@@ -1,6 +1,8 @@
 import { Table } from 'antd';
+import { Link } from 'react-router-dom';
 import type { ColumnsType } from 'antd/es/table';
-import React from 'react';
+import React, { useState } from 'react';
+import './table.style.scss';
 
 interface DataType {
   key: React.Key;
@@ -39,7 +41,7 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const data: DataType[] = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 4; i++) {
   data.push({
     key: i,
     name: 'Moshe',
@@ -49,13 +51,30 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
-const DashboardTable: React.FC = () => (
-  <Table
-    columns={columns}
-    dataSource={data}
-    bordered
-    size="middle"
-  />
-);
+const DashboardTable: React.FC = () => {
+  const [activeClass, setActiveClass] = useState(0);
+  const addActiveClassRow = (number: number) => {
+    setActiveClass(number);
+  };
+  return (
+    <Table
+      rowClassName={(_, index) =>
+        index === activeClass ? 'ant-table-row-active' : ''
+      }
+      columns={columns}
+      dataSource={data}
+      bordered
+      size="middle"
+      pagination={false}
+      onRow={(_, rowIndex: any) => {
+        return {
+          onClick: () => {
+            addActiveClassRow(rowIndex);
+          }
+        };
+      }}
+    />
+  );
+};
 
 export default DashboardTable;
