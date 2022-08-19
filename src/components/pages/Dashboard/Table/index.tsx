@@ -51,9 +51,14 @@ for (let i = 0; i < 4; i++) {
   });
 }
 
-const DashboardTable: React.FC = () => {
+interface DataTableProps {
+  setActiveUserIxd: (idx: number) => void;
+}
+
+const DashboardTable: React.FC<DataTableProps> = ({ setActiveUserIxd }) => {
   const [activeClass, setActiveClass] = useState(0);
   const addActiveClassRow = (number: number) => {
+    setActiveUserIxd(number);
     setActiveClass(number);
   };
   return (
