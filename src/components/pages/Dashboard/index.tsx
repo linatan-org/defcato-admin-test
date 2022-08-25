@@ -1,85 +1,76 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { API } from '../../../server';
+import { IDailyStatsData, IDailyUserStatsData, IDailyUserTargetsData, RESPONSE_STATUSES } from '../../../server/models';
 import MainLayout from '../../layout/MainLayout';
 import { Redirect } from 'react-router-dom';
 import DashboardCard from './Card';
-import DashboardTable from './Table';
+import CustomTable from './CustomTable';
 import DashboardTargetProgress from './TargetProgress';
-
-const taregtsMockData = [
-  [10, 20, 30, 40, 50],
-  [25, 69, 30, 35, 77],
-  [4, 67, 88, 45, 24],
-  [15, 79, 100, 23, 56]
-];
-
-const dashboardCardsData = [
-  [
-    {
-      title: 'סה"כ הזמנות',
-      value: '2,800'
-    },
-    {
-      title: 'כמות הזמנות',
-      value: '26'
-    },
-    {
-      title: 'שעת הזמנה אחרונה',
-      value: '14:45'
-    }
-  ],
-  [
-    {
-      title: 'ממוצע להזמנה',
-      value: '1,200'
-    },
-    {
-      title: 'כמות הזמנות לשעה',
-      value: '20'
-    },
-    {
-      title: 'פדיון שעתי',
-      value: '1200'
-    }
-  ],
-  [
-    {
-      title: 'שיחות נכנסות',
-      value: '1,200'
-    },
-    {
-      title: 'ממוצע שיחות לשעה',
-      value: '20'
-    },
-    {
-      title: 'אחוז סגירת שיחות',
-      value: '10%'
-    }
-  ]
-];
+import { getDashboardCardsValues, getDashboardTableValues } from './values';
 
 const Dashboard = () => {
-  const [checkedUserIdx, setCheckedUserIdx] = useState(0);
+  const { t } = useTranslation();
+  const dashboardCardsData = getDashboardCardsValues(t);
+  const [checkedUserIdx, setCheckedUserIdx] = useState<number>(-1);
+  const [dailyStats, setDailyStats] = useState<IDailyStatsData | null>(null);
+  const [dailyUserStats, setDailyUserStats] = useState<IDailyUserStatsData[]>([]);
+  const [dailyUserTargets, setDailyUserTargets] = useState<IDailyUserTargetsData[] | null>(null);
+
+  useEffect(() => {
+    API.dashboard.getDailyStat().then((res) => {
+      setDailyStats(res.Data);
+    });
+    API.dashboard.getDailyUserStat().then((res) => {
+      if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+        setDailyUserStats(res.List);
+        if (res.List.length) {
+          setCheckedUserIdx(res.List[0].DeviceSysId);
+        }
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(checkedUserIdx);
+    if (checkedUserIdx !== -1) {
+      API.dashboard.getDailyUserTargets(checkedUserIdx).then((res) => {
+        setDailyUserTargets(res.List);
+        console.log(res, 'REPONSE');
+      });
+    }
+  }, [checkedUserIdx]);
+
   if (!sessionStorage.token) return <Redirect to={'/'} />;
   return (
-    <MainLayout>
+    <>
       <div className="grid grid-cols-3 gap-6">
         {dashboardCardsData.map((data, index) => (
           <DashboardCard
             key={index}
             data={data}
+            dailyStats={dailyStats}
           />
         ))}
       </div>
-      <DashboardTable setActiveUserIxd={setCheckedUserIdx} />
+      <CustomTable
+        data={dailyUserStats}
+        columns={getDashboardTableValues(t)}
+        setActiveUserIxd={setCheckedUserIdx}
+        checkedUserDeviceSysId={checkedUserIdx}
+        activeKey={'DeviceSysId'}
+      />
       <div className="flex flex-wrap justify-center gap-6">
-        {taregtsMockData[checkedUserIdx].map((value, index) => (
-          <DashboardTargetProgress
-            key={index}
-            value={value}
-          />
-        ))}
+        {dailyUserTargets &&
+          dailyUserTargets.map((value, index) => (
+            <DashboardTargetProgress
+              key={index}
+              title={value.Description}
+              value={value.CurrentPercent}
+            />
+          ))}
       </div>
-    </MainLayout>
+    </>
   );
 };
 export default Dashboard;

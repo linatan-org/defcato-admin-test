@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import MainLayout from './components/layout/MainLayout';
 import AppRoutes from './routes/AppRoutes';
 import './assets/styles/index.scss';
 import AuthProvider from './contexts/auth/provider';
@@ -14,7 +15,9 @@ root.render(
   <BrowserRouter>
     <ConfigProvider direction="rtl">
       <AuthProvider>
-        <AppRoutes />
+        <MainLayout>
+          <AppRoutes />
+        </MainLayout>
       </AuthProvider>
     </ConfigProvider>
   </BrowserRouter>

@@ -2,12 +2,14 @@
 import { Card, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import React from 'react';
+import { IDailyStatsData } from '../../../../server/models';
 
 interface Interface {
-  data: { value: string; title: string }[];
+  data: { key: string; title: string }[];
+  dailyStats?: IDailyStatsData | null;
 }
 
-const DashboardCard: React.FC<Interface> = ({ data }) => (
+const DashboardCard: React.FC<Interface> = ({ data, dailyStats }) => (
   <div className="site-card-border-less-wrapper">
     <Card bodyStyle={{ padding: '20px 24px 8px' }}>
       <div className="flex">
@@ -27,8 +29,8 @@ const DashboardCard: React.FC<Interface> = ({ data }) => (
             index === 2 ? 'border-t-[1px] border-[#f0f0f0] mt-2' : ''
           } flex gap-10 text-[20px] align-center justify-between`}
         >
-          <p>{value.title}</p>
-          <span>{value.value}</span>
+          <p>{value?.title}</p>
+          <span>{dailyStats && (dailyStats as any)[value.key]}</span>
         </div>
       ))}
     </Card>

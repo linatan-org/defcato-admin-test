@@ -1,14 +1,16 @@
 import React from 'react';
 import { Progress } from 'antd';
+import { IDailyStatsData } from '../../../../server/models';
 interface TargetProps {
-  value?: number;
+  value: number;
+  title: string;
 }
-const DashboardTargetProgress: React.FC<TargetProps> = ({ value }) => (
-  <div className="inline-flex flex-col items-center self-start gap-3">
-    <p className="text-xl">Target {value || Math.floor(Math.random() * 10)}</p>
+const DashboardTargetProgress: React.FC<TargetProps> = ({ value, title }) => (
+  <div className="inline-flex flex-col items-center flex-1 self-start gap-3">
+    <p className="text-base">{title}</p>
     <Progress
       strokeWidth={9}
-      width={115}
+      width={100}
       strokeColor={{
         '0%': '#108ee9',
         '100%': '#87d068'
@@ -16,7 +18,7 @@ const DashboardTargetProgress: React.FC<TargetProps> = ({ value }) => (
       type="dashboard"
       strokeLinecap="butt"
       gapDegree={0}
-      percent={value || Math.floor(Math.random() * 100)}
+      percent={value}
     />
   </div>
 );

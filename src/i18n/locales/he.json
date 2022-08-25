@@ -1,0 +1,53 @@
+{
+  "test": "HELLO",
+  "navMenu" : {
+    "currentTradingDay": "נוכחי יום מסחר",
+    "reports": "דוחות",
+    "salesReport": "דוח מכירות",
+    "itemsReport": "דוח פריטים",
+    "settings": "הגדרות"
+  },
+  "dashboard": {
+    "dailyStats": {
+      "totalRevenue": "סה'כ הזמנות",
+      "totalOrders": "כמות הזמנות",
+      "lastOrderTime": "שעת הזמנה אחרונה",
+      "orderAVG": "ממוצע להזמנה",
+      "ordersPerHour": "כמות הזמנות לשעה",
+      "hourRedemption": "פדיון שעתי",
+      "incomingCalls": "שיחות נכנסות",
+      "callsPerHours": "ממוצע שיחות לשעה",
+      "callsOrdersConversion": "אחוז סגירת שיחות"
+    },
+    "dailyUserStats": {
+      "seller": "נציג מכירות",
+      "name": "שם נציג"
+    },
+    "userTargets": {
+      "currentPercent": "עמידה ביעד",
+      "currentValue": "סה’כ נמכר",
+      "targetValue": "סה’כ יעד",
+      "targetType1": "לפי סבכום",
+      "targetType2": "לפי כמות",
+      "status0": "רחוק",
+      "status1": "קרוב",
+      "status2": "הושג",
+      "shiftCurrentValue": "סה’כ נמכר למשמרת",
+      "shiftTargetValue": "סה’כ יעד למשמרת",
+      "shiftAVGPercent": "עמידה ביעד למשמרת"
+    }
+  },
+  "reports": {
+    "saleReports": {
+      "salesReports": "דוח מכירות",
+      "deviceTranReference": "מספר עסקה",
+      "tranType": "סוג מסמך",
+      "tranDate": "תאריך",
+      "operatorNumber": "שם מוכרן",
+      "sellerNumber": "מספר מוכרן",
+      "branchName": "סניף",
+      "memberName": "לקוח",
+      "totalAmount": "סה‘כ"
+    }
+  }
+}

@@ -2,9 +2,11 @@ import { Form, Input, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { UserOutlined, LockOutlined, EnterOutlined } from '@ant-design/icons';
 import useAuth from '../../../../contexts/auth/hook';
-import { AUTH_URL } from '../../../../constants/data';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API } from '../../../../server';
+import axios from 'axios';
+import { AUTH_URL } from '../../../../constants/data';
+import { RESPONSE_STATUSES } from '../../../../server/models';
 
 type EnterForm = {
   username?: string;
@@ -26,29 +28,25 @@ export default function SigninForm() {
   const onFinish = (values: EnterForm) => {
     const { username, password } = values;
     setLoadingButton(true);
-    axios
-      .post(AUTH_URL, {
-        User: username,
-        Password: password
-      })
-      .then(function (res) {
-        if (
-          res.status === 200 &&
-          res.data.ErrorCode === 0 &&
-          res.data.ErrorMessage === ''
-        ) {
-          sessionStorage.setItem('token', res.data.SessionKey);
-          authContext.setIsSignedIn(true);
-        } else {
+    if (username && password) {
+      API.auth
+        .signIn(username, password)
+        .then((res) => {
+          if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+            console.log(res, 'RESPONSE');
+            sessionStorage.setItem('token', res.SessionKey);
+            authContext.setIsSignedIn(true);
+          } else {
+            setLoadingButton(false);
+            toast(res.ErrorMessage);
+            form.resetFields();
+          }
+        })
+        .catch((err) => {
           setLoadingButton(false);
-          toast(res.data.ErrorMessage);
-          form.resetFields();
-        }
-      })
-      .catch(function (error) {
-        setLoadingButton(false);
-        console.log(error);
-      });
+          console.log(err);
+        });
+    }
   };
   return (
     <div className="flex items-center justify-center h-screen">
