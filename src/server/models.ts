@@ -123,6 +123,53 @@ export interface IDataTable extends ColumnsType {
   children: IDataTableChildren[];
 }
 
+export interface IKeyboardItem {
+  Col: number;
+  CurrentValue: number;
+  IsCategory: boolean;
+  IsPromoted: boolean;
+  ItemCode: string;
+  ItemImageBase64: string;
+  ItemImageUri: string;
+  ItemPrice: string;
+  Items: IKeyboardItem[];
+  children: IKeyboardItem[];
+  Name: string;
+  title: string;
+  References: number[];
+  Row: number;
+  StockOnHand: number;
+  TargetType: number;
+  TargetValue: number;
+}
+
+export interface IKeyBoard {
+  Branch: string;
+  CreatedDate: string;
+  CustomerId: string;
+  Description: string;
+  FromDate: string;
+  FromTime: string;
+  IsAllowChangeOwnerSysId: boolean;
+  IsDataChangeDisable: boolean;
+  IsManualSysID: boolean;
+  Items: IKeyboardItem[];
+  children: IKeyboardItem[];
+  Name: string;
+  title: string;
+  ObjectType: number;
+  OwnerSysId: number;
+  Status: number;
+  StatusDesc: string;
+  SysId: number;
+  ToDate: string;
+  ToTime: string;
+}
+
+export interface IKeybordList extends IGeneralResponse {
+  KeyBoardList: IKeyBoard[];
+}
+
 export enum RESPONSE_STATUSES {
   OK = 0
 }

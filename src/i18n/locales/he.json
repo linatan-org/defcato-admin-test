@@ -5,6 +5,8 @@
     "reports": "דוחות",
     "salesReport": "דוח מכירות",
     "itemsReport": "דוח פריטים",
+    "keyboardEditor": "תכנון מקלדת",
+    "keyboardList": "רשימת מקלדות",
     "settings": "הגדרות"
   },
   "dashboard": {
@@ -49,5 +51,12 @@
       "memberName": "לקוח",
       "totalAmount": "סה‘כ"
     }
+  },
+  "keyboardList": {
+    "fromDate": "מ תאריך",
+    "toDate": "עד תאריך",
+    "activeHours": "שעות פעילות",
+    "itemsEditor": "עריכת פריטים",
+    "dataEditor": "עריכת תאריכים"
   }
 }

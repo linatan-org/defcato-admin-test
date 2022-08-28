@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IDailyStats, IDailyUserStats, IDailyUserTargets, ISalesReports, ISignInResponse } from './models';
+import { IDailyStats, IDailyUserStats, IDailyUserTargets, IKeybordList, ISalesReports, ISignInResponse } from './models';
 
 const apiConfig = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -48,6 +48,14 @@ export const API = {
       const res = await apiConfig.post('/FetchTranJournalList.aspx', {
         ...getSession(),
         ...data
+      });
+      return res.data;
+    }
+  },
+  keyboard: {
+    getKeyboardList: async (): Promise<IKeybordList> => {
+      const res = await apiConfig.post('/ItemsKeyBoardGetList.aspx', {
+        ...getSession()
       });
       return res.data;
     }

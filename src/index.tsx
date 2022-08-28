@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import MainLayout from './components/layout/MainLayout';
 import AppRoutes from './routes/AppRoutes';
 import './assets/styles/index.scss';
-import AuthProvider from './contexts/auth/provider';
+import AppProvider from './contexts/auth/provider';
 import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import './i18n';
@@ -14,11 +14,11 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <ConfigProvider direction="rtl">
-      <AuthProvider>
+      <AppProvider>
         <MainLayout>
           <AppRoutes />
         </MainLayout>
-      </AuthProvider>
+      </AppProvider>
     </ConfigProvider>
   </BrowserRouter>
 );
