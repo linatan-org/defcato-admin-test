@@ -1,5 +1,7 @@
 export const routes = {
   signIn: '/signIn',
   dashboard: '/dashboard',
-  salesReports: '/reports/salesReports'
+  salesReports: '/reports/salesReports',
+  keyboardEditor: '/keyboardEditor',
+  keyboardList: '/keyboardList'
 };

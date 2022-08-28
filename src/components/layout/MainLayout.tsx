@@ -2,13 +2,28 @@ import React from 'react';
 import { Layout, Menu } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { MenuProps } from 'antd';
-import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, MailOutlined, PieChartOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  PieChartOutlined,
+  TableOutlined,
+  SettingOutlined,
+  BranchesOutlined
+} from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { routes } from '../../constants/routes';
 
 const { Header, Footer, Sider, Content } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
-function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[], type?: 'group'): MenuItem {
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group'
+): MenuItem {
   return {
     key,
     icon,
@@ -27,8 +42,12 @@ const MainLayout = ({ children }: LayoutProps) => {
   const history = useHistory();
   const items: MenuItem[] = [
     getItem(t('navMenu.currentTradingDay'), routes.dashboard, <PieChartOutlined />),
-    getItem(t('navMenu.reports'), 'sub1', <MailOutlined />, [getItem(t('navMenu.salesReport'), routes.salesReports), getItem(t('navMenu.itemsReport'), '6')]),
-    getItem(t('navMenu.settings'), '7', <PieChartOutlined />)
+    getItem(t('navMenu.reports'), 'sub1', <TableOutlined />, [
+      getItem(t('navMenu.salesReport'), routes.salesReports),
+      getItem(t('navMenu.itemsReport'), '6')
+    ]),
+    getItem(t('navMenu.keyboardList'), routes.keyboardList, <BranchesOutlined />),
+    getItem(t('navMenu.settings'), '7', <SettingOutlined />)
   ];
   return (
     <Layout className="min-h-screen">

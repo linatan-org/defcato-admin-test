@@ -4,6 +4,19 @@ module.exports = {
         browser: true,
         es6: true,
     },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ],
+        "extensions": [
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",

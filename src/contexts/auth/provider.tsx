@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
+import { IKeyboardItem } from '../../server/models';
 
 import ctx from './context';
 
-function AuthProvider({ children }: any) {
+function AppProvider({ children }: any) {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [editedKeyboardData, setEditedKeyboardData] = useState<IKeyboardItem[] | null>(null);
 
   const isAuthenticated = () => isSignedIn;
+
+  const getEditedKeyboardData = () => editedKeyboardData;
 
   return (
     <ctx.Provider
       value={{
         isAuthenticated,
-        setIsSignedIn
+        setIsSignedIn,
+        getEditedKeyboardData,
+        setEditedKeyboardData
       }}
     >
       {children}
@@ -19,4 +25,4 @@ function AuthProvider({ children }: any) {
   );
 }
 
-export default AuthProvider;
+export default AppProvider;
