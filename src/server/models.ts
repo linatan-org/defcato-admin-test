@@ -166,8 +166,28 @@ export interface IKeyBoard {
   ToTime: string;
 }
 
-export interface IKeybordList extends IGeneralResponse {
+export interface IKeyboardList extends IGeneralResponse {
   KeyBoardList: IKeyBoard[];
+}
+
+export interface ICategory {
+  Key: string;
+  Value: string;
+  title?: string;
+}
+
+export interface IItem {
+  Key?: string;
+  Value?: string;
+  title?: string;
+  ItemCode?: string;
+  Name?: string;
+  IsCategory?: boolean;
+}
+
+export interface ICreateItemValues extends IGeneralResponse {
+  Categories: ICategory[];
+  Items: IItem[];
 }
 
 export enum RESPONSE_STATUSES {

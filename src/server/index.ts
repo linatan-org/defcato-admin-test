@@ -1,5 +1,14 @@
 import axios from 'axios';
-import { IDailyStats, IDailyUserStats, IDailyUserTargets, IKeybordList, ISalesReports, ISignInResponse } from './models';
+import {
+  ICreateItemValues,
+  IDailyStats,
+  IDailyUserStats,
+  IDailyUserTargets,
+  IKeyBoard,
+  IKeyboardList,
+  ISalesReports,
+  ISignInResponse
+} from './models';
 
 const apiConfig = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -53,9 +62,23 @@ export const API = {
     }
   },
   keyboard: {
-    getKeyboardList: async (): Promise<IKeybordList> => {
+    getKeyboardList: async (): Promise<IKeyboardList> => {
       const res = await apiConfig.post('/ItemsKeyBoardGetList.aspx', {
         ...getSession()
+      });
+      return res.data;
+    },
+    getCreateItems: async (InputData: string, CategoryCode: string): Promise<ICreateItemValues> => {
+      const res = await apiConfig.post('/FetchItemsForKeyboard.aspx', {
+        ...getSession(),
+        ...{ InputData, CategoryCode }
+      });
+      return res.data;
+    },
+    updateKeyboard: async (KeyBoard: IKeyBoard): Promise<IKeyboardList> => {
+      const res = await apiConfig.post('/ItemsKeyBoardUpdate.aspx', {
+        ...getSession(),
+        ...{ KeyBoard }
       });
       return res.data;
     }

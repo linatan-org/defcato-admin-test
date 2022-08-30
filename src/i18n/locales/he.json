@@ -1,5 +1,9 @@
 {
-  "test": "HELLO",
+  "ok": "אישור",
+  "cancel": "בטל",
+  "save": "שמור",
+  "saveAndBack": "סיים ושמור",
+  "back": "סיים",
   "navMenu" : {
     "currentTradingDay": "נוכחי יום מסחר",
     "reports": "דוחות",
@@ -58,5 +62,14 @@
     "activeHours": "שעות פעילות",
     "itemsEditor": "עריכת פריטים",
     "dataEditor": "עריכת תאריכים"
+  },
+  "addKeyboardItemModal": {
+    "addItemCategory": "הוספת קטגוריה/פריט",
+    "isCategory": "קטגוריה",
+    "category": "קטגוריה",
+    "product": "פריט",
+    "areYouSureDeleteProduct": "האם אתה בטוח?",
+    "areYouSureDeleteCategory": "שים לב , הקטגוריה תמחק כולל הפריטים, הם להמשיך את הפעולה?",
+    "areYouSureGoBackWithoutSave": "שים לב , השינויים שנעשו לא ישמרו , הטם להמשיך?"
   }
 }

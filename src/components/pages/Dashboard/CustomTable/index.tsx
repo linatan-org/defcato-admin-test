@@ -12,6 +12,7 @@ interface DataTableProps<T> {
   checkedUserDeviceSysId?: number;
   columns: ColumnsType<T>;
   activeKey?: string;
+  scrollSize?: number;
 }
 
 const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
@@ -32,7 +33,7 @@ const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
         bordered
         size="middle"
         pagination={false}
-        scroll={{ y: 600 }}
+        scroll={{ y: props.scrollSize || 600 }}
         onRow={(value) => {
           return {
             onClick: () => {
