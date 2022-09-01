@@ -81,6 +81,20 @@ export const API = {
         ...{ KeyBoard }
       });
       return res.data;
+    },
+    createKeyboard: async (KeyBoard: IKeyBoard): Promise<IKeyboardList> => {
+      const res = await apiConfig.post('/ItemsKeyBoardAdd.aspx', {
+        ...getSession(),
+        ...{ KeyBoard }
+      });
+      return res.data;
+    },
+    deleteKeyboard: async (KeyboardId: number): Promise<IKeyboardList> => {
+      const res = await apiConfig.post('/ItemsKeyBoardDelete.aspx', {
+        ...getSession(),
+        KeyboardId
+      });
+      return res.data;
     }
   }
 };

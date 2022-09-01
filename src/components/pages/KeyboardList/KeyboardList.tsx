@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import '@nosferatu500/react-sortable-tree/style.css';
-import { routes } from '../../../constants/routes';
 import useAuth from '../../../contexts/auth/hook';
 import { API } from '../../../server';
-import { IKeyBoard } from '../../../server/models';
-import { List } from 'antd';
+import { IKeyBoard, RESPONSE_STATUSES } from '../../../server/models';
+import { Button, List, Modal, Typography, notification } from 'antd';
 import { KeyboardItem } from './components/KeyboardItem/KeyboardItem';
 import { saveKeyboardList } from '../../../reudux/keyboard/action';
 import { keyboardKeyReplace } from '../../../helpers/helpers';
+import './styles.scss';
+
+const { Text } = Typography;
 
 interface IStoreState {
   keyboard: {
@@ -23,13 +25,12 @@ interface IKeyboardList {
 }
 
 const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
+  const { t } = useTranslation();
   const authContext = useAuth();
   const navigation = useHistory();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(keyboardList, 'propspropspropsprops');
-  }, [keyboardList]);
+  const [isVisibleConfirmDeleteModal, setIsVisibleConfirmDeleteModal] = useState(false);
+  const [kbFOrDelete, setKbFOrDelete] = useState<IKeyBoard | null>(null);
 
   useEffect(() => {
     API.keyboard.getKeyboardList().then((res) => {
@@ -38,19 +39,53 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
         return keyboardKeyReplace(kb, true);
       });
       dispatch(saveKeyboardList(replacedData));
-      console.log(replacedData, 'replacedData');
     });
   }, []);
 
-  const editKeyboard = (kb: IKeyBoard, index: number) => {
+  const editCreateKeyboard = (kb?: IKeyBoard, isDuplicate?: boolean) => {
     console.log(kb, authContext, 'authContext');
-    navigation.push(routes.keyboardEditor, { kbIndex: index });
+    // eslint-disable-next-line
+    navigation.push(kb && isDuplicate ? `keyboardEditor/${kb.SysId}/duplicate` : kb ? `keyboardEditor/${kb.SysId}/edit` : 'keyboardEditor/new');
+  };
+
+  const onAskCancelDelete = (kb?: IKeyBoard) => {
+    if (kb) {
+      setIsVisibleConfirmDeleteModal(true);
+      setKbFOrDelete(kb);
+    } else {
+      setIsVisibleConfirmDeleteModal(false);
+      setKbFOrDelete(null);
+    }
+  };
+
+  const deleteKeyboard = () => {
+    if (kbFOrDelete && kbFOrDelete.SysId) {
+      API.keyboard.deleteKeyboard(kbFOrDelete.SysId).then((res) => {
+        if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+          onAskCancelDelete();
+          notification.success({
+            message: 'Notification Title',
+            description: 'Keyboard was deleted',
+            placement: 'bottomRight'
+          });
+        }
+      });
+    }
   };
 
   const keyboardSettings = (kb: IKeyBoard) => {};
 
   return (
-    <div className="wrapper">
+    <div className="wrapper-list">
+      <Button
+        className="w-80 mb-4"
+        type="primary"
+        key="saveAndBack"
+        size="large"
+        onClick={() => editCreateKeyboard()}
+      >
+        {t('saveAndBack')}
+      </Button>
       <div className="tree-wrapper">
         <List
           grid={{ gutter: 16, column: 3 }}
@@ -60,13 +95,32 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
               <KeyboardItem
                 key={index}
                 keyboard={item}
-                onEdit={(kb) => editKeyboard(kb, index)}
+                onEdit={editCreateKeyboard}
                 onSettings={keyboardSettings}
+                onDuplicate={(kb) => editCreateKeyboard(kb, true)}
+                onDelete={onAskCancelDelete}
               />
             </List.Item>
           )}
         />
       </div>
+      <Modal
+        title={''}
+        centered
+        visible={isVisibleConfirmDeleteModal}
+        onOk={() => deleteKeyboard()}
+        onCancel={() => onAskCancelDelete()}
+        cancelText={t('cancel')}
+        okText={t('ok')}
+        cancelButtonProps={{
+          size: 'large'
+        }}
+        okButtonProps={{
+          size: 'large'
+        }}
+      >
+        <Text>Are you sure you want delete keyboard?</Text>
+      </Modal>
     </div>
   );
 };

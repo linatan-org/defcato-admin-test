@@ -40,6 +40,7 @@ type LayoutProps = {
 const MainLayout = ({ children }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
+  console.log(history, 'history');
   const items: MenuItem[] = [
     getItem(t('navMenu.currentTradingDay'), routes.dashboard, <PieChartOutlined />),
     getItem(t('navMenu.reports'), 'sub1', <TableOutlined />, [
@@ -49,6 +50,16 @@ const MainLayout = ({ children }: LayoutProps) => {
     getItem(t('navMenu.keyboardList'), routes.keyboardList, <BranchesOutlined />),
     getItem(t('navMenu.settings'), '7', <SettingOutlined />)
   ];
+
+  const getDefaultSelectedKey = () => {
+    const currentPath = history.location.pathname;
+    const matchedRoute = Object.keys(routes).find((k: string) => {
+      return (routes as any)[k].includes(currentPath);
+    });
+    return (matchedRoute && (routes as any)[matchedRoute]) || routes.dashboard;
+  };
+  console.log(getDefaultSelectedKey(), 'getDefaultSelectedKey');
+
   return (
     <Layout className="min-h-screen">
       {/*<Header className="bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]">*/}
@@ -62,7 +73,7 @@ const MainLayout = ({ children }: LayoutProps) => {
           <div>
             <Menu
               onClick={(e) => history.push(e.key)}
-              defaultSelectedKeys={[routes.dashboard]}
+              defaultSelectedKeys={[getDefaultSelectedKey()]}
               mode="inline"
               theme="dark"
               items={items}

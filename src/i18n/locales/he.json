@@ -60,8 +60,8 @@
     "fromDate": "מ תאריך",
     "toDate": "עד תאריך",
     "activeHours": "שעות פעילות",
-    "itemsEditor": "עריכת פריטים",
-    "dataEditor": "עריכת תאריכים"
+    "dataEditor": "עריכת פריטים",
+    "itemsEditor": "עריכת תאריכים"
   },
   "addKeyboardItemModal": {
     "addItemCategory": "הוספת קטגוריה/פריט",

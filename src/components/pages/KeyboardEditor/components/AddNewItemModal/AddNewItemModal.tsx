@@ -8,9 +8,14 @@ import useDebounceValue from '../../../../hooks/useDebounce';
 import CustomTable from '../../../Dashboard/CustomTable';
 import { getSaleReportsTableColumns } from '../../../Reports/SalesReports/columns';
 import { getItemsColumns } from './columns';
+import set = Reflect.set;
 
 interface IGlobalModalWrapperProps {
   isVisible: boolean;
+  editableItem: IItem | ICategory | null;
+  forbiddenCreateCategory?: boolean;
+  forbiddenCreateProduct?: boolean;
+  isAddTopCategory: boolean;
   title?: string;
   onOk: (item: IItem) => void;
   onCancel: () => void;
@@ -21,14 +26,22 @@ const SELECT_FIELD_NAMES = {
   value: 'Key'
 };
 
-const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({ isVisible, onOk, onCancel }) => {
+const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
+  isVisible,
+  editableItem,
+  isAddTopCategory,
+  onOk,
+  onCancel,
+  forbiddenCreateProduct,
+  forbiddenCreateCategory
+}) => {
   const { t } = useTranslation();
   const [isProductFocused, setIsProductFocused] = useState(false);
-  const [isCategory, setIsCategory] = useState(true);
+  const [isCategory, setIsCategory] = useState(!!editableItem?.IsCategory);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [items, setItems] = useState<IItem[]>([]);
   const [productSearchValue, setProductSearchValue] = useState<string>('');
-  const [categoryName, setCategoryName] = useState<string>('');
+  const [categoryName, setCategoryName] = useState<string>(editableItem?.title || '');
   const [productSearchValueCOPY, setProductSearchValueCOPY] = useState<string>('');
   const [checkedCategoryKey, setCheckedCategoryKey] = useState<string>('');
   const [checkedItem, setCheckedItem] = useState<IItem[]>([]);
@@ -44,17 +57,27 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({ isVisible, onOk, 
   };
 
   useEffect(() => {
+    if (editableItem) {
+      // @ts-ignore
+      setCategoryName(editableItem?.title);
+    }
+  }, [editableItem]);
+
+  useEffect(() => {
     if (isProductFocused) {
       setProductSearchValueCOPY(productSearchValue);
     }
   }, [isProductFocused, productSearchValue]);
 
   useEffect(() => {
-    getFilterData('', '');
-  }, []);
+    if (isVisible) {
+      getFilterData('', '');
+    } else {
+      clearData();
+    }
+  }, [isVisible]);
 
   useEffect(() => {
-    console.log(checkedCategoryKey, 'checkedCategoryKey');
     getFilterData(productSearchValueCOPY, checkedCategoryKey);
   }, [checkedCategoryKey]);
 
@@ -97,6 +120,13 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({ isVisible, onOk, 
     setCheckedItem([]);
   };
 
+  const onRemoveItemFromAdded = (item: IItem) => {
+    const copyChecked = [...checkedItem];
+    const itemIndex = copyChecked.map((it) => it.Key).indexOf(item.Key);
+    copyChecked.splice(itemIndex, 1);
+    setCheckedItem(copyChecked);
+  };
+
   return (
     <Modal
       title={t('addKeyboardItemModal.addItemCategory')}
@@ -111,14 +141,18 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({ isVisible, onOk, 
         size: 'large'
       }}
       okButtonProps={{
-        size: 'large'
+        size: 'large',
+        disabled: !categoryName && checkedItem.length === 0
       }}
     >
       <div className="flex flex-1 items-center">
         <Checkbox
+          disabled={isAddTopCategory || !!editableItem || forbiddenCreateCategory || forbiddenCreateProduct}
           checked={isCategory}
           onChange={(e) => {
             console.log(e, 'e.target.checked');
+            setCategoryName('');
+            setCheckedItem([]);
             setIsCategory(e.target.checked);
           }}
         >
@@ -126,6 +160,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({ isVisible, onOk, 
         </Checkbox>
         {isCategory ? (
           <Input
+            value={categoryName}
             placeholder={t('addKeyboardItemModal.category')}
             onChange={(e) => setCategoryName(e.target.value)}
           />
@@ -162,7 +197,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({ isVisible, onOk, 
           <CustomTable
             scrollSize={200}
             data={checkedItem}
-            columns={getItemsColumns(t)}
+            columns={getItemsColumns(t, onRemoveItemFromAdded)}
           />
         </div>
       ) : null}

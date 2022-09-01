@@ -1,9 +1,10 @@
 import React from 'react';
-import { EditOutlined, SettingOutlined } from '@ant-design/icons/lib';
-import { Button, Card, Typography } from 'antd';
+import { CopyOutlined, DeleteOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons/lib';
+import { Button, Card, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { IKeyBoard } from '../../../../../server/models';
+import './styles.scss';
 
 const { Text } = Typography;
 
@@ -11,26 +12,55 @@ interface IKeyboardItemProps {
   keyboard: IKeyBoard;
   onSettings: (k: IKeyBoard) => void;
   onEdit: (k: IKeyBoard) => void;
+  onDuplicate: (k: IKeyBoard) => void;
+  onDelete: (k: IKeyBoard) => void;
 }
-export const KeyboardItem: React.FC<IKeyboardItemProps> = ({ keyboard, onEdit, onSettings }) => {
+export const KeyboardItem: React.FC<IKeyboardItemProps> = ({ keyboard, onEdit, onSettings, onDuplicate, onDelete }) => {
   const { t } = useTranslation();
   return (
     <Card
-      title={keyboard.title}
+      title={keyboard.title || '-'}
       bordered
       actions={[
-        <Button
+        <Tooltip
           key={t('keyboardList.dataEditor')}
-          onClick={() => onEdit(keyboard)}
+          color="blue"
+          className="cursor-pointer d-inline"
+          placement="top"
+          title={t('keyboardList.dataEditor')}
         >
-          {t('keyboardList.dataEditor')}
-        </Button>,
-        <Button
+          <SettingOutlined onClick={() => onSettings(keyboard)} />
+        </Tooltip>,
+        <Tooltip
           key={t('keyboardList.itemsEditor')}
-          onClick={() => onSettings(keyboard)}
+          color="blue"
+          className="cursor-pointer d-inline"
+          placement="top"
+          title={t('keyboardList.itemsEditor')}
         >
-          {t('keyboardList.itemsEditor')}
-        </Button>
+          <EditOutlined onClick={() => onEdit(keyboard)} />
+        </Tooltip>,
+        <Tooltip
+          key={'COPY'}
+          color="blue"
+          className="cursor-pointer d-inline"
+          placement="top"
+          title={'COPY'}
+        >
+          <CopyOutlined onClick={() => onDuplicate(keyboard)} />
+        </Tooltip>,
+        <Tooltip
+          key={'DELETE'}
+          color="blue"
+          className="cursor-pointer d-inline"
+          placement="top"
+          title={'DELETE'}
+        >
+          <DeleteOutlined
+            className="deleteIcon"
+            onClick={() => onDelete(keyboard)}
+          />
+        </Tooltip>
       ]}
     >
       <div className="d-flex flex-col">

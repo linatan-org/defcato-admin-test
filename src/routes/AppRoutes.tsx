@@ -42,6 +42,14 @@ const AppRoutes = () => {
           component={KeyboardEditor}
         />
         <Route
+          path={routes.keyboardEditorDuplicate}
+          component={KeyboardEditor}
+        />
+        <Route
+          path={routes.keyboardEditorNew}
+          component={KeyboardEditor}
+        />
+        <Route
           path={routes.keyboardList}
           component={KeyboardList}
         />

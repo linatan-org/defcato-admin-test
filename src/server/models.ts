@@ -161,7 +161,7 @@ export interface IKeyBoard {
   OwnerSysId: number;
   Status: number;
   StatusDesc: string;
-  SysId: number;
+  SysId?: number;
   ToDate: string;
   ToTime: string;
 }
@@ -174,6 +174,8 @@ export interface ICategory {
   Key: string;
   Value: string;
   title?: string;
+  Name?: string;
+  IsCategory?: boolean;
 }
 
 export interface IItem {
