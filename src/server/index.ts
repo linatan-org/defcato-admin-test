@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   ICreateItemValues,
+  IDailyInstruction,
   IDailyStats,
   IDailyUserStats,
   IDailyUserTargets,
@@ -57,6 +58,21 @@ export const API = {
       const res = await apiConfig.post('/FetchTranJournalList.aspx', {
         ...getSession(),
         ...data
+      });
+      return res.data;
+    }
+  },
+  dailyInstruction: {
+    getDailyInstruction: async (): Promise<IDailyInstruction> => {
+      const res = await apiConfig.post('/GetDailyInstructionDefinition.aspx', {
+        ...getSession()
+      });
+      return res.data;
+    },
+    saveDailyInstruction: async (Defenition: string, HTML: string): Promise<IKeyboardList> => {
+      const res = await apiConfig.post('/UpdateDailyInstructionDefinition.aspx', {
+        ...getSession(),
+        ...{ Defenition, HTML }
       });
       return res.data;
     }

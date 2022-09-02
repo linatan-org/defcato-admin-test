@@ -4,6 +4,7 @@
   "save": "שמור",
   "saveAndBack": "סיים ושמור",
   "back": "סיים",
+  "changesHasBeenSaved": "שינויים נשמרו",
   "navMenu" : {
     "currentTradingDay": "נוכחי יום מסחר",
     "reports": "דוחות",
@@ -11,6 +12,8 @@
     "itemsReport": "דוח פריטים",
     "keyboardEditor": "תכנון מקלדת",
     "keyboardList": "רשימת מקלדות",
+    "htmlEditor": "עורך HTML",
+    "dailyInstruction": "תדריך יומי",
     "settings": "הגדרות"
   },
   "dashboard": {
@@ -61,7 +64,14 @@
     "toDate": "עד תאריך",
     "activeHours": "שעות פעילות",
     "dataEditor": "עריכת פריטים",
-    "itemsEditor": "עריכת תאריכים"
+    "itemsEditor": "עריכת תאריכים",
+    "createNewKeyboard": "הוסף מקלדת חדשה",
+    "duplicateKeyboard": "שכפל מקלדת",
+    "deleteKeyboard": "מחלק מקלדת",
+    "areYouSureYouWantDeleteKeyboard": "האם אתה בטוח שברצונך למחוק מקלדת?"
+  },
+  "keyboard": {
+    "addNewCategory": "הוסף קטגוריה חדשה"
   },
   "addKeyboardItemModal": {
     "addItemCategory": "הוספת קטגוריה/פריט",

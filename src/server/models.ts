@@ -192,6 +192,10 @@ export interface ICreateItemValues extends IGeneralResponse {
   Items: IItem[];
 }
 
+export interface IDailyInstruction extends IGeneralResponse {
+  Data: string;
+}
+
 export enum RESPONSE_STATUSES {
   OK = 0
 }
