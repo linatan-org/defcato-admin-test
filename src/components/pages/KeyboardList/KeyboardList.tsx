@@ -64,7 +64,7 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           onAskCancelDelete();
           notification.success({
-            message: 'Notification Title',
+            message: '',
             description: 'Keyboard was deleted',
             placement: 'bottomRight'
           });
@@ -84,7 +84,7 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
         size="large"
         onClick={() => editCreateKeyboard()}
       >
-        {t('saveAndBack')}
+        {t('keyboardList.createNewKeyboard')}
       </Button>
       <div className="tree-wrapper">
         <List
@@ -119,7 +119,7 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
           size: 'large'
         }}
       >
-        <Text>Are you sure you want delete keyboard?</Text>
+        <Text>{t('keyboardList.areYouSureYouWantDeleteKeyboard')}</Text>
       </Modal>
     </div>
   );

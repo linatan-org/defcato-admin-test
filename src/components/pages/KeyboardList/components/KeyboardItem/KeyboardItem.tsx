@@ -41,20 +41,20 @@ export const KeyboardItem: React.FC<IKeyboardItemProps> = ({ keyboard, onEdit, o
           <EditOutlined onClick={() => onEdit(keyboard)} />
         </Tooltip>,
         <Tooltip
-          key={'COPY'}
+          key={t('keyboardList.duplicateKeyboard')}
           color="blue"
           className="cursor-pointer d-inline"
           placement="top"
-          title={'COPY'}
+          title={t('keyboardList.duplicateKeyboard')}
         >
           <CopyOutlined onClick={() => onDuplicate(keyboard)} />
         </Tooltip>,
         <Tooltip
-          key={'DELETE'}
+          key={t('keyboardList.deleteKeyboard')}
           color="blue"
           className="cursor-pointer d-inline"
           placement="top"
-          title={'DELETE'}
+          title={t('keyboardList.deleteKeyboard')}
         >
           <DeleteOutlined
             className="deleteIcon"

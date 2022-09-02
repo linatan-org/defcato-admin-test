@@ -1,3 +1,4 @@
+import { Html5Outlined } from '@ant-design/icons/lib';
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { useHistory } from 'react-router-dom';
@@ -47,6 +48,9 @@ const MainLayout = ({ children }: LayoutProps) => {
       getItem(t('navMenu.salesReport'), routes.salesReports),
       getItem(t('navMenu.itemsReport'), '6')
     ]),
+    getItem(t('navMenu.htmlEditor'), 'sub2', <Html5Outlined />, [
+      getItem(t('navMenu.dailyInstruction'), routes.dailyInstructionEditor)
+    ]),
     getItem(t('navMenu.keyboardList'), routes.keyboardList, <BranchesOutlined />),
     getItem(t('navMenu.settings'), '7', <SettingOutlined />)
   ];
@@ -56,35 +60,29 @@ const MainLayout = ({ children }: LayoutProps) => {
     const matchedRoute = Object.keys(routes).find((k: string) => {
       return (routes as any)[k].includes(currentPath);
     });
-    return (matchedRoute && (routes as any)[matchedRoute]) || routes.dashboard;
+    return matchedRoute === routes.signIn
+      ? routes.dashboard
+      : (matchedRoute && (routes as any)[matchedRoute]) || routes.dashboard;
   };
   console.log(getDefaultSelectedKey(), 'getDefaultSelectedKey');
 
   return (
     <Layout className="min-h-screen">
-      {/*<Header className="bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]">*/}
-      {/*Header*/}
-      {/*</Header>*/}
-      <Layout>
-        <Sider
-          width={250}
-          className="text-[#fff]"
-        >
-          <div>
-            <Menu
-              onClick={(e) => history.push(e.key)}
-              defaultSelectedKeys={[getDefaultSelectedKey()]}
-              mode="inline"
-              theme="dark"
-              items={items}
-            />
-          </div>
-        </Sider>
-        <Content className="flex flex-col min-h-screen gap-6 p-6">{children}</Content>
-      </Layout>
-      {/*<Footer className="bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]">*/}
-      {/*Footer*/}
-      {/*</Footer>*/}
+      <Sider
+        width={250}
+        className="text-[#fff]"
+      >
+        <div>
+          <Menu
+            onClick={(e) => history.push(e.key)}
+            defaultSelectedKeys={[getDefaultSelectedKey()]}
+            mode="inline"
+            theme="dark"
+            items={items}
+          />
+        </div>
+      </Sider>
+      <Content className="flex flex-col min-h-screen gap-6 p-6">{children}</Content>
     </Layout>
   );
 };

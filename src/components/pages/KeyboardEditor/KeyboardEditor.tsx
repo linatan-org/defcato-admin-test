@@ -30,11 +30,9 @@ const KeyboardEditor: React.FC = () => {
   const params: { id: string } = useParams();
   const navigation = useHistory();
   const isDuplicate = navigation.location.pathname.includes('duplicate');
-  console.log(params.id, 'ID===');
   const keyboard: IKeyBoard = useSelector((state: any) =>
     state.keyboard.keyboardList.find((kb: IKeyBoard) => {
       const matchedKb = kb?.SysId?.toString() === params.id && kb;
-      console.log(matchedKb, 'matchedKb');
       let copyKb;
       if (matchedKb && isDuplicate) {
         copyKb = { ...matchedKb };
@@ -43,7 +41,6 @@ const KeyboardEditor: React.FC = () => {
       return copyKb || matchedKb;
     })
   );
-  console.log(keyboard, 'keyboard');
 
   const [checkedRowInfo, setCheckedRowInfo] = useState<GenerateNodePropsParams | null>(null);
   const [isVisibleAddNewItemModal, setIsVisibleAddNewItemModal] = useState(false);
@@ -108,8 +105,8 @@ const KeyboardEditor: React.FC = () => {
     await API.keyboard[keyboardAction](copyKeyBoard).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         notification.success({
-          message: 'Notification Title',
-          description: 'Changes has been saved',
+          message: '',
+          description: t('changesHasBeenSaved'),
           placement: 'bottomRight'
         });
       }
@@ -241,7 +238,7 @@ const KeyboardEditor: React.FC = () => {
         size="large"
         onClick={() => setIsVisibleAddNewItemModal(true)}
       >
-        Add new category
+        {t('keyboard.addNewCategory')}
       </Button>
       {isDuplicate ? (
         <div className="w-80 m-4">

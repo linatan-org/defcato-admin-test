@@ -1,4 +1,5 @@
 import { Redirect, Switch, Route } from 'react-router-dom';
+import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import { SignIn } from '../components/pages/SignIn';
 import { routes } from '../constants/routes';
@@ -53,7 +54,10 @@ const AppRoutes = () => {
           path={routes.keyboardList}
           component={KeyboardList}
         />
-
+        <Route
+          path={routes.dailyInstructionEditor}
+          component={Editor}
+        />
         <Route
           path="*"
           component={NotFound}
