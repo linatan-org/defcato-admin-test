@@ -12,12 +12,15 @@ import set = Reflect.set;
 
 interface IGlobalModalWrapperProps {
   isVisible: boolean;
+  isAddRefItems: boolean;
+  isMultiItems: boolean;
   editableItem: IItem | ICategory | null;
   forbiddenCreateCategory?: boolean;
   forbiddenCreateProduct?: boolean;
   isAddTopCategory: boolean;
   title?: string;
   onOk: (item: IItem) => void;
+  onAddReffItems: (data: { References: string[]; Items: IItem[] }) => void;
   onCancel: () => void;
 }
 
@@ -30,14 +33,17 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
   isVisible,
   editableItem,
   isAddTopCategory,
+  isAddRefItems,
+  isMultiItems,
   onOk,
   onCancel,
   forbiddenCreateProduct,
-  forbiddenCreateCategory
+  forbiddenCreateCategory,
+  onAddReffItems
 }) => {
   const { t } = useTranslation();
   const [isProductFocused, setIsProductFocused] = useState(false);
-  const [isCategory, setIsCategory] = useState(!!editableItem?.IsCategory);
+  const [isCategory, setIsCategory] = useState(isAddRefItems ? false : !!editableItem?.IsCategory);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [items, setItems] = useState<IItem[]>([]);
   const [productSearchValue, setProductSearchValue] = useState<string>('');
@@ -55,6 +61,12 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
       }
     });
   };
+
+  useEffect(() => {
+    if (isAddRefItems) {
+      setIsCategory(false);
+    }
+  }, [isAddRefItems]);
 
   useEffect(() => {
     if (editableItem) {
@@ -92,8 +104,17 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
   }, [debouncedProductSearch, items]);
 
   const onOkHandler = () => {
-    console.log(checkedItem, 'CHECK');
-    if (checkedItem.length) {
+    if (isAddRefItems) {
+      // @ts-ignore
+      const References: string[] = checkedItem.map((ci) => ci.Key);
+      const Items = checkedItem.map((ci) => ({
+        ItemCode: ci.Key,
+        Name: ci.Value,
+        title: ci.Value,
+        IsReferenceItem: true
+      }));
+      onAddReffItems({ References, Items });
+    } else if (checkedItem.length) {
       onOk({
         ItemCode: checkedItem[0].Key,
         Name: checkedItem[0].Value,
@@ -114,6 +135,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     setIsCategory(true);
     setCategories([]);
     setItems([]);
+    setCategoryName('');
     setProductSearchValue('');
     setProductSearchValueCOPY('');
     setCheckedCategoryKey('');
@@ -125,6 +147,17 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     const itemIndex = copyChecked.map((it) => it.Key).indexOf(item.Key);
     copyChecked.splice(itemIndex, 1);
     setCheckedItem(copyChecked);
+  };
+
+  const onAddProducts = (newProduct: IItem) => {
+    const copyItems = [...checkedItem];
+    if (isAddRefItems && isMultiItems) {
+      copyItems.push(newProduct);
+    } else {
+      copyItems[0] = newProduct;
+    }
+    console.log(copyItems, 'copyItems');
+    setCheckedItem(copyItems);
   };
 
   return (
@@ -147,7 +180,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     >
       <div className="flex flex-1 items-center">
         <Checkbox
-          disabled={isAddTopCategory || !!editableItem || forbiddenCreateCategory || forbiddenCreateProduct}
+          disabled={isAddTopCategory || isAddRefItems || !!editableItem || forbiddenCreateCategory || forbiddenCreateProduct}
           checked={isCategory}
           onChange={(e) => {
             console.log(e, 'e.target.checked');
@@ -167,20 +200,14 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
         ) : (
           <div className="flex flex-1">
             <Select
-              className="flex-1 ml-5"
-              fieldNames={SELECT_FIELD_NAMES}
-              options={categories}
-              placeholder={t('addKeyboardItemModal.category')}
-              onChange={setCheckedCategoryKey}
-            />
-            <Select
-              className="flex-1 flex mr-5"
+              className="flex-1 flex ml-5"
               placeholder={t('addKeyboardItemModal.product')}
               options={items}
               fieldNames={SELECT_FIELD_NAMES}
               showSearch
+              allowClear
               // @ts-ignore
-              onChange={(v, op) => setCheckedItem([op])}
+              onChange={(v, op) => onAddProducts(op)}
               onSearch={setProductSearchValue}
               onBlur={() => setIsProductFocused(false)}
               onFocus={() => setIsProductFocused(true)}
@@ -188,6 +215,14 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
               showArrow={false}
               filterOption={false}
               notFoundContent={null}
+            />
+            <Select
+              className="flex-1 mr-5"
+              fieldNames={SELECT_FIELD_NAMES}
+              options={categories}
+              placeholder={t('addKeyboardItemModal.category')}
+              onChange={setCheckedCategoryKey}
+              allowClear
             />
           </div>
         )}

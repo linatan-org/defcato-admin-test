@@ -47,4 +47,25 @@
   color: $primaryGreen;
 }
 
+.categoryItem {
+  .rst__rowContents {
+    background: $gray8;
+    color: white;
+  }
+}
+
+.productItem {
+  .rst__rowContents {
+    background: $gray6;
+    color: white;
+  }
+}
+
+.referenceItem {
+  .rst__rowContents {
+    background: $gray4;
+    color: white;
+  }
+}
+
 

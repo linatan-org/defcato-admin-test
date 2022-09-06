@@ -196,6 +196,14 @@ export interface IDailyInstruction extends IGeneralResponse {
   Data: string;
 }
 
+// ===========
+
+export interface IKeyboardFields {
+  // DateRange: { FromDate: string; ToDate: string };
+  DateRange: string[];
+  Name: string;
+}
+
 export enum RESPONSE_STATUSES {
   OK = 0
 }

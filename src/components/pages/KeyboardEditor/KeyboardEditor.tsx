@@ -1,17 +1,20 @@
 import { EditOutlined, PlusOutlined } from '@ant-design/icons/lib';
-import React, { useState } from 'react';
-import { Button, Typography, Modal, PageHeader, Space, notification, Input } from 'antd';
-import SortableTree, { addNodeUnderParent, removeNodeAtPath } from '@nosferatu500/react-sortable-tree';
+import { FormInstance } from 'antd/es/form';
+import React, { useEffect, useState } from 'react';
+import { Button, Typography, Modal, PageHeader, Space, notification, Input, Form } from 'antd';
+import SortableTree, { addNodeUnderParent, changeNodeAtPath, removeNodeAtPath } from '@nosferatu500/react-sortable-tree';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { ICategory, IItem, IKeyBoard, IKeyboardItem, RESPONSE_STATUSES } from '../../../server/models';
+import { ICategory, IItem, IKeyBoard, IKeyboardFields, IKeyboardItem, RESPONSE_STATUSES } from '../../../server/models';
 import './styles.scss';
 import '@nosferatu500/react-sortable-tree/style.css';
 import { API } from '../../../server';
 import AddNewItemModal from './components/AddNewItemModal/AddNewItemModal';
 import { keyboardKeyReplace } from '../../../helpers/helpers';
 import { DeleteOutlined } from '@ant-design/icons';
+import KeyboardCategoryForm from '../../KeyboardCategoryForm/KeyboardCategoryForm';
+import moment from 'moment';
 
 const { Text } = Typography;
 const maxDepth = 5;
@@ -27,9 +30,11 @@ declare type GenerateNodePropsParams = {
 
 const KeyboardEditor: React.FC = () => {
   const { t } = useTranslation();
+  const [keyBoardForm] = Form.useForm();
   const params: { id: string } = useParams();
   const navigation = useHistory();
   const isDuplicate = navigation.location.pathname.includes('duplicate');
+  const isCreateNew = navigation.location.pathname.includes('new');
   const keyboard: IKeyBoard = useSelector((state: any) =>
     state.keyboard.keyboardList.find((kb: IKeyBoard) => {
       const matchedKb = kb?.SysId?.toString() === params.id && kb;
@@ -45,11 +50,20 @@ const KeyboardEditor: React.FC = () => {
   const [checkedRowInfo, setCheckedRowInfo] = useState<GenerateNodePropsParams | null>(null);
   const [isVisibleAddNewItemModal, setIsVisibleAddNewItemModal] = useState(false);
   const [isVisibleConformModal, setIsVisibleConformModal] = useState(false);
+  const [isGoBack, setIsGoBack] = useState(false);
   const [isVisibleModalWithoutSave, setSetIsVisibleModalWithoutSave] = useState(false);
+  const [isMultiNewItems, setIsMultiNewItems] = useState(false);
+  const [isAddRefItems, setIsAddRefItems] = useState(false);
   const [isTreeWasChanged, setIsTreeWasChanged] = useState(isDuplicate || false);
   const [editableItem, setEditableItem] = useState<IItem | ICategory | null>(null);
-  const [keyboardName, setKeyboardName] = useState(keyboard && (keyboard.Name || keyboard.title));
   const [newTreeData, setNewStreeData] = useState<IKeyboardItem[]>(keyboard ? keyboard.children : []);
+
+  useEffect(() => {
+    const FromDate = keyboard && keyboard.FromDate ? moment(keyboard.FromDate) : moment();
+    const ToDate = keyboard && keyboard.FromDate ? moment(keyboard.ToDate) : moment();
+    keyBoardForm.setFieldsValue({ DateRange: [FromDate, ToDate], Name: keyboard && keyboard.title });
+  }, []);
+
   // @ts-ignore
   const getNodeKey: any = ({ treeIndex }) => treeIndex;
 
@@ -66,13 +80,15 @@ const KeyboardEditor: React.FC = () => {
   };
 
   const onCancelNewItem = () => {
+    setIsAddRefItems(false);
+    setIsMultiNewItems(false);
     setIsVisibleAddNewItemModal(false);
     setCheckedRowInfo(null);
   };
 
   const onAddNewItem = async (item: IItem) => {
     let newTree;
-    if (checkedRowInfo) {
+    if (checkedRowInfo && !editableItem) {
       newTree = addNodeUnderParent({
         treeData: newTreeData,
         parentKey: checkedRowInfo.path[checkedRowInfo.path.length - 1],
@@ -81,27 +97,43 @@ const KeyboardEditor: React.FC = () => {
         newNode: item
         // addAsFirstChild: state.addAsFirstChild
       }).treeData;
+    } else if (checkedRowInfo && editableItem) {
+      newTree = changeNodeAtPath({
+        treeData: newTreeData,
+        path: checkedRowInfo.path,
+        // @ts-ignore
+        expandParent: true,
+        getNodeKey,
+        newNode: item
+      });
     } else {
       newTree = addNodeUnderParent({
         treeData: newTreeData,
         expandParent: true,
         getNodeKey,
         newNode: item
+        // addAsFirstChild: state.addAsFirstChild
       }).treeData;
     }
     // @ts-ignore
     setNewStreeData(newTree);
-    setIsVisibleAddNewItemModal(false);
-    setCheckedRowInfo(null);
-    setIsTreeWasChanged(true);
+    clearData();
   };
 
   const onSave = async (isGoBack: boolean) => {
+    setIsGoBack(isGoBack);
+    keyBoardForm.submit();
+  };
+
+  const handleOnSave = async (values: IKeyboardFields) => {
+    console.log('values: ', values);
     const replacedData = keyboardKeyReplace(newTreeData, false);
     const copyKeyBoard = { ...keyboard };
-    copyKeyBoard.Name = isDuplicate ? keyboardName : copyKeyBoard.title;
+    copyKeyBoard.Name = values.Name;
+    copyKeyBoard.FromDate = values.DateRange[0];
+    copyKeyBoard.ToDate = values.DateRange[1];
     copyKeyBoard.Items = replacedData;
-    const keyboardAction = isDuplicate ? 'createKeyboard' : 'updateKeyboard';
+    const keyboardAction = isDuplicate || isCreateNew ? 'createKeyboard' : 'updateKeyboard';
     await API.keyboard[keyboardAction](copyKeyBoard).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         notification.success({
@@ -113,6 +145,7 @@ const KeyboardEditor: React.FC = () => {
     });
     setIsTreeWasChanged(false);
     if (isGoBack) {
+      setIsGoBack(false);
       onBack(true);
     }
   };
@@ -151,16 +184,24 @@ const KeyboardEditor: React.FC = () => {
           {deleteButton(rowInfo)}
         </Space>
       ];
+    } else if (rowInfo.node.IsReferenceItem) {
+      return [<Space key="btns-ref">{deleteButton(rowInfo)}</Space>];
     }
-    return [deleteButton(rowInfo)];
+    return [
+      <Space key="btns-category">
+        {addButton(rowInfo, false, true)}
+        {deleteButton(rowInfo)}
+      </Space>
+    ];
   };
 
   const onEdit = (rowInfo: GenerateNodePropsParams) => {
     setEditableItem(rowInfo.node);
+    setCheckedRowInfo(rowInfo);
     setIsVisibleAddNewItemModal(true);
   };
 
-  const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean) => {
+  const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean, isAddRefItems?: boolean) => {
     return (
       <Button
         icon={<PlusOutlined />}
@@ -168,8 +209,12 @@ const KeyboardEditor: React.FC = () => {
         key="addButton"
         type="primary"
         onClick={() => {
-          if (!isAddTopCategory) {
+          if (!isAddTopCategory || isAddRefItems) {
             setCheckedRowInfo(rowInfo);
+          }
+          if (isAddRefItems) {
+            setIsAddRefItems(true);
+            setIsMultiNewItems(true);
           }
           setIsVisibleAddNewItemModal(true);
         }}
@@ -224,6 +269,44 @@ const KeyboardEditor: React.FC = () => {
     ];
   };
 
+  const onAddReffItems = (data: { References: string[]; Items: IItem[] }) => {
+    let newTree: any;
+    if (isAddRefItems && checkedRowInfo) {
+      const copyInfo = { ...checkedRowInfo };
+      copyInfo.node.References = [...data.References];
+      copyInfo.node.Items = [...data.Items];
+      newTree = changeNodeAtPath({
+        treeData: newTreeData,
+        path: checkedRowInfo.path,
+        // @ts-ignore
+        expandParent: true,
+        getNodeKey,
+        newNode: copyInfo.node
+      });
+      data.Items.forEach((it) => {
+        newTree = addNodeUnderParent({
+          treeData: newTree,
+          parentKey: checkedRowInfo.path[checkedRowInfo.path.length - 1],
+          expandParent: true,
+          getNodeKey,
+          newNode: it
+          // addAsFirstChild: state.addAsFirstChild
+        }).treeData;
+      });
+    }
+    console.log(newTree, 'newTree');
+    setNewStreeData(newTree);
+    clearData();
+  };
+
+  const clearData = () => {
+    setIsVisibleAddNewItemModal(false);
+    setCheckedRowInfo(null);
+    setIsAddRefItems(false);
+    setIsMultiNewItems(false);
+    setIsTreeWasChanged(true);
+  };
+
   return (
     <div className="wrapper">
       <PageHeader
@@ -240,15 +323,11 @@ const KeyboardEditor: React.FC = () => {
       >
         {t('keyboard.addNewCategory')}
       </Button>
-      {isDuplicate ? (
-        <div className="w-80 m-4">
-          <Input
-            value={keyboardName}
-            placeholder={t('addKeyboardItemModal.category')}
-            onChange={(e) => setKeyboardName(e.target.value)}
-          />
-        </div>
-      ) : null}
+      <KeyboardCategoryForm
+        handleFinish={handleOnSave}
+        form={keyBoardForm}
+        onValuesChange={(cv, av) => setIsTreeWasChanged(true)}
+      />
       <div className="tree-wrapper">
         <SortableTree
           treeData={newTreeData}
@@ -272,7 +351,9 @@ const KeyboardEditor: React.FC = () => {
           // }
           onDragStateChanged={(e) => console.log(e)}
           generateNodeProps={(rowinfo) => ({
-            buttons: getActionButtons(rowinfo)
+            buttons: getActionButtons(rowinfo),
+            // eslint-disable-next-line
+            className: rowinfo.node.IsCategory ? 'categoryItem' : rowinfo.node.isReferenceItem ? 'referenceItem' : 'productItem'
           })}
         />
       </div>
@@ -281,7 +362,10 @@ const KeyboardEditor: React.FC = () => {
         editableItem={editableItem}
         onCancel={onCancelNewItem}
         onOk={onAddNewItem}
+        onAddReffItems={onAddReffItems}
         isVisible={isVisibleAddNewItemModal}
+        isAddRefItems={isAddRefItems}
+        isMultiItems={isMultiNewItems}
       />
       <Modal
         title={''}
