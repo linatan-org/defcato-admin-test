@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
+import React from 'react';
 import { Card, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import React from 'react';
 import { IDailyStatsData } from '../../../../server/models';
+import './styles.scss';
 
 interface Interface {
   data: { key: string; title: string }[];
@@ -10,7 +11,7 @@ interface Interface {
 }
 
 const DashboardCard: React.FC<Interface> = ({ data, dailyStats }) => (
-  <div className="site-card-border-less-wrapper">
+  <div className="site-card-border-less-wrapper card">
     <Card bodyStyle={{ padding: '20px 24px 8px' }}>
       <div className="flex">
         <Tooltip

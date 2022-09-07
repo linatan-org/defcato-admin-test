@@ -42,7 +42,7 @@ const Editor = () => {
     // @ts-ignore
     emailEditorRef.current.editor.exportHtml((data) => {
       const { design, html } = data;
-      console.log(design, 'DESIGN');
+      console.log(html, 'DESIGN');
       API.dailyInstruction.saveDailyInstruction(JSON.stringify(design), JSON.stringify(html)).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           notification.success({

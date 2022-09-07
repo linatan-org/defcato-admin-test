@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setLoading } from '../reudux/globalLoader/action';
 import {
   ICreateItemValues,
   IDailyInstruction,
@@ -11,6 +12,12 @@ import {
   ISignInResponse
 } from './models';
 
+let dispatch: any;
+
+export const injectDispatch = (_dispatch: any) => {
+  dispatch = _dispatch;
+};
+
 const apiConfig = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
@@ -19,11 +26,29 @@ const apiConfig = axios.create({
   }
 });
 
+apiConfig.interceptors.request.use(
+  (config) => {
+    dispatch(setLoading(true));
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+apiConfig.interceptors.response.use(
+  (response) => {
+    dispatch(setLoading(false));
+    return Promise.resolve(response);
+  },
+  (error) => {
+    dispatch(setLoading(false));
+    return Promise.reject(error);
+  }
+);
+
 const getSession = () => {
   const SessionKey = sessionStorage.getItem('token');
   return { SessionKey };
 };
-console.log(apiConfig, 'apiConfig', process.env.BASE_URL);
 
 export const API = {
   auth: {
@@ -33,22 +58,24 @@ export const API = {
     }
   },
   dashboard: {
-    getDailyStat: async (): Promise<IDailyStats> => {
+    getDailyStat: async (SelectedDate: string): Promise<IDailyStats> => {
       const res = await apiConfig.post('/FetchDailyStat.aspx', {
-        ...getSession()
+        ...getSession(),
+        SelectedDate
       });
       return res.data;
     },
-    getDailyUserStat: async (): Promise<IDailyUserStats> => {
+    getDailyUserStat: async (SelectedDate: string): Promise<IDailyUserStats> => {
       const res = await apiConfig.post('/FetchDailyUsersStats.aspx', {
-        ...getSession()
+        ...getSession(),
+        SelectedDate
       });
       return res.data;
     },
-    getDailyUserTargets: async (DeviceSysId: number): Promise<IDailyUserTargets> => {
+    getDailyUserTargets: async (SellerCode: string, SelectedDate?: string): Promise<IDailyUserTargets> => {
       const res = await apiConfig.post('/FetchDailyUsersTargets.aspx', {
         ...getSession(),
-        DeviceSysId
+        ...{ SellerCode, SelectedDate }
       });
       return res.data;
     }

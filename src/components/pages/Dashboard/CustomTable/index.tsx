@@ -7,9 +7,9 @@ import { IDailyUserStatsData, IDataTable } from '../../../../server/models';
 import { getDashboardTableValues } from '../values';
 
 interface DataTableProps<T> {
-  setActiveUserIxd?: (idx: number) => void;
+  setActiveUserIxd?: (idx: string) => void;
   data: T[];
-  checkedUserDeviceSysId?: number;
+  checkedUserDeviceSysId?: string;
   columns: ColumnsType<T>;
   activeKey?: string;
   scrollSize?: number;

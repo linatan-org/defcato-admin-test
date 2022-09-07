@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Redirect, Switch, Route } from 'react-router-dom';
 import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
@@ -9,9 +11,15 @@ import Dashboard from '../components/pages/Dashboard';
 import SalesReports from '../components/pages/Reports/SalesReports';
 import { ToastContainer } from 'react-toastify';
 import KeyboardEditor from '../components/pages/KeyboardEditor/KeyboardEditor';
+import { injectDispatch } from '../server';
 
 const AppRoutes = () => {
   const authContext = useAuth();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    injectDispatch(dispatch);
+  }, []);
   return (
     <>
       <ToastContainer />

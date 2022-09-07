@@ -5,11 +5,11 @@ export const getDashboardCardsValues = (t: any): DashboardValues[][] => [
   [
     {
       title: t('dashboard.dailyStats.totalRevenue'),
-      key: 'TotalOrders'
+      key: 'TotalRevenue'
     },
     {
       title: t('dashboard.dailyStats.totalOrders'),
-      key: 'TotalRevenue'
+      key: 'TotalOrders'
     },
     {
       title: t('dashboard.dailyStats.lastOrderTime'),

@@ -71,7 +71,10 @@
     "areYouSureYouWantDeleteKeyboard": "האם אתה בטוח שברצונך למחוק מקלדת?"
   },
   "keyboard": {
-    "addNewCategory": "הוסף קטגוריה חדשה"
+    "addNewCategory": "הוסף קטגוריה חדשה",
+    "addProductTooltip": "הוסף קטגוריה",
+    "addSubProductTooltip": "הוסף פריט",
+    "editCategoryTooltip": "עורך קטגוריה"
   },
   "addKeyboardItemModal": {
     "addItemCategory": "הוספת קטגוריה/פריט",

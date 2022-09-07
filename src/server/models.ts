@@ -38,6 +38,7 @@ export interface IDailyUserStatsData {
   CallsOrdersConversion: number;
   Name: string;
   DeviceSysId: number;
+  SelleCode: string;
 }
 
 export interface IDailyUserStats extends IGeneralResponse {

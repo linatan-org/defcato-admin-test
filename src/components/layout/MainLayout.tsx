@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { routes } from '../../constants/routes';
+import GlobalLoader from '../GlobalLoader/GlobalLoader';
 
 const { Header, Footer, Sider, Content } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -68,6 +69,7 @@ const MainLayout = ({ children }: LayoutProps) => {
 
   return (
     <Layout className="min-h-screen">
+      <GlobalLoader />
       <Sider
         width={250}
         className="text-[#fff]"

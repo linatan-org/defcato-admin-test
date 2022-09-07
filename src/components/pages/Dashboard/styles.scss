@@ -1,0 +1,14 @@
+@import '../../../assets/styles/index.scss';
+
+.userDailyStatsBtn {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  z-index: 10000;
+}
+
+.block {
+  background: $gray2;
+  padding: 45px 0 25px 0;
+  position: relative;
+}

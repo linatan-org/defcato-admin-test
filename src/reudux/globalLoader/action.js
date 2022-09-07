@@ -1,6 +1,6 @@
 import * as types from './types';
 
-export const setLoading = loading => ({
+export const setLoading = (loading) => ({
   type: types.SET_LOADING,
-  payload: loading,
+  payload: loading
 });

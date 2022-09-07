@@ -1,7 +1,7 @@
-import { EditOutlined, PlusOutlined } from '@ant-design/icons/lib';
+import { EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons/lib';
 import { FormInstance } from 'antd/es/form';
 import React, { useEffect, useState } from 'react';
-import { Button, Typography, Modal, PageHeader, Space, notification, Input, Form } from 'antd';
+import { Button, Typography, Modal, PageHeader, Space, notification, Input, Form, Tooltip } from 'antd';
 import SortableTree, { addNodeUnderParent, changeNodeAtPath, removeNodeAtPath } from '@nosferatu500/react-sortable-tree';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -55,7 +55,7 @@ const KeyboardEditor: React.FC = () => {
   const [isMultiNewItems, setIsMultiNewItems] = useState(false);
   const [isAddRefItems, setIsAddRefItems] = useState(false);
   const [isTreeWasChanged, setIsTreeWasChanged] = useState(isDuplicate || false);
-  const [editableItem, setEditableItem] = useState<IItem | ICategory | null>(null);
+  const [editableItem, setEditableItem] = useState<GenerateNodePropsParams | null>(null);
   const [newTreeData, setNewStreeData] = useState<IKeyboardItem[]>(keyboard ? keyboard.children : []);
 
   useEffect(() => {
@@ -97,14 +97,15 @@ const KeyboardEditor: React.FC = () => {
         newNode: item
         // addAsFirstChild: state.addAsFirstChild
       }).treeData;
-    } else if (checkedRowInfo && editableItem) {
+    } else if (editableItem) {
+      console.log(item, 'ITEM=======', editableItem);
       newTree = changeNodeAtPath({
         treeData: newTreeData,
-        path: checkedRowInfo.path,
+        path: editableItem.path,
         // @ts-ignore
         expandParent: true,
         getNodeKey,
-        newNode: item
+        newNode: { ...editableItem.node, ...item }
       });
     } else {
       newTree = addNodeUnderParent({
@@ -196,29 +197,37 @@ const KeyboardEditor: React.FC = () => {
   };
 
   const onEdit = (rowInfo: GenerateNodePropsParams) => {
-    setEditableItem(rowInfo.node);
-    setCheckedRowInfo(rowInfo);
+    setEditableItem(rowInfo);
     setIsVisibleAddNewItemModal(true);
   };
 
   const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean, isAddRefItems?: boolean) => {
+    const tooltipText = rowInfo.node.IsCategory ? t('keyboard.addProductTooltip') : t('keyboard.addSubProductTooltip');
     return (
-      <Button
-        icon={<PlusOutlined />}
-        shape="circle"
-        key="addButton"
-        type="primary"
-        onClick={() => {
-          if (!isAddTopCategory || isAddRefItems) {
-            setCheckedRowInfo(rowInfo);
-          }
-          if (isAddRefItems) {
-            setIsAddRefItems(true);
-            setIsMultiNewItems(true);
-          }
-          setIsVisibleAddNewItemModal(true);
-        }}
-      />
+      <Tooltip
+        key={tooltipText}
+        color="blue"
+        className="cursor-pointer d-inline"
+        placement="top"
+        title={tooltipText}
+      >
+        <Button
+          icon={<PlusOutlined />}
+          shape="circle"
+          key="addButton"
+          type="primary"
+          onClick={() => {
+            if (!isAddTopCategory || isAddRefItems) {
+              setCheckedRowInfo(rowInfo);
+            }
+            if (isAddRefItems) {
+              setIsAddRefItems(true);
+              setIsMultiNewItems(true);
+            }
+            setIsVisibleAddNewItemModal(true);
+          }}
+        />
+      </Tooltip>
     );
   };
 
@@ -236,13 +245,21 @@ const KeyboardEditor: React.FC = () => {
 
   const editButton = (rowInfo: GenerateNodePropsParams) => {
     return (
-      <Button
-        className="editButton"
-        icon={<EditOutlined />}
-        shape="circle"
-        key="edit"
-        onClick={() => onEdit(rowInfo)}
-      />
+      <Tooltip
+        key={t('keyboard.editCategoryTooltip')}
+        color="blue"
+        className="cursor-pointer d-inline"
+        placement="top"
+        title={t('keyboard.editCategoryTooltip')}
+      >
+        <Button
+          className="editButton"
+          icon={<EditOutlined />}
+          shape="circle"
+          key="edit"
+          onClick={() => onEdit(rowInfo)}
+        />
+      </Tooltip>
     );
   };
 
@@ -294,7 +311,6 @@ const KeyboardEditor: React.FC = () => {
         }).treeData;
       });
     }
-    console.log(newTree, 'newTree');
     setNewStreeData(newTree);
     clearData();
   };
@@ -352,14 +368,23 @@ const KeyboardEditor: React.FC = () => {
           onDragStateChanged={(e) => console.log(e)}
           generateNodeProps={(rowinfo) => ({
             buttons: getActionButtons(rowinfo),
-            // eslint-disable-next-line
-            className: rowinfo.node.IsCategory ? 'categoryItem' : rowinfo.node.isReferenceItem ? 'referenceItem' : 'productItem'
+            /* eslint-disable */
+            className: `
+              ${rowinfo.node.IsCategory && 'categoryItem'}
+              ${rowinfo.node.IsReferenceItem && 'referenceItem'}
+              ${!rowinfo.node.IsCategory && 'productItem'}
+              ${(
+                !rowinfo.node.IsCategory && rowinfo.node.Items && rowinfo.node.Items.length
+                || !rowinfo.node.IsCategory && rowinfo.node.children && rowinfo.node.children.length
+              ) && 'productItemWithRefItems' }
+            `
+            /* eslint-disable */
           })}
         />
       </div>
       <AddNewItemModal
         isAddTopCategory={!checkedRowInfo}
-        editableItem={editableItem}
+        editableItem={editableItem && editableItem.node}
         onCancel={onCancelNewItem}
         onOk={onAddNewItem}
         onAddReffItems={onAddReffItems}
