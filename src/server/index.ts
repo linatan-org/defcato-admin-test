@@ -8,6 +8,8 @@ import {
   IDailyUserTargets,
   IKeyBoard,
   IKeyboardList,
+  IPaymentDataItem,
+  IPaymentsList,
   ISalesReports,
   ISignInResponse
 } from './models';
@@ -136,6 +138,21 @@ export const API = {
       const res = await apiConfig.post('/ItemsKeyBoardDelete.aspx', {
         ...getSession(),
         KeyboardId
+      });
+      return res.data;
+    }
+  },
+  paymentKeyboard: {
+    get: async (): Promise<IPaymentsList> => {
+      const res = await apiConfig.post('/PaymentKeyBoardGet.aspx', {
+        ...getSession()
+      });
+      return res.data;
+    },
+    save: async (Presets: IPaymentDataItem[]): Promise<IPaymentsList> => {
+      const res = await apiConfig.post('/PaymentKeyBoardUpdate.aspx', {
+        ...getSession(),
+        ...{ Presets }
       });
       return res.data;
     }

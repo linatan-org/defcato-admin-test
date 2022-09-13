@@ -10,28 +10,46 @@
     font-weight: 500;
   }
 }
-.ant-menu-item:first-child {
-  margin-top: 0;
-}
-.ant-card-body p:last-child {
-  margin-bottom: 0;
-}
-.ant-btn-primary {
-  color: #fff;
-  border-color: #1890ff;
-  background: #1890ff;
-  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
-  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
-}
-.ant-progress-circle-trail {
-  stroke: rgb(204, 204, 204);
-}
+
+
 
 $primaryBlue: #1890ff;
-$primaryGreen: #52c41a;
+$primaryGreen: #215731;
+$primaryGreenDark: #1c4625;
+$primaryGreenHovered: #36a15d;
 $primaryRed: #ff4d4f;
 $gray2: #fafafa;
 $gray8: #595959;
 $gray6: #bfbfbf;
 $gray4: #f0f0f0;
 $yellow6: #fadb14;
+$gold6: #faad14;
+
+:root {
+  --primary-color: $primaryGreen;
+  --primary-color-darken: $primaryGreenDark;
+  --primary-hover-color: #36a15d;
+}
+
+.ant-menu-item:first-child {
+  margin-top: 0;
+}
+.ant-card-body p:last-child {
+  margin-bottom: 0;
+}
+.ant-btn.ant-btn-primary, .ant-btn-primary {
+  border-color: $primaryGreen;
+  background: $primaryGreen;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+  &:hover {
+    background-color: var(--primary-hover-color) !important;
+    border-color: var(--primary-hover-color) !important;
+  }
+}
+
+.ant-progress-circle-trail {
+  stroke: rgb(204, 204, 204);
+}
+
+

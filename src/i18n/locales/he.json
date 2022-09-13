@@ -5,6 +5,7 @@
   "saveAndBack": "סיים ושמור",
   "back": "סיים",
   "changesHasBeenSaved": "שינויים נשמרו",
+  "dates": "תאריכים",
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",
@@ -14,6 +15,7 @@
     "keyboardList": "רשימת מקלדות",
     "htmlEditor": "עורך HTML",
     "dailyInstruction": "תדריך יומי",
+    "paymentKeyboardEditor": "מקלדת תשלומים",
     "settings": "הגדרות"
   },
   "dashboard": {
@@ -72,9 +74,41 @@
   },
   "keyboard": {
     "addNewCategory": "הוסף קטגוריה חדשה",
-    "addProductTooltip": "הוסף קטגוריה",
-    "addSubProductTooltip": "הוסף פריט",
-    "editCategoryTooltip": "עורך קטגוריה"
+    "addProductTooltip": "הוסף קטגוריה / פריט",
+    "addSubProductTooltip": "הוסף פריט נלווה",
+    "editCategoryTooltip": "עורך קטגוריה",
+    "keyboardName": "שם מקלדת"
+  },
+  "paymentKeyboard": {
+    "paymentMethods": "אמצעי תשלום",
+    "selectedPaymentMethods": "אמצעי תשלום זמינים",
+    "favoritePaymentMethods": "אמצעי תשלום מעדיפים",
+    "item": {
+      "selectPaymentTooltip": "בחר אמצעי תשלום",
+      "favoritePaymentTooltip": "אמצעי תשלום מעדיף"
+    },
+    "payments": {
+      "Cash": "מזומן",
+      "RegularCredit": "כרטיס אשראי",
+      "EMVCredit": "כרטיס אשראי",
+      "PhoneCredit": "כרטיס אשראי ידני",
+      "Cheque": "ציק",
+      "RefundNote": "זיכוי",
+      "GiftCard": "כרטיס מתנה",
+      "CreditNote": "זיכוי",
+      "PayPal": "PayPal",
+      "BuyMe": "ביי מי",
+      "ExternalApplication": "אפליקציה חיצונית",
+      "WithoutReceipt": "ללא תקבול",
+      "Points": "תשלום בנקודות",
+      "DirectDebit": "הוייק",
+      "BankTransfer": "העברה בנקאית",
+      "Obligo": "אובליגו",
+      "HighTechZone": "היטק זון",
+      "Praxell": "פרקסל",
+      "PowerCard": "PowerCard",
+      "DTS": "DTS"
+    }
   },
   "addKeyboardItemModal": {
     "addItemCategory": "הוספת קטגוריה/פריט",

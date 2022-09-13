@@ -10,15 +10,17 @@ export interface IFilterItem {
   displayKey?: string;
   valueKey?: string;
   onChange?: (v: any) => void;
+  value?: any;
 }
 
 const { RangePicker } = DatePicker;
 
-export const FilterItem: React.FC<IFilterItem> = ({ type, onChange }) => {
+export const FilterItem: React.FC<IFilterItem> = ({ type, onChange, value }) => {
   switch (type) {
     case 'DATE': {
       return (
         <RangePicker
+          value={value || null}
           format={'DD/MM/yyyy'}
           onChange={(v, s) => {
             const FromDate = s[0];

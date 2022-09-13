@@ -1,0 +1,25 @@
+@import '../../../../../assets/styles/index.scss';
+
+.item {
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 20%);
+  background-color: white;
+  padding: 15px;
+  height: 58.8px;
+}
+
+.checkBox {
+  .ant-checkbox-input, .ant-checkbox-inner {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.invisibleStar {
+  opacity: 0;
+}
+
+.favoriteIcon {
+  font-size: 1.5rem;
+  color: $gold6;
+  padding-bottom: 3px;
+}

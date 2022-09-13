@@ -29,15 +29,6 @@ export const KeyboardItem: React.FC<IKeyboardItemProps> = ({ keyboard, onEdit, o
           placement="top"
           title={t('keyboardList.dataEditor')}
         >
-          <SettingOutlined onClick={() => onSettings(keyboard)} />
-        </Tooltip>,
-        <Tooltip
-          key={t('keyboardList.itemsEditor')}
-          color="blue"
-          className="cursor-pointer d-inline"
-          placement="top"
-          title={t('keyboardList.itemsEditor')}
-        >
           <EditOutlined onClick={() => onEdit(keyboard)} />
         </Tooltip>,
         <Tooltip

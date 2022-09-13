@@ -36,12 +36,12 @@ const KeyboardCategoryForm: React.FC<KeyboardCategoryFormProps> = ({ form, handl
           <Col span={10}>
             <Form.Item
               name="Name"
-              label={t('addKeyboardItemModal.category')}
+              label={t('keyboard.keyboardName')}
               rules={[{ required: true }]}
             >
               <Input
                 value={''}
-                placeholder={t('addKeyboardItemModal.category')}
+                placeholder={t('keyboard.keyboardName')}
                 onChange={(e) => {}}
               />
             </Form.Item>
@@ -49,7 +49,7 @@ const KeyboardCategoryForm: React.FC<KeyboardCategoryFormProps> = ({ form, handl
           <Col span={10}>
             <Form.Item
               name="DateRange"
-              label={t('addKeyboardItemModal.category')}
+              label={t('dates')}
               rules={[{ required: true }]}
             >
               <RangePicker

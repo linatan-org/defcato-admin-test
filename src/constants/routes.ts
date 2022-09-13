@@ -6,5 +6,6 @@ export const routes = {
   keyboardEditor: '/keyboardEditor/:id/edit',
   keyboardEditorNew: '/keyboardEditor/new',
   keyboardEditorDuplicate: '/keyboardEditor/:id/duplicate',
-  keyboardList: '/keyboardList'
+  keyboardList: '/keyboardList',
+  paymentsEditor: '/paymentsEditor'
 };

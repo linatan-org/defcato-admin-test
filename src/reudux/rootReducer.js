@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import errorReducer from './error';
 import keyboardReducer from './keyboard';
 import globalLoaderReducer from './globalLoader';
+import settingsReducer from './settings';
 
 const persistConfig = {
   key: 'root',
@@ -17,7 +18,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   error: errorReducer,
   keyboard: keyboardReducer,
-  globalLoader: globalLoaderReducer
+  globalLoader: globalLoaderReducer,
+  settings: settingsReducer
 });
 
 const pReducer = persistReducer(persistConfig, rootReducer);

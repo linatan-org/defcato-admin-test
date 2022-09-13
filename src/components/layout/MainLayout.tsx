@@ -1,6 +1,7 @@
 import { Html5Outlined } from '@ant-design/icons/lib';
 import React from 'react';
 import { Layout, Menu } from 'antd';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MenuProps } from 'antd';
 import {
@@ -42,18 +43,19 @@ type LayoutProps = {
 const MainLayout = ({ children }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
   console.log(history, 'history');
   const items: MenuItem[] = [
-    getItem(t('navMenu.currentTradingDay'), routes.dashboard, <PieChartOutlined />),
     getItem(t('navMenu.reports'), 'sub1', <TableOutlined />, [
+      getItem(t('navMenu.currentTradingDay'), routes.dashboard),
       getItem(t('navMenu.salesReport'), routes.salesReports),
       getItem(t('navMenu.itemsReport'), '6')
     ]),
-    getItem(t('navMenu.htmlEditor'), 'sub2', <Html5Outlined />, [
+    getItem(t('navMenu.settings'), 'sub2', <SettingOutlined />, [
+      getItem(t('navMenu.keyboardList'), routes.keyboardList),
+      getItem(t('navMenu.paymentKeyboardEditor'), routes.paymentsEditor),
       getItem(t('navMenu.dailyInstruction'), routes.dailyInstructionEditor)
-    ]),
-    getItem(t('navMenu.keyboardList'), routes.keyboardList, <BranchesOutlined />),
-    getItem(t('navMenu.settings'), '7', <SettingOutlined />)
+    ])
   ];
 
   const getDefaultSelectedKey = () => {
@@ -65,25 +67,26 @@ const MainLayout = ({ children }: LayoutProps) => {
       ? routes.dashboard
       : (matchedRoute && (routes as any)[matchedRoute]) || routes.dashboard;
   };
-  console.log(getDefaultSelectedKey(), 'getDefaultSelectedKey');
 
   return (
     <Layout className="min-h-screen">
       <GlobalLoader />
-      <Sider
-        width={250}
-        className="text-[#fff]"
-      >
-        <div>
-          <Menu
-            onClick={(e) => history.push(e.key)}
-            defaultSelectedKeys={[getDefaultSelectedKey()]}
-            mode="inline"
-            theme="dark"
-            items={items}
-          />
-        </div>
-      </Sider>
+      {!isDashboardAccessOnly ? (
+        <Sider
+          width={250}
+          className="text-[#fff]"
+        >
+          <div>
+            <Menu
+              onClick={(e) => history.push(e.key)}
+              defaultSelectedKeys={[getDefaultSelectedKey()]}
+              mode="inline"
+              theme="dark"
+              items={items}
+            />
+          </div>
+        </Sider>
+      ) : null}
       <Content className="flex flex-col min-h-screen gap-6 p-6">{children}</Content>
     </Layout>
   );

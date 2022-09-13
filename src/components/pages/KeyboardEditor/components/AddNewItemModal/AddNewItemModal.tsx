@@ -183,7 +183,6 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
           disabled={isAddTopCategory || isAddRefItems || !!editableItem || forbiddenCreateCategory || forbiddenCreateProduct}
           checked={isCategory}
           onChange={(e) => {
-            console.log(e, 'e.target.checked');
             setCategoryName('');
             setCheckedItem([]);
             setIsCategory(e.target.checked);

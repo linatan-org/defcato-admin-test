@@ -331,6 +331,11 @@ const KeyboardEditor: React.FC = () => {
         onBack={() => onBack(false)}
         extra={getExtraHeaderButtons()}
       />
+      <KeyboardCategoryForm
+        handleFinish={handleOnSave}
+        form={keyBoardForm}
+        onValuesChange={(cv, av) => setIsTreeWasChanged(true)}
+      />
       <Button
         className="w-80 m-4"
         type="primary"
@@ -339,11 +344,6 @@ const KeyboardEditor: React.FC = () => {
       >
         {t('keyboard.addNewCategory')}
       </Button>
-      <KeyboardCategoryForm
-        handleFinish={handleOnSave}
-        form={keyBoardForm}
-        onValuesChange={(cv, av) => setIsTreeWasChanged(true)}
-      />
       <div className="tree-wrapper">
         <SortableTree
           treeData={newTreeData}

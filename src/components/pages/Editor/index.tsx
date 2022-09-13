@@ -46,7 +46,7 @@ const Editor = () => {
       API.dailyInstruction.saveDailyInstruction(JSON.stringify(design), JSON.stringify(html)).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           notification.success({
-            message: 'Notification Title',
+            message: '',
             description: t('changesHasBeenSaved'),
             placement: 'bottomRight'
           });

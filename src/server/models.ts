@@ -205,6 +205,24 @@ export interface IKeyboardFields {
   Name: string;
 }
 
+export interface IPayment {
+  Favorite: boolean;
+  Tender: number;
+  IsEnabled?: boolean;
+  Col?: number;
+  Row?: number;
+}
+
+export interface IPaymentDataItem extends Partial<IPayment> {
+  Tender: number;
+  Key: string;
+  Title: string;
+}
+
+export interface IPaymentsList extends IGeneralResponse {
+  Presets: IPayment[];
+}
+
 export enum RESPONSE_STATUSES {
   OK = 0
 }
