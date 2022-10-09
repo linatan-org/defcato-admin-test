@@ -28,7 +28,7 @@ const DashboardCard: React.FC<Interface> = ({ data, dailyStats }) => (
           key={index}
           className={`${
             index === 2 ? 'border-t-[1px] border-[#f0f0f0] mt-2' : ''
-          } flex gap-10 text-[20px] align-center justify-between`}
+          } flex gap-10 text-[16px] align-center justify-between`}
         >
           <p>{value?.title}</p>
           <span>{dailyStats && (dailyStats as any)[value.key]}</span>

@@ -1,3 +1,4 @@
+import { bool } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -31,21 +32,24 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
   const dispatch = useDispatch();
   const [isVisibleConfirmDeleteModal, setIsVisibleConfirmDeleteModal] = useState(false);
   const [kbFOrDelete, setKbFOrDelete] = useState<IKeyBoard | null>(null);
+  const [updateKeyboradList, setUpdateKeyboradList] = useState(0);
+  const [IsAllowDefineItemOnCategoryLevel, setIsAllowDefineItemOnCategoryLevel] = useState(true);
 
   useEffect(() => {
     API.keyboard.getKeyboardList().then((res) => {
       const keyboardList = res.KeyBoardList;
+      setIsAllowDefineItemOnCategoryLevel(!!res.IsAllowDefineItemOnCategoryLevel);
       const replacedData = keyboardList.map((kb: IKeyBoard) => {
         return keyboardKeyReplace(kb, true);
       });
       dispatch(saveKeyboardList(replacedData));
     });
-  }, []);
+  }, [updateKeyboradList]);
 
   const editCreateKeyboard = (kb?: IKeyBoard, isDuplicate?: boolean) => {
     console.log(kb, authContext, 'authContext');
     // eslint-disable-next-line
-    navigation.push(kb && isDuplicate ? `keyboardEditor/${kb.SysId}/duplicate` : kb ? `keyboardEditor/${kb.SysId}/edit` : 'keyboardEditor/new');
+    navigation.push(kb && isDuplicate ? `keyboardEditor/${kb.SysId}/duplicate` : kb ? `keyboardEditor/${kb.SysId}/edit` : 'keyboardEditor/new', {IsAllowDefineItemOnCategoryLevel});
   };
 
   const onAskCancelDelete = (kb?: IKeyBoard) => {
@@ -68,6 +72,7 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
             description: 'Keyboard was deleted',
             placement: 'bottomRight'
           });
+          setUpdateKeyboradList(updateKeyboradList + 1);
         }
       });
     }

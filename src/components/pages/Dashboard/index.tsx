@@ -10,7 +10,7 @@ import DashboardCard from './Card';
 import CustomTable from './CustomTable';
 import DashboardTargetProgress from './TargetProgress';
 import { getDashboardCardsValues, getDashboardTableValues } from './values';
-import { ReloadOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ReloadOutlined } from '@ant-design/icons';
 
 import './styles.scss';
 
@@ -84,19 +84,17 @@ const Dashboard = () => {
     }
   };
 
-  const refrechAll = () => {
-    getDailyStat(selectedDate);
-    getDailyUserStat(selectedDate);
-  };
-
   if (!sessionStorage.token) return <Redirect to={'/'} />;
   return (
     <>
-      <div className="w-80">
+      <div className="datepickerWrap">
         <DatePicker
+          className="w-full datePicker"
           value={selectedDateMoment}
-          format="MM/DD/yyyy"
+          placeholder={t('dashboard.datePickerPlaceholder')}
+          format="DD/MM/yyyy"
           onChange={onChange}
+          suffixIcon={<CalendarOutlined className="datePicker_icon" />}
         />
       </div>
       <div className="block">
@@ -143,6 +141,7 @@ const Dashboard = () => {
             dailyUserTargets.map((value, index) => (
               <DashboardTargetProgress
                 key={index}
+                t={t}
                 title={value.Description}
                 value={value.CurrentPercent}
               />

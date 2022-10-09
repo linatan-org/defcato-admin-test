@@ -5,7 +5,7 @@ import { Button, Typography, Modal, PageHeader, Space, notification, Input, Form
 import SortableTree, { addNodeUnderParent, changeNodeAtPath, removeNodeAtPath } from '@nosferatu500/react-sortable-tree';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useParams, useLocation } from 'react-router';
 import { ICategory, IItem, IKeyBoard, IKeyboardFields, IKeyboardItem, RESPONSE_STATUSES } from '../../../server/models';
 import './styles.scss';
 import '@nosferatu500/react-sortable-tree/style.css';
@@ -33,6 +33,9 @@ const KeyboardEditor: React.FC = () => {
   const [keyBoardForm] = Form.useForm();
   const params: { id: string } = useParams();
   const navigation = useHistory();
+  const location = useLocation();
+  const [IsAllowDefineItemOnCategoryLevel, setIsAllowDefineItemOnCategoryLevel] = useState(true);
+
   const isDuplicate = navigation.location.pathname.includes('duplicate');
   const isCreateNew = navigation.location.pathname.includes('new');
   const keyboard: IKeyBoard = useSelector((state: any) =>
@@ -62,6 +65,9 @@ const KeyboardEditor: React.FC = () => {
     const FromDate = keyboard && keyboard.FromDate ? moment(keyboard.FromDate) : moment();
     const ToDate = keyboard && keyboard.FromDate ? moment(keyboard.ToDate) : moment();
     keyBoardForm.setFieldsValue({ DateRange: [FromDate, ToDate], Name: keyboard && keyboard.title });
+    if (location.state) {
+      setIsAllowDefineItemOnCategoryLevel(!!(location.state as any).IsAllowDefineItemOnCategoryLevel);
+    }
   }, []);
 
   // @ts-ignore
@@ -189,7 +195,7 @@ const KeyboardEditor: React.FC = () => {
       return [<Space key="btns-ref">{deleteButton(rowInfo)}</Space>];
     }
     return [
-      <Space key="btns-category">
+      <Space key="btns-product">
         {addButton(rowInfo, false, true)}
         {deleteButton(rowInfo)}
       </Space>
@@ -199,6 +205,22 @@ const KeyboardEditor: React.FC = () => {
   const onEdit = (rowInfo: GenerateNodePropsParams) => {
     setEditableItem(rowInfo);
     setIsVisibleAddNewItemModal(true);
+  };
+
+  const isForbiddenCreateCategory = (item: IKeyboardItem | null): boolean => {
+    const isAllProducts =
+      item && item.IsCategory && item.children && item.children.length && item.children.every((c) => !c.IsCategory);
+    const isProduct = item && !item.IsCategory;
+    console.log(item?.title, 'isForbiddenCreateCategory', !!isAllProducts, !!isProduct, !IsAllowDefineItemOnCategoryLevel);
+    return (!!isAllProducts || !!isProduct) && !IsAllowDefineItemOnCategoryLevel;
+  };
+
+  const isForbiddenCreateProduct = (item: IKeyboardItem | null): boolean => {
+    const isAllCategories =
+      item && item.IsCategory && item.children && item.children.length && item.children.every((c) => c.IsCategory);
+    const isCategory = item && item.IsCategory;
+    console.log(item?.title, 'isForbiddenCreateProduct', !!isAllCategories, !!isCategory, !IsAllowDefineItemOnCategoryLevel);
+    return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel;
   };
 
   const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean, isAddRefItems?: boolean) => {
@@ -383,6 +405,8 @@ const KeyboardEditor: React.FC = () => {
         />
       </div>
       <AddNewItemModal
+        forbiddenCreateCategory={isForbiddenCreateCategory(checkedRowInfo?.node)}
+        forbiddenCreateProduct={isForbiddenCreateProduct(checkedRowInfo?.node)}
         isAddTopCategory={!checkedRowInfo}
         editableItem={editableItem && editableItem.node}
         onCancel={onCancelNewItem}

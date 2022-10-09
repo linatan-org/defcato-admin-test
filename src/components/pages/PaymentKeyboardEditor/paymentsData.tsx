@@ -7,11 +7,6 @@ export const getPayments = (t: any): IPaymentDataItem[] => [
     Title: t('paymentKeyboard.payments.Cash')
   },
   {
-    Tender: 2,
-    Key: 'RegularCredit',
-    Title: t('paymentKeyboard.payments.RegularCredit')
-  },
-  {
     Tender: 3,
     Key: 'EMVCredit',
     Title: t('paymentKeyboard.payments.EMVCredit')

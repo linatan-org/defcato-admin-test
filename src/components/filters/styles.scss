@@ -1,4 +1,4 @@
-@import '../../../assets/styles/index.scss';
+@import '../../assets/styles/index.scss';
 
 .userDailyStatsBtn {
   position: absolute;
@@ -12,12 +12,11 @@
   padding: 45px 0 25px 0;
   position: relative;
 }
-
 .datePicker_icon {
   color: $primaryGreen;
   font-size: 1.1rem;
 }
-.datepickerWrap {
+.datepickerWrapRangePicker {
   width: 370px;
   .ant-picker {
     border-color: $borderGray;
@@ -37,11 +36,15 @@
   }
 }
 
-.datePicker {
-  direction: ltr;
+.datePickerRangePicker {
+  direction: rtl;
+  .ant-picker-suffix {
+    position: absolute;
+    margin-bottom: 2px;
+  }
   input {
     text-align: end;
-    margin-right: 15px;
+    //margin-lef: 15px;
     font-size: 18px;
     color: $primaryGreen;
   }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { DatePicker, Space } from 'antd';
+import { CalendarOutlined } from '@ant-design/icons';
+import './styles.scss';
 
 type FilterType = 'MULTI' | 'SINGLE' | 'DATE' | 'SWITCH' | 'SINGLE_DATE';
 
@@ -19,15 +21,19 @@ export const FilterItem: React.FC<IFilterItem> = ({ type, onChange, value }) => 
   switch (type) {
     case 'DATE': {
       return (
-        <RangePicker
-          value={value || null}
-          format={'DD/MM/yyyy'}
-          onChange={(v, s) => {
-            const FromDate = s[0];
-            const ToDate = s[1];
-            onChange && onChange({ FromDate, ToDate });
-          }}
-        />
+        <div className="datepickerWrapRangePicker">
+          <RangePicker
+            className="datePickerRangePicker"
+            value={value || null}
+            format={'DD/MM/yyyy'}
+            suffixIcon={<CalendarOutlined className="datePicker_icon" />}
+            onChange={(v, s) => {
+              const FromDate = s[0];
+              const ToDate = s[1];
+              onChange && onChange({ FromDate, ToDate });
+            }}
+          />
+        </div>
       );
     }
     default:

@@ -46,12 +46,12 @@ const MainLayout = ({ children }: LayoutProps) => {
   const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
   console.log(history, 'history');
   const items: MenuItem[] = [
-    getItem(t('navMenu.reports'), 'sub1', <TableOutlined />, [
+    getItem(t('navMenu.reports'), 'sub1', null, [
       getItem(t('navMenu.currentTradingDay'), routes.dashboard),
       getItem(t('navMenu.salesReport'), routes.salesReports),
       getItem(t('navMenu.itemsReport'), '6')
     ]),
-    getItem(t('navMenu.settings'), 'sub2', <SettingOutlined />, [
+    getItem(t('navMenu.settings'), 'sub2', null, [
       getItem(t('navMenu.keyboardList'), routes.keyboardList),
       getItem(t('navMenu.paymentKeyboardEditor'), routes.paymentsEditor),
       getItem(t('navMenu.dailyInstruction'), routes.dailyInstructionEditor)

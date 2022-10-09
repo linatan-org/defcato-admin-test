@@ -19,6 +19,7 @@
     "settings": "הגדרות"
   },
   "dashboard": {
+    "datePickerPlaceholder": "תאריך אחר",
     "dailyStats": {
       "totalRevenue": "סה'כ הזמנות",
       "totalOrders": "כמות הזמנות",
@@ -32,7 +33,8 @@
     },
     "dailyUserStats": {
       "seller": "נציג מכירות",
-      "name": "שם נציג"
+      "name": "שם נציג",
+      "percent": "יינות"
     },
     "userTargets": {
       "currentPercent": "עמידה ביעד",
@@ -82,7 +84,7 @@
   "paymentKeyboard": {
     "paymentMethods": "אמצעי תשלום",
     "selectedPaymentMethods": "אמצעי תשלום זמינים",
-    "favoritePaymentMethods": "אמצעי תשלום מעדיפים",
+    "favoritePaymentMethods": "אמצעי תשלום מועדפים",
     "item": {
       "selectPaymentTooltip": "בחר אמצעי תשלום",
       "favoritePaymentTooltip": "אמצעי תשלום מעדיף"

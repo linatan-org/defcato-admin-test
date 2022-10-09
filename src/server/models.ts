@@ -168,6 +168,7 @@ export interface IKeyBoard {
 }
 
 export interface IKeyboardList extends IGeneralResponse {
+  IsAllowDefineItemOnCategoryLevel?: boolean;
   KeyBoardList: IKeyBoard[];
 }
 

@@ -24,9 +24,12 @@ const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
   return (
     <div>
       <Table
-        rowClassName={(value) =>
-          props.activeKey && (value as any)[props.activeKey] === props.checkedUserDeviceSysId ? 'ant-table-row-active' : ''
-        }
+        rowClassName={(value) => {
+          console.log(props.activeKey && (value as any)[props.activeKey], props.checkedUserDeviceSysId);
+          return props.activeKey && (value as any)[props.activeKey] === props.checkedUserDeviceSysId
+            ? 'ant-table-row-active'
+            : '';
+        }}
         // @ts-ignore
         columns={props.columns}
         dataSource={props.data.map((v, index) => ({ ...v, key: index }))}

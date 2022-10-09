@@ -66,7 +66,14 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     if (isAddRefItems) {
       setIsCategory(false);
     }
-  }, [isAddRefItems]);
+    if (forbiddenCreateProduct) {
+      setIsCategory(true);
+    }
+
+    if (forbiddenCreateCategory) {
+      setIsCategory(false);
+    }
+  }, [isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory]);
 
   useEffect(() => {
     if (editableItem) {
@@ -181,7 +188,8 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
       <div className="flex flex-1 items-center">
         <Checkbox
           disabled={isAddTopCategory || isAddRefItems || !!editableItem || forbiddenCreateCategory || forbiddenCreateProduct}
-          checked={isCategory}
+          // eslint-disable-next-line
+          checked={forbiddenCreateCategory ? !forbiddenCreateCategory : forbiddenCreateProduct ? forbiddenCreateProduct : isCategory}
           onChange={(e) => {
             setCategoryName('');
             setCheckedItem([]);

@@ -34,7 +34,7 @@ const PaymentKeyboardEditor = () => {
       const favoriteList = payments.filter((p) => paymentsEnabled.includes(p.Tender) && p.Favorite);
       setCheckedPayments(enabledList);
       setFavoritePayments(favoriteList);
-      setIsSaveEnabled(true);
+      setIsSaveEnabled(false);
     }
   }, [payments, paymentsEnabled]);
 
@@ -72,7 +72,7 @@ const PaymentKeyboardEditor = () => {
     const mergedPayments = ([] as IPaymentDataItem[]).concat(checkedPayments, favoritePayments);
     API.paymentKeyboard.save(mergedPayments).then((res) => {
       console.log(res, 'RESPONSE');
-      setIsSaveEnabled(false);
+      setIsSaveEnabled(true);
     });
   };
 
