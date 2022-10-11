@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import KeyboardEditor from '../components/pages/KeyboardEditor/KeyboardEditor';
 import { injectDispatch } from '../server';
 import { setDashboardAccessOnly } from '../reudux/settings/action';
+import ZReports from '../components/pages/Reports/ZReports';
 
 const AppRoutes = () => {
   const authContext = useAuth();
@@ -107,6 +108,10 @@ const AppRoutes = () => {
             <Route
               path={routes.paymentsEditor}
               component={PaymentKeyboardEditor}
+            />
+            <Route
+              path={routes.zReports}
+              component={ZReports}
             />
             {/*<Route*/}
             {/*path="*"*/}

@@ -16,7 +16,8 @@
     "htmlEditor": "עורך HTML",
     "dailyInstruction": "תדריך יומי",
     "paymentKeyboardEditor": "מקלדת תשלומים",
-    "settings": "הגדרות"
+    "settings": "הגדרות",
+    "zReport": "דוח סגירות קופה"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",
@@ -61,6 +62,43 @@
       "branchName": "סניף",
       "memberName": "לקוח",
       "totalAmount": "סה‘כ"
+    },
+    "ZReports": {
+      "ZReport": "דוח Z",
+      "Branch": "סניף",
+      "Station": "עמדה",
+      "Date": "תאריך",
+      "Payments": "חיובים",
+      "Refunds": "זיכויים",
+      "Balance": "סה‘כ מכירות",
+      "TotalCash": "סה'כ מזומן",
+      "Vat": "מע‘מ",
+      "Status": "סטטוס",
+      "ZReportDetails": {
+        "AccountName": "שם העסק",
+        "ID": "ת'ז או ח'פ",
+        "Phone": "טלפון",
+        "Address": "כתובת",
+        "POSName": "מסוף",
+        "ReportDate": "תאריך יצירת הדו'ח",
+        "UserName": "שם מבצע דו'ח",
+        "Totals": "סכום",
+        "Details": "פירוט",
+        "TotalPayments": "חיובים",
+        "TotalRefunds": "זיכויים",
+        "Balance": "מכירות",
+        "Vat": "מע'מ",
+        "PaymentsOnly": "חיוביים בלבד",
+        "RefundsOnly": "זיכויים בלבד",
+        "Cash": "מזומן",
+        "Cheques": "שיקים",
+        "Credit": "אשראי",
+        "Other": "אחר",
+        "PrintAndExist": "הדפסה ויציאה",
+        "CloseDay": "סגירת קופה",
+        "Exit": "יציאה"
+
+      }
     }
   },
   "keyboardList": {

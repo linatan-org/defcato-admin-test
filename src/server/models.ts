@@ -66,7 +66,7 @@ export interface ISalesReport {
   BranchFormatId: number;
   BranchFormatName: string;
   BranchId: number;
-  BranchName: string;
+  DescriptionBranchName: string;
   BranchNetCode: string;
   CollectionBranchSysId: number;
   CreatedDate: string;
@@ -106,6 +106,76 @@ export interface ISalesReport {
 
 export interface ISalesReports extends IGeneralResponse {
   List: ISalesReport[];
+}
+
+export interface IZReportParams {
+  AccountName: string;
+  Address: string;
+  Balance: number;
+  BrnachExternalReference: string;
+  BrnachName: string;
+  BrnachNetCode: string;
+  DepositAmount: number;
+  DeviceExternalReference: string;
+  DeviceNetCode: string;
+  ID: string;
+  POSName: string;
+  Phone: string;
+  ReportDate: string;
+  TotalCash: number;
+  TotalCashDrawerEntries: number;
+  TotalCashPayments: number;
+  TotalCashRefunds: number;
+  TotalCheque: number;
+  TotalChequePayments: number;
+  TotalChequeRefunds: number;
+  TotalCredit: number;
+  TotalCreditPayments: number;
+  TotalCreditRefunds: number;
+  TotalOther: number;
+  TotalOtherPayments: number;
+  TotalOtherRefunds: number;
+  TotalPayments: number;
+  TotalRefunds: number;
+  UserName: string;
+  Vat: number;
+}
+
+export interface IZReport {
+  AuthorizedBy: string;
+  AuthorizedDate: string;
+  BranchName: string;
+  BranchSysId: number;
+  CashAccount: string;
+  CashDeclared: number;
+  CreatedDate: string;
+  DeclareStationSysId: number;
+  DeclaredBy: string;
+  DeclaredDate: string;
+  Description: string;
+  ExtrenalReference: string;
+  FirstTranDate: string;
+  GrnadTotal: number;
+  IntegrationStatus: number;
+  IsAllowChangeOwnerSysId: boolean;
+  IsBalanced: boolean;
+  IsDataChangeDisable: boolean;
+  IsManualSysID: boolean;
+  LastTranDate: string;
+  LastTrxNumber: number;
+  ObjectType: number;
+  OwnerSysId: number;
+  PreviosZDate: string;
+  SysId: number;
+  TotalItems: number;
+  UpdateDate: string;
+  ZCounter: number;
+  ZStatus: number;
+  ReportParams: IZReportParams;
+}
+
+export interface IZReports extends IGeneralResponse {
+  ReportList: IZReport[];
 }
 
 export interface DashboardValues {

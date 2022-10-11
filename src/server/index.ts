@@ -6,12 +6,14 @@ import {
   IDailyStats,
   IDailyUserStats,
   IDailyUserTargets,
+  IGeneralResponse,
   IKeyBoard,
   IKeyboardList,
   IPaymentDataItem,
   IPaymentsList,
   ISalesReports,
-  ISignInResponse
+  ISignInResponse,
+  IZReports
 } from './models';
 
 let dispatch: any;
@@ -87,6 +89,20 @@ export const API = {
       const res = await apiConfig.post('/FetchTranJournalList.aspx', {
         ...getSession(),
         ...data
+      });
+      return res.data;
+    },
+    getZReports: async (data: any): Promise<IZReports> => {
+      const res = await apiConfig.post('/FetchZReportList.aspx', {
+        ...getSession(),
+        ...data
+      });
+      return res.data;
+    },
+    printZReport: async (DeclareStationSysId: number | string, ZCounter: number | string): Promise<IGeneralResponse> => {
+      const res = await apiConfig.post('/AdminPrintZReport.aspx', {
+        ...getSession(),
+        ...{ DeclareStationSysId, ZCounter }
       });
       return res.data;
     }

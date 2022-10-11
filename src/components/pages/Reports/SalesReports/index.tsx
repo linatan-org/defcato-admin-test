@@ -14,7 +14,10 @@ import './styles.scss';
 const SalesReports: React.FC<any> = () => {
   const { t } = useTranslation();
   const [salesReports, setSalesReport] = useState<ISalesReport[]>([]);
-  const [filtersValues, setFiltersValues] = useState({});
+  const [filtersValues, setFiltersValues] = useState({
+    FromDate: moment().format('MM/DD/yyyy'),
+    ToDate: moment().format('MM/DD/yyyy')
+  });
 
   const getSaleReports = (filters: any) => {
     API.reports.getSalesReports(filters).then((res) => {
@@ -38,10 +41,10 @@ const SalesReports: React.FC<any> = () => {
       />
       <div className="relative">
         <Button
-            icon={<ReloadOutlined />}
-            onClick={() => getSaleReports(filtersValues)}
-            type="primary"
-            className="userDailyStatsBtn"
+          icon={<ReloadOutlined />}
+          onClick={() => getSaleReports(filtersValues)}
+          type="primary"
+          className="userDailyStatsBtn"
         />
         <CustomTable
           data={salesReports}

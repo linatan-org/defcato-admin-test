@@ -13,6 +13,7 @@ interface DataTableProps<T> {
   columns: ColumnsType<T>;
   activeKey?: string;
   scrollSize?: number;
+  onDoubleClick?: (item: T) => void;
 }
 
 const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
@@ -38,6 +39,13 @@ const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
         pagination={false}
         scroll={{ y: props.scrollSize || 600 }}
         onRow={(value) => {
+          if (props.onDoubleClick) {
+            return {
+              onDoubleClick: () => {
+                props.onDoubleClick && props.onDoubleClick(value as any);
+              }
+            };
+          }
           return {
             onClick: () => {
               props.activeKey && addActiveClassRow((value as any)[props.activeKey]);
