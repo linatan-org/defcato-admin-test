@@ -6,6 +6,7 @@ export const routes = {
   zReports: '/reports/zReports',
   keyboardEditor: '/keyboardEditor/:id/edit',
   keyboardEditorNew: '/keyboardEditor/new',
+  catalog: '/catalog',
   keyboardEditorDuplicate: '/keyboardEditor/:id/duplicate',
   keyboardList: '/keyboardList',
   paymentsEditor: '/paymentsEditor'

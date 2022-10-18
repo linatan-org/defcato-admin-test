@@ -29,7 +29,7 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
           : [moment(), moment()];
       }
       default:
-        return null;
+        return filtersValues.value || filtersValues[filter.key];
     }
   };
 
@@ -40,6 +40,7 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
         className="w-64 pt-4 pl-4"
       >
         <FilterItem
+          {...filter}
           value={getFilterValue(filter)}
           type={filter.type}
           key={filter.key}

@@ -4,6 +4,7 @@ import { Redirect, Switch, Route, useLocation } from 'react-router-dom';
 import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
+import Catalog from '../components/pages/Reports/Catalog';
 import { SignIn } from '../components/pages/SignIn';
 import { routes } from '../constants/routes';
 import useAuth from '../contexts/auth/hook';
@@ -112,6 +113,10 @@ const AppRoutes = () => {
             <Route
               path={routes.zReports}
               component={ZReports}
+            />
+            <Route
+              path={routes.catalog}
+              component={Catalog}
             />
             {/*<Route*/}
             {/*path="*"*/}

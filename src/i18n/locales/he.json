@@ -17,7 +17,8 @@
     "dailyInstruction": "תדריך יומי",
     "paymentKeyboardEditor": "מקלדת תשלומים",
     "settings": "הגדרות",
-    "zReport": "דוח סגירות קופה"
+    "zReport": "דוח סגירות קופה",
+    "catalog": "קטלוג"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",
@@ -98,6 +99,24 @@
         "CloseDay": "סגירת קופה",
         "Exit": "יציאה"
 
+      }
+    },
+    "catalog": {
+      "filterTitle": "קטלוג",
+      "ItemCode": "קוד פריט",
+      "Description": "Description",
+      "Price": "מחיר",
+      "catalogItemDetails": {
+        "title": "מאפייני פריט",
+        "Code": "קוד פריט",
+        "IsNotActive": "לא פעיל",
+        "BarCode": "בר קוד",
+        "Description": "תאור פריט",
+        "Price": "מחיר",
+        "CategoryCode": "קטגוריה",
+        "Add": "הוסף",
+        "Update": "עדכן",
+        "Exit": "יציאה"
       }
     }
   },

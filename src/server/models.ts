@@ -264,6 +264,30 @@ export interface ICreateItemValues extends IGeneralResponse {
   Items: IItem[];
 }
 
+export interface ICatalogItem {
+  BarCode: string;
+  Base64Picture: null;
+  CategoryCode: string;
+  Code: string | number;
+  Description: string;
+  IsNotActive: boolean;
+  Price: number;
+}
+
+export interface ICatalog extends IGeneralResponse {
+  List: ICatalogItem[];
+}
+
+export interface ICatalogCategory {
+  Code: string;
+  Description: string;
+  IsNotActive: boolean;
+}
+
+export interface ICatalagCategories extends IGeneralResponse {
+  List: ICatalogCategory[];
+}
+
 export interface IDailyInstruction extends IGeneralResponse {
   Data: string;
 }

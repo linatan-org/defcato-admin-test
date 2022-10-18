@@ -17,6 +17,9 @@
   font-size: 1.1rem;
 }
 .datepickerWrapRangePicker {
+  .ant-input-group-addon {
+
+  }
   width: 370px;
   .ant-picker {
     border-color: $borderGray;
@@ -33,6 +36,20 @@
     ::-ms-input-placeholder { /* Microsoft Edge */
       color: $primaryGreen !important;
     }
+  }
+}
+
+.datePickerRangePicker {
+  direction: rtl;
+  .ant-picker-suffix {
+    position: absolute;
+    margin-bottom: 2px;
+  }
+  input {
+    text-align: end;
+    //margin-lef: 15px;
+    font-size: 18px;
+    color: $primaryGreen;
   }
 }
 

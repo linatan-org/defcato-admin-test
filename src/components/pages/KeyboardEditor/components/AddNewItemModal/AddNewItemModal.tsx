@@ -106,10 +106,6 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     }
   }, [debouncedProductSearch, isProductFocused]);
 
-  useEffect(() => {
-    console.log(debouncedProductSearch, 'DEB', items);
-  }, [debouncedProductSearch, items]);
-
   const onOkHandler = () => {
     if (isAddRefItems) {
       // @ts-ignore

@@ -15,8 +15,8 @@ const SalesReports: React.FC<any> = () => {
   const { t } = useTranslation();
   const [salesReports, setSalesReport] = useState<ISalesReport[]>([]);
   const [filtersValues, setFiltersValues] = useState({
-    FromDate: moment().format('MM/DD/yyyy'),
-    ToDate: moment().format('MM/DD/yyyy')
+    FromDate: moment().format('DD/MM/yyyy'),
+    ToDate: moment().format('DD/MM/yyyy')
   });
 
   const getSaleReports = (filters: any) => {

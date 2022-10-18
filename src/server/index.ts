@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { setLoading } from '../reudux/globalLoader/action';
 import {
+  ICatalagCategories,
+  ICatalog,
+  ICatalogItem,
   ICreateItemValues,
   IDailyInstruction,
   IDailyStats,
@@ -105,6 +108,42 @@ export const API = {
         ...{ DeclareStationSysId, ZCounter }
       });
       return res.data;
+    },
+    catalog: {
+      getCatalog: async (InputData: string): Promise<ICatalog> => {
+        const res = await apiConfig.post('/AdminFetchCatalogItems.aspx', {
+          ...getSession(),
+          InputData
+        });
+        return res.data;
+      },
+      getCatalogCategories: async (): Promise<ICatalagCategories> => {
+        const res = await apiConfig.post('/AdminFetchCatalogCategories.aspx', {
+          ...getSession()
+        });
+        return res.data;
+      },
+      createCatalogItem: async (item: ICatalogItem): Promise<IGeneralResponse> => {
+        const res = await apiConfig.post('/AdminAddCatalogItem.aspx', {
+          ...getSession(),
+          ...{ Item: item }
+        });
+        return res.data;
+      },
+      editCatalogItem: async (item: ICatalogItem): Promise<IGeneralResponse> => {
+        const res = await apiConfig.post('/AdminUpdateCatalogItem.aspx', {
+          ...getSession(),
+          ...{ Item: item }
+        });
+        return res.data;
+      },
+      addNewCatalogCategory: async (Description: string): Promise<ICatalagCategories> => {
+        const res = await apiConfig.post('/AdminAddCatalogCategory.aspx', {
+          ...getSession(),
+          Description
+        });
+        return res.data;
+      }
     }
   },
   dailyInstruction: {

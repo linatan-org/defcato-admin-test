@@ -26,7 +26,6 @@ const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
     <div>
       <Table
         rowClassName={(value) => {
-          console.log(props.activeKey && (value as any)[props.activeKey], props.checkedUserDeviceSysId);
           return props.activeKey && (value as any)[props.activeKey] === props.checkedUserDeviceSysId
             ? 'ant-table-row-active'
             : '';

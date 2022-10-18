@@ -18,8 +18,8 @@ const ZReports: React.FC<any> = () => {
   const [salesReports, setSalesReport] = useState<IZReport[]>([]);
   const [checkedZReport, setCheckedZReport] = useState<IZReport | null>(null);
   const [filtersValues, setFiltersValues] = useState({
-    FromDate: moment().format('MM/DD/yyyy'),
-    ToDate: moment().format('MM/DD/yyyy')
+    FromDate: moment().format('DD/MM/yyyy'),
+    ToDate: moment().format('DD/MM/yyyy')
   });
 
   const getSaleReports = (filters: any) => {
@@ -87,6 +87,7 @@ const ZReports: React.FC<any> = () => {
         <Button
           size="large"
           key={t('reports.ZReports.ZReportDetails.Exit')}
+          onClick={() => setCheckedZReport(null)}
         >
           {t('reports.ZReports.ZReportDetails.Exit')}
         </Button>
