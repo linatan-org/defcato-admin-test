@@ -5,6 +5,7 @@ import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
 import Catalog from '../components/pages/Reports/Catalog';
+import Sellers from '../components/pages/Sellers';
 import { SignIn } from '../components/pages/SignIn';
 import { routes } from '../constants/routes';
 import useAuth from '../contexts/auth/hook';
@@ -117,6 +118,10 @@ const AppRoutes = () => {
             <Route
               path={routes.catalog}
               component={Catalog}
+            />
+            <Route
+              path={routes.sellers}
+              component={Sellers}
             />
             {/*<Route*/}
             {/*path="*"*/}

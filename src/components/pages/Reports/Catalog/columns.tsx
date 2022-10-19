@@ -1,6 +1,6 @@
 export const getCatalogTableColumns = (t: any): any => [
   {
-    title: t('reports.saleReports.salesReports'),
+    title: t('reports.catalog.catalogTableTitle'),
     children: [
       {
         title: t('reports.catalog.ItemCode'),

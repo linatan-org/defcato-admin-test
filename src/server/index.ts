@@ -15,6 +15,8 @@ import {
   IPaymentDataItem,
   IPaymentsList,
   ISalesReports,
+  ISeller,
+  ISellersList,
   ISignInResponse,
   IZReports
 } from './models';
@@ -193,6 +195,29 @@ export const API = {
       const res = await apiConfig.post('/ItemsKeyBoardDelete.aspx', {
         ...getSession(),
         KeyboardId
+      });
+      return res.data;
+    }
+  },
+  sellers: {
+    get: async (InputData: string): Promise<ISellersList> => {
+      const res = await apiConfig.post('/AdminFetchSellers.aspx', {
+        ...getSession(),
+        InputData
+      });
+      return res.data;
+    },
+    createSeller: async (item: ISeller): Promise<IGeneralResponse> => {
+      const res = await apiConfig.post('/AdminAddSeller.aspx', {
+        ...getSession(),
+        ...{ Seller: item }
+      });
+      return res.data;
+    },
+    editSeller: async (item: ISeller): Promise<IGeneralResponse> => {
+      const res = await apiConfig.post('/AdminUpdateSeller.aspx', {
+        ...getSession(),
+        ...{ Seller: item }
       });
       return res.data;
     }

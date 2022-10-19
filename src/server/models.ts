@@ -288,6 +288,17 @@ export interface ICatalagCategories extends IGeneralResponse {
   List: ICatalogCategory[];
 }
 
+export interface ISeller {
+  CellPhone: string;
+  IsNotActive: boolean;
+  Name: string;
+  SellerCode: string | number;
+}
+
+export interface ISellersList extends IGeneralResponse {
+  List: ISeller[];
+}
+
 export interface IDailyInstruction extends IGeneralResponse {
   Data: string;
 }

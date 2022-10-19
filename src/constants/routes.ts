@@ -7,6 +7,7 @@ export const routes = {
   keyboardEditor: '/keyboardEditor/:id/edit',
   keyboardEditorNew: '/keyboardEditor/new',
   catalog: '/catalog',
+  sellers: '/sellers',
   keyboardEditorDuplicate: '/keyboardEditor/:id/duplicate',
   keyboardList: '/keyboardList',
   paymentsEditor: '/paymentsEditor'

@@ -97,7 +97,6 @@ export const CatalogItem: React.FC<CatalogItemProps> = ({
     <Form
       form={form}
       name="basic"
-      initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -150,11 +149,13 @@ export const CatalogItem: React.FC<CatalogItemProps> = ({
                 />
               </Upload>
             </div>
-            <Image
-              preview={false}
-              width={100}
-              src={`data:image/jpeg;base64,${form.getFieldValue('Base64Picture')}`}
-            />
+            {form.getFieldValue('Base64Picture') ? (
+              <Image
+                preview={false}
+                width={100}
+                src={`data:image/jpeg;base64,${form.getFieldValue('Base64Picture')}`}
+              />
+            ) : null}
           </div>
         </Space>
         <div className="codeContainer">

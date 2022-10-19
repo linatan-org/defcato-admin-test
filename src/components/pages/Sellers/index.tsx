@@ -1,118 +1,79 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Button, Modal, Form, Tooltip, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { API } from '../../../../server';
-import { ICatalogCategory, ICatalogItem, RESPONSE_STATUSES } from '../../../../server/models';
-import CustomTable from '../../Dashboard/CustomTable';
-import Filters from '../../../filters/FIlters';
+import { API } from '../../../server';
+import { ICatalogCategory, ICatalogItem, ISeller, RESPONSE_STATUSES } from '../../../server/models';
+import CustomTable from '../Dashboard/CustomTable';
+import Filters from '../../filters/FIlters';
 import { getCatalogTableColumns } from './columns';
 import { getCatalogFilters } from './filters';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
-import { CatalogItem } from './components/CatalogItem';
+import { SellerItem } from './components/SellerItem';
 
-const emptyCatalogItem = {
-  BarCode: '',
-  Base64Picture: '',
-  CategoryCode: '',
-  Code: null,
-  Description: '',
-  IsNotActive: false,
-  Price: null
-};
-
-const Catalog: React.FC<any> = () => {
+const Sellers: React.FC<any> = () => {
   const { t } = useTranslation();
-  const [catalog, setCatalog] = useState<ICatalogItem[]>([]);
+  const [sellers, setSellers] = useState<ISeller[]>([]);
   const [reloadTable, setRealoadTable] = useState(0);
-  const [catalogEditItem, setCatalogEditItem] = useState<ICatalogItem | null>();
-  const [isCreateCatalogItem, setIsCreateCatalogItem] = useState(false);
-  const [catalogCategories, setCatalogCategories] = useState<ICatalogCategory[]>([]);
+  const [sellerEditItem, setSellerEditItem] = useState<ISeller | null>();
+  const [isCreateSeller, setIsCreateSeller] = useState(false);
   const [filtersValues, setFiltersValues] = useState({});
   const [form] = Form.useForm();
 
-  const getSaleReports = (filters: any) => {
+  const getSellers = (filters: any) => {
     if (filters.InputData) {
-      API.reports.catalog.getCatalog(filters.InputData).then((res) => {
+      API.sellers.get(filters.InputData).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-          setCatalog(res.List);
+          setSellers(res.List);
         }
       });
     }
   };
 
   useEffect(() => {
-    if (catalogEditItem) {
-      form.setFieldsValue({ ...catalogEditItem });
+    if (sellerEditItem) {
+      form.setFieldsValue({ ...sellerEditItem });
     }
-  }, [catalogEditItem]);
-
-  useEffect(() => {
-    API.reports.catalog.getCatalogCategories().then((res) => {
-      if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-        setCatalogCategories(res.List);
-      }
-    });
-  }, []);
+  }, [sellerEditItem]);
 
   useEffect(() => {
     if (Object.keys(filtersValues).length) {
-      getSaleReports(filtersValues);
+      getSellers(filtersValues);
     }
   }, [filtersValues, reloadTable]);
 
-  const onFinish = (values: ICatalogItem) => {
-    if (catalogEditItem) {
-      API.reports.catalog.editCatalogItem(values).then((res) => {
+  const onFinish = (values: ISeller) => {
+    if (sellerEditItem) {
+      API.sellers.editSeller(values).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           notification.success({
             message: '',
-            description: 'Catalog item has been added',
+            description: 'Seller has been added',
             placement: 'bottomRight'
           });
           form.resetFields();
-          setCatalogEditItem(null);
+          setSellerEditItem(null);
           setRealoadTable(reloadTable + 1);
         }
       });
     } else {
-      API.reports.catalog.createCatalogItem(values).then((res) => {
+      API.sellers.createSeller(values).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           notification.success({
             message: '',
-            description: 'Catalog item has been edited',
+            description: 'Seller has been edited',
             placement: 'bottomRight'
           });
           form.resetFields();
-          setIsCreateCatalogItem(false);
+          setIsCreateSeller(false);
         }
       });
     }
   };
 
-  const onAddNewCategory = (descr: string) => {
-    API.reports.catalog
-      .addNewCatalogCategory(descr)
-      .then((res) => {
-        if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-          notification.success({
-            message: '',
-            description: 'Category has been added',
-            placement: 'bottomRight'
-          });
-          const newCAtCode = res.List.find((nc) => nc.Description === descr);
-          if (newCAtCode) {
-            form.setFieldValue('CategoryCode', newCAtCode.Code);
-          }
-          setCatalogCategories(res.List);
-        }
-      })
-      .catch((e) => console.log(e, 'ERROR'));
-  };
-
   const clearCreateEditCatalogItemMode = () => {
-    setIsCreateCatalogItem(false);
-    setCatalogEditItem(null);
+    setIsCreateSeller(false);
+    setSellerEditItem(null);
     form.resetFields();
   };
 
@@ -129,7 +90,7 @@ const Catalog: React.FC<any> = () => {
             type="primary"
             onClick={() => form.submit()}
           >
-            {catalogEditItem ? t('reports.catalog.catalogItemDetails.Update') : t('reports.catalog.catalogItemDetails.Add')}
+            {sellerEditItem ? t('reports.catalog.catalogItemDetails.Update') : t('reports.catalog.catalogItemDetails.Add')}
           </Button>
         </div>
         <Button
@@ -158,35 +119,34 @@ const Catalog: React.FC<any> = () => {
         >
           <Button
             icon={<PlusOutlined />}
-            onClick={() => setIsCreateCatalogItem(true)}
+            onClick={() => setIsCreateSeller(true)}
             type="primary"
             className="userDailyStatsBtn"
           />
         </Tooltip>
         <CustomTable
-          data={catalog}
+          data={sellers}
           columns={getCatalogTableColumns(t)}
-          onDoubleClick={setCatalogEditItem}
+          onDoubleClick={setSellerEditItem}
         />
       </div>
       <Modal
         className="modalStyle"
         title={t('reports.catalog.catalogItemDetails.title')}
         centered
-        visible={!!catalogEditItem || isCreateCatalogItem}
+        width={400}
+        visible={!!sellerEditItem || isCreateSeller}
         onCancel={clearCreateEditCatalogItemMode}
         footer={modalActionButtons()}
       >
-        <CatalogItem
-          onAddNewCategory={onAddNewCategory}
+        <SellerItem
           onFinish={onFinish}
-          editMode={!!catalogEditItem}
+          editMode={!!sellerEditItem}
           form={form}
-          catalogCategories={catalogCategories}
         />
       </Modal>
     </Layout>
   );
 };
 
-export default Catalog;
+export default Sellers;

@@ -18,7 +18,8 @@
     "paymentKeyboardEditor": "מקלדת תשלומים",
     "settings": "הגדרות",
     "zReport": "דוח סגירות קופה",
-    "catalog": "קטלוג"
+    "catalog": "קטלוג",
+    "sellers": "מוכרנים"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",
@@ -51,6 +52,14 @@
       "shiftTargetValue": "סה’כ יעד למשמרת",
       "shiftAVGPercent": "עמידה ביעד למשמרת"
     }
+  },
+  "sellers": {
+    "SellerCode": "קוד מוכרן",
+    "Name": "שם",
+    "CellPhone": "נייד",
+    "Code": "קוד פריט",
+    "IsNotActive": "לא פעיל",
+    "title": "איש מכירות"
   },
   "reports": {
     "saleReports": {
@@ -106,6 +115,7 @@
       "ItemCode": "קוד פריט",
       "Description": "Description",
       "Price": "מחיר",
+      "catalogTableTitle": "קטלוג פריטים",
       "catalogItemDetails": {
         "title": "מאפייני פריט",
         "Code": "קוד פריט",
