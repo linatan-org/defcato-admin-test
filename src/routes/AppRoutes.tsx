@@ -5,6 +5,7 @@ import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
 import Catalog from '../components/pages/Reports/Catalog';
+import TicketReports from '../components/pages/Reports/TicketReports';
 import Sellers from '../components/pages/Sellers';
 import { SignIn } from '../components/pages/SignIn';
 import { routes } from '../constants/routes';
@@ -122,6 +123,10 @@ const AppRoutes = () => {
             <Route
               path={routes.sellers}
               component={Sellers}
+            />
+            <Route
+              path={routes.ticketReports}
+              component={TicketReports}
             />
             {/*<Route*/}
             {/*path="*"*/}

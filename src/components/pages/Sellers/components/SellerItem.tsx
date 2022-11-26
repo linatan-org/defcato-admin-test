@@ -42,7 +42,7 @@ export const SellerItem: React.FC<CatalogItemProps> = ({ form, onFinish, editMod
             direction="horizontal"
             size={20}
           >
-            <Text className="title">{t('sellers.Code')}</Text>
+            <Text className="title">{t('sellers.SellerCode')}</Text>
             <Form.Item
               className="flex-1"
               name="SellerCode"

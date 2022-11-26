@@ -1,4 +1,5 @@
 import { Table } from 'antd';
+import { TableProps } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import type { ColumnsType } from 'antd/es/table';
 import React, { PropsWithChildren, useState } from 'react';
@@ -6,7 +7,7 @@ import './table.style.scss';
 import { IDailyUserStatsData, IDataTable } from '../../../../server/models';
 import { getDashboardTableValues } from '../values';
 
-interface DataTableProps<T> {
+interface DataTableProps<T> extends TableProps<T> {
   setActiveUserIxd?: (idx: string) => void;
   data: T[];
   checkedUserDeviceSysId?: string;
@@ -25,6 +26,7 @@ const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
   return (
     <div>
       <Table
+        {...props}
         rowClassName={(value) => {
           return props.activeKey && (value as any)[props.activeKey] === props.checkedUserDeviceSysId
             ? 'ant-table-row-active'

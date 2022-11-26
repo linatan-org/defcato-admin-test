@@ -132,7 +132,7 @@ const Sellers: React.FC<any> = () => {
       </div>
       <Modal
         className="modalStyle"
-        title={t('reports.catalog.catalogItemDetails.title')}
+        title={t('sellers.title')}
         centered
         width={400}
         visible={!!sellerEditItem || isCreateSeller}

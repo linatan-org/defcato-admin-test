@@ -4,6 +4,7 @@ export const routes = {
   dailyInstructionEditor: '/dailyInstructionEditor',
   salesReports: '/reports/salesReports',
   zReports: '/reports/zReports',
+  ticketReports: '/reports/tickerReports',
   keyboardEditor: '/keyboardEditor/:id/edit',
   keyboardEditorNew: '/keyboardEditor/new',
   catalog: '/catalog',

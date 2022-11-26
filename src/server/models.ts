@@ -108,6 +108,65 @@ export interface ISalesReports extends IGeneralResponse {
   List: ISalesReport[];
 }
 
+export interface ITicketReportBranchView {
+  BranchName: string;
+  BranchSysId: number;
+  TicketsPerOrder: number;
+  TotalOrders: number;
+  TotalTickets: number;
+}
+
+export interface ITicketReportsBranchView extends IGeneralResponse {
+  List: ITicketReportBranchView[];
+}
+
+export interface ITicketReportBranchViewDetails {
+  CategoryName: string;
+  BranchName: number;
+}
+
+export interface ITicketReportsBranchViewDetails extends IGeneralResponse {
+  List: ITicketReportBranchViewDetails[];
+}
+
+export interface ITicketReportJournal {
+  BranchName: string;
+  BranchNetCode: string;
+  CardNumber: string;
+  CreatedDate: string;
+  DeliveryDate: string;
+  DeliveryFromHour: number;
+  DeliveryFromMinute: number;
+  DeliveryPriority: number;
+  DeliveryRecipientName: string;
+  DeliveryStatus: number;
+  DeliveryToHour: number;
+  DeliveryToMinute: number;
+  IsCoordinationRequired: boolean;
+  IsForSpecialsItems: boolean;
+  ItemDescription: string;
+  MemberBlankId: string;
+  MemberName: string;
+  MemberPhone: string;
+  MemberSysId: string;
+  OrderAddress: string;
+  OrderNumber: string;
+  OwnerName: string;
+  StatusDescription: string;
+  Street: string;
+  TicketRequestTypeSysId: number;
+  TicketStatus: number;
+  TicketSysId: number;
+  TicketTypeDescription: string;
+  TicketTypeSysId: number;
+  TranNumber: number;
+  City: string;
+}
+
+export interface ITicketReportJournalList extends IGeneralResponse {
+  Tickets: ITicketReportJournal[];
+}
+
 export interface IZReportParams {
   AccountName: string;
   Address: string;

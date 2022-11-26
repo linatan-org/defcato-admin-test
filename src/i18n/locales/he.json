@@ -19,7 +19,8 @@
     "settings": "הגדרות",
     "zReport": "דוח סגירות קופה",
     "catalog": "קטלוג",
-    "sellers": "מוכרנים"
+    "sellers": "מוכרנים",
+    "ticketReports": "דוח פניות"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",
@@ -54,12 +55,13 @@
     }
   },
   "sellers": {
-    "SellerCode": "קוד מוכרן",
+    "SellerCode": "קוד",
     "Name": "שם",
     "CellPhone": "נייד",
     "Code": "קוד פריט",
     "IsNotActive": "לא פעיל",
-    "title": "איש מכירות"
+    "title": "איש מכירות",
+    "sellersTableTitle": "אנשי מכירות"
   },
   "reports": {
     "saleReports": {
@@ -72,6 +74,29 @@
       "branchName": "סניף",
       "memberName": "לקוח",
       "totalAmount": "סה‘כ"
+    },
+    "ticketReports": {
+      "branchView": "תצוגה לפי סניפים",
+      "branchViewTitle": "דוח פניות",
+      "journalView": "יומן פניות",
+      "journalViewTitle": "יומן פניות",
+      "branchName": "סניף",
+      "totalOrders": "כמות הזמנות",
+      "totalTickets": "כמות פניות",
+      "ticketsPerOrder": "יחס פניה להזמנה",
+      "CategoryName": "סוג פניה",
+      "TotalTickets": "כמות",
+      "SysId": "מספר פניה",
+      "CreatorUserDescription": "נוצר ע",
+      "CreatedDate": "תאריך פתיחה",
+      "MemberName": "שם לקוח",
+      "TicketTypeDescription": "סוג פניה",
+      "RequestTypeDescription": "מהות בקשה",
+      "RequestReason": "סיבה",
+      "BranchName": "סניף",
+      "StatusDescription": "סטטוס",
+      "OwnerUserDescription": "גורם מטפל",
+      "TotalTicketsNumber": "סה״כ פניות"
     },
     "ZReports": {
       "ZReport": "דוח Z",
@@ -111,7 +136,7 @@
       }
     },
     "catalog": {
-      "filterTitle": "קטלוג",
+      "filterTitle": "חפש",
       "ItemCode": "קוד פריט",
       "Description": "Description",
       "Price": "מחיר",

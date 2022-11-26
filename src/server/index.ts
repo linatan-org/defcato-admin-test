@@ -18,6 +18,9 @@ import {
   ISeller,
   ISellersList,
   ISignInResponse,
+  ITicketReportJournalList,
+  ITicketReportsBranchView,
+  ITicketReportsBranchViewDetails,
   IZReports
 } from './models';
 
@@ -90,6 +93,29 @@ export const API = {
     }
   },
   reports: {
+    ticketReports: {
+      getBranchTickets: async (data: any): Promise<ITicketReportsBranchView> => {
+        const res = await apiConfig.post('/FetchBranchTickets.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
+      getBranchTicketsDetails: async (data: any): Promise<ITicketReportsBranchViewDetails> => {
+        const res = await apiConfig.post('/FetchBranchTicketsDetails.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
+      getJournals: async (data: any): Promise<ITicketReportJournalList> => {
+        const res = await apiConfig.post('/AdminCRMFetchTickets.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      }
+    },
     getSalesReports: async (data: any): Promise<ISalesReports> => {
       const res = await apiConfig.post('/FetchTranJournalList.aspx', {
         ...getSession(),
