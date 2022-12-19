@@ -67,7 +67,6 @@ export const CatalogItem: React.FC<CatalogItemProps> = ({
   }, [catalogCategories]);
 
   const filterCategories = (searchText: string) => {
-    console.log(searchText, 'searchText');
     let filtered = catalogCategories;
     if (searchText) {
       filtered = catalogCategories.filter((c) => c.Code.includes(searchText) || c.Description.includes(searchText));
@@ -87,7 +86,6 @@ export const CatalogItem: React.FC<CatalogItemProps> = ({
   };
 
   const onCategoryChange = (code: string) => {
-    console.log(code, 'CHANGE');
     form.setFieldValue('CategoryCode', code);
   };
 

@@ -33,9 +33,9 @@ export const getSaleReportsTableColumns = (t: any): any => [
         key: 'RequestTypeDescription'
       },
       {
-        title: t('reports.ticketReports.RequestReason'),
-        dataIndex: 'RequestReason',
-        key: 'RequestReason'
+        title: t('reports.ticketReports.ItemCode'),
+        dataIndex: 'ItemCode',
+        key: 'ItemCode'
       },
       {
         title: t('reports.ticketReports.BranchName'),
@@ -48,9 +48,9 @@ export const getSaleReportsTableColumns = (t: any): any => [
         key: 'StatusDescription'
       },
       {
-        title: t('reports.ticketReports.OwnerUserDescription'),
-        dataIndex: 'OwnerUserDescription',
-        key: 'OwnerUserDescription'
+        title: t('reports.ticketReports.InformationType'),
+        dataIndex: 'InformationType',
+        key: 'InformationType'
       }
     ]
   }

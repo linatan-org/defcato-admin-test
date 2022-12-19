@@ -68,10 +68,8 @@ const PaymentKeyboardEditor = () => {
   };
 
   const onSave = () => {
-    console.log(favoritePayments, 'favoritePayments\n', checkedPayments, 'checkedPayments');
     const mergedPayments = ([] as IPaymentDataItem[]).concat(checkedPayments, favoritePayments);
     API.paymentKeyboard.save(mergedPayments).then((res) => {
-      console.log(res, 'RESPONSE');
       setIsSaveEnabled(true);
     });
   };

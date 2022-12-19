@@ -104,7 +104,6 @@ const KeyboardEditor: React.FC = () => {
         // addAsFirstChild: state.addAsFirstChild
       }).treeData;
     } else if (editableItem) {
-      console.log(item, 'ITEM=======', editableItem);
       newTree = changeNodeAtPath({
         treeData: newTreeData,
         path: editableItem.path,
@@ -133,7 +132,6 @@ const KeyboardEditor: React.FC = () => {
   };
 
   const handleOnSave = async (values: IKeyboardFields) => {
-    console.log('values: ', values);
     const replacedData = keyboardKeyReplace(newTreeData, false);
     const copyKeyBoard = { ...keyboard };
     copyKeyBoard.Name = values.Name;
@@ -211,7 +209,6 @@ const KeyboardEditor: React.FC = () => {
     const isAllProducts =
       item && item.IsCategory && item.children && item.children.length && item.children.every((c) => !c.IsCategory);
     const isProduct = item && !item.IsCategory;
-    console.log(item?.title, 'isForbiddenCreateCategory', !!isAllProducts, !!isProduct, !IsAllowDefineItemOnCategoryLevel);
     return (!!isAllProducts || !!isProduct) && !IsAllowDefineItemOnCategoryLevel;
   };
 
@@ -219,7 +216,6 @@ const KeyboardEditor: React.FC = () => {
     const isAllCategories =
       item && item.IsCategory && item.children && item.children.length && item.children.every((c) => c.IsCategory);
     const isCategory = item && item.IsCategory;
-    console.log(item?.title, 'isForbiddenCreateProduct', !!isAllCategories, !!isCategory, !IsAllowDefineItemOnCategoryLevel);
     return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel;
   };
 
@@ -372,21 +368,11 @@ const KeyboardEditor: React.FC = () => {
           onChange={handleTreeOnChange}
           onMoveNode={({ node, nextTreeIndex, nextPath }) => {
             setIsTreeWasChanged(true);
-            console.log('node:', node, 'treeIndex:', nextTreeIndex, 'path:', nextPath);
           }}
           maxDepth={maxDepth}
           onlyExpandSearchedNodes={true}
-          // searchQuery={searchString}
-          // searchFocusOffset={searchFocusIndex}
           canDrag={({ node }) => !node.noDragging}
           canDrop={({ nextParent }) => !nextParent || !nextParent.noChildren}
-          // searchFinishCallback={(matches) =>
-          //     this.setState({
-          //       searchFoundCount: matches.length,
-          //       searchFocusIndex:
-          //           matches.length > 0 ? searchFocusIndex % matches.length : 0
-          //     })
-          // }
           onDragStateChanged={(e) => console.log(e)}
           generateNodeProps={(rowinfo) => ({
             buttons: getActionButtons(rowinfo),

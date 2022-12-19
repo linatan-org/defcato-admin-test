@@ -8,7 +8,6 @@ interface IZReport {
 
 export const ZReportDetails: React.FC<IZReport> = ({ reportParams }) => {
   const { t } = useTranslation();
-  console.log(reportParams, 'REPORT');
   return (
     <div className="main-content">
       <div className="flex-direction-column">

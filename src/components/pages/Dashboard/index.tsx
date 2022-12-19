@@ -61,7 +61,6 @@ const Dashboard = () => {
   }, [checkedUserIdx, selectedDate]);
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
     setCheckedUserIdx('');
     setSelectedDateMoment(date);
     setSelectedDate(dateString);

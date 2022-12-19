@@ -32,7 +32,6 @@ const ZReports: React.FC<any> = () => {
 
   useEffect(() => {
     if (Object.keys(filtersValues).length) {
-      console.log(filtersValues, 'filtersValues');
       getSaleReports(filtersValues);
     }
   }, [filtersValues]);

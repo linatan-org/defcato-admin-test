@@ -167,6 +167,23 @@ export interface ITicketReportJournalList extends IGeneralResponse {
   Tickets: ITicketReportJournal[];
 }
 
+export interface IExportExcelTicketReport extends IGeneralResponse {
+  ReportURL: string;
+}
+
+export interface ITicketFilter {
+  Key: string;
+  Value: string;
+}
+
+export interface ITicketFilters extends IGeneralResponse {
+  BranchList: ITicketFilter[];
+  InformationTypes: ITicketFilter[];
+  OpenDateRanges: ITicketFilter[];
+  StatusList: ITicketFilter[];
+  TicketRequestTypes: ITicketFilter[];
+}
+
 export interface IZReportParams {
   AccountName: string;
   Address: string;

@@ -16,11 +16,58 @@
   color: $primaryGreen;
   font-size: 1.1rem;
 }
+.filterMinWidth {
+  min-width: 12rem;
+}
+
+.filterLabelWrapper {
+  .ant-typography {
+    color: $primaryGreen;
+  }
+}
+.invisibleText {
+  opacity: 0;
+}
+
+.filterSelectWrapper {
+  .ant-select {
+    width: 100%;
+    .ant-select-selector {
+      height: 38px;
+      border-color: $borderGray;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      .ant-select-selection-search {
+        input {
+          text-align: start;
+          //margin-lef: 15px;
+          font-size: 18px;
+          color: $primaryGreen;
+        }
+      }
+      .ant-select-selection-placeholder {
+        display: flex;
+        align-items: center;
+        color: $primaryGreen;
+        opacity: 0.7;
+      }
+      .ant-select-selection-item {
+        align-items: center;
+        color: $primaryGreen;
+        font-size: 1.1rem;
+        text-overflow: ellipsis;
+        display: inline-block;
+      }
+    }
+  }
+}
+
 .datepickerWrapRangePicker {
   .ant-input-group-addon {
 
   }
-  width: 370px;
+  //width: 370px;
   .ant-picker {
     border-color: $borderGray;
     border-radius: 4px;

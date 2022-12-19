@@ -47,7 +47,6 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
   }, [updateKeyboradList]);
 
   const editCreateKeyboard = (kb?: IKeyBoard, isDuplicate?: boolean) => {
-    console.log(kb, authContext, 'authContext');
     // eslint-disable-next-line
     navigation.push(kb && isDuplicate ? `keyboardEditor/${kb.SysId}/duplicate` : kb ? `keyboardEditor/${kb.SysId}/edit` : 'keyboardEditor/new', {IsAllowDefineItemOnCategoryLevel});
   };
@@ -85,7 +84,7 @@ const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
       <Button
         className="w-80 mb-4"
         type="primary"
-        key="saveAndBack"
+        key="createNewKeyboard"
         size="large"
         onClick={() => editCreateKeyboard()}
       >

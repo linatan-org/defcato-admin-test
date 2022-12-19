@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Switch, Route, useLocation } from 'react-router-dom';
+import { Redirect, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
@@ -23,15 +23,20 @@ const AppRoutes = () => {
   const authContext = useAuth();
   const dispatch = useDispatch();
   const { search } = useLocation();
+  const navigation = useHistory();
   const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
 
   useEffect(() => {
     if (search) {
       const SessionKey = new URLSearchParams(search).get('SessionKey');
+      const url = new URLSearchParams(search).get('url');
       if (SessionKey) {
         dispatch(setDashboardAccessOnly(true));
         sessionStorage.setItem('token', SessionKey);
         authContext.setIsSignedIn(true);
+        if (url) {
+          navigation.replace(url);
+        }
       }
     }
   }, [search]);
@@ -39,6 +44,15 @@ const AppRoutes = () => {
   useEffect(() => {
     injectDispatch(dispatch);
   }, []);
+
+  useEffect(() => {
+    if (!sessionStorage.token) {
+      // dispatch(setDashboardAccessOnly(false));
+      authContext.setIsSignedIn(false);
+      navigation.replace('/');
+    }
+  }, [authContext.isAuthenticated(), sessionStorage.token]);
+
   return (
     <>
       <ToastContainer />
@@ -46,22 +60,12 @@ const AppRoutes = () => {
         {isDashboardAccessOnly ? (
           <>
             <Route
-              path="/"
-              exact
-              render={() =>
-                authContext.isAuthenticated() || sessionStorage.token ? (
-                  <Redirect to={routes.dashboard} />
-                ) : (
-                  <Route
-                    path="/"
-                    component={SignIn}
-                  />
-                )
-              }
-            />
-            <Route
               path={routes.dashboard}
               component={Dashboard}
+            />
+            <Route
+              path={routes.salesReports}
+              component={SalesReports}
             />
           </>
         ) : (

@@ -159,7 +159,6 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     } else {
       copyItems[0] = newProduct;
     }
-    console.log(copyItems, 'copyItems');
     setCheckedItem(copyItems);
   };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Table, Layout } from 'antd';
+import { Button, Table, Layout, Typography } from 'antd';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
@@ -11,6 +11,7 @@ import { getSaleReportsTableColumns } from './columns';
 import { getSalesFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
+const { Text } = Typography;
 
 interface BranchViewDetailsRecord {
   data: ITicketReportBranchViewDetails[];
@@ -77,6 +78,45 @@ const BranchView: React.FC<any> = () => {
       getBranchViewList(filtersValues);
     }
   }, [filtersValues]);
+
+  const getTabletSummary = (pageData: ITicketReportBranchView[]) => {
+    let totalOrders = 0;
+    let totalTickets = 0;
+    pageData.forEach((rec) => {
+      totalOrders += rec.TotalOrders;
+      totalTickets += rec.TotalTickets;
+    });
+    const ticketsPerOrderTotal = totalTickets && totalOrders ? (totalTickets / totalOrders).toFixed(2) : 0;
+    return (
+      <Table.Summary fixed="bottom">
+        <Table.Summary.Row>
+          <Table.Summary.Cell
+            index={0}
+            colSpan={2}
+          />
+          <Table.Summary.Cell
+            colSpan={1}
+            index={1}
+          >
+            <Text strong>{totalOrders}</Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell
+            index={2}
+            colSpan={1}
+          >
+            <Text strong>{totalTickets}</Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell
+            index={3}
+            colSpan={1}
+          >
+            <Text strong>{`${ticketsPerOrderTotal}%`}</Text>
+          </Table.Summary.Cell>
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  };
+
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
@@ -100,43 +140,8 @@ const BranchView: React.FC<any> = () => {
           expandRowByClick
           expandable={{ expandedRowRender, onExpand }}
           scrollSize={tableHeight}
-          summary={(pageData) => {
-            let totalOrders = 0;
-            let totalTickets = 0;
-            pageData.forEach((rec) => {
-              totalOrders += rec.TotalOrders;
-              totalTickets += rec.TotalTickets;
-            });
-            const ticketsPerOrderTotal = (totalTickets / totalOrders).toFixed(2);
-            return (
-              <Table.Summary fixed="bottom">
-                <Table.Summary.Row>
-                  <Table.Summary.Cell
-                    index={0}
-                    colSpan={2}
-                  />
-                  <Table.Summary.Cell
-                    colSpan={1}
-                    index={1}
-                  >
-                    {totalOrders}
-                  </Table.Summary.Cell>
-                  <Table.Summary.Cell
-                    index={2}
-                    colSpan={1}
-                  >
-                    {totalTickets}
-                  </Table.Summary.Cell>
-                  <Table.Summary.Cell
-                    index={3}
-                    colSpan={1}
-                  >
-                    {`${ticketsPerOrderTotal}%`}
-                  </Table.Summary.Cell>
-                </Table.Summary.Row>
-              </Table.Summary>
-            );
-          }}
+          // @ts-ignore
+          summary={getTabletSummary}
         />
       </div>
     </div>

@@ -44,7 +44,6 @@ const MainLayout = ({ children }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
-  console.log(history, 'history');
   const items: MenuItem[] = [
     getItem(t('navMenu.reports'), 'sub1', null, [
       getItem(t('navMenu.currentTradingDay'), routes.dashboard),

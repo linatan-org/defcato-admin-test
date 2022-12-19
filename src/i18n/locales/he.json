@@ -6,6 +6,7 @@
   "back": "סיים",
   "changesHasBeenSaved": "שינויים נשמרו",
   "dates": "תאריכים",
+  "exportToExcel": "יצוא  לאקסל",
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",
@@ -96,7 +97,17 @@
       "BranchName": "סניף",
       "StatusDescription": "סטטוס",
       "OwnerUserDescription": "גורם מטפל",
-      "TotalTicketsNumber": "סה״כ פניות"
+      "TotalTicketsNumber": "סה״כ פניות",
+      "InformationType": "אופן תיעוד",
+      "ItemCode": "קוד פריט",
+      "filterTitles": {
+        "OpenDateRanges": "ת. פתיחה",
+        "TicketRequestTypes": "סוג פניה",
+        "StatusList": "סטטוס",
+        "BranchList": "סניף",
+        "ItemCode": "פריט",
+        "InformationTypes": "אופן תיעוד"
+      }
     },
     "ZReports": {
       "ZReport": "דוח Z",

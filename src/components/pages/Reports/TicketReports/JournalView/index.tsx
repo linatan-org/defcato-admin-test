@@ -1,22 +1,26 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Table, Layout } from 'antd';
+import { FileExcelFilled } from '@ant-design/icons/lib';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Table, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import { ITicketReportJournal, RESPONSE_STATUSES } from '../../../../../server/models';
+import { ITicketFilters, ITicketReportJournal, RESPONSE_STATUSES } from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getSaleReportsTableColumns } from './columns';
-import { getSalesFilters } from './filters';
+import { getFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
+const { Text } = Typography;
 
 const JournalView: React.FC<any> = () => {
   const { t } = useTranslation();
   const [journalList, setJournalList] = useState<ITicketReportJournal[]>([]);
-  const [filtersValues, setFiltersValues] = useState({
+  const [filtersOptions, setFiltersOptions] = useState<ITicketFilters | null>(null);
+  const [filtersValues, setFiltersValues] = useState<any>({
     FromDate: moment().format('DD/MM/yyyy'),
-    ToDate: moment().format('DD/MM/yyyy')
+    ToDate: moment().format('DD/MM/yyyy'),
+    OpenDateRange: 0
   });
 
   const [tableHeight, setTableHeight] = useState(600);
@@ -29,7 +33,7 @@ const JournalView: React.FC<any> = () => {
   }, [ref]);
 
   const getJournalList = (filters: any) => {
-    API.reports.ticketReports.getJournals({ DateFilterId: 1 }).then((res) => {
+    API.reports.ticketReports.getJournals(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setJournalList(res.Tickets);
       }
@@ -41,13 +45,47 @@ const JournalView: React.FC<any> = () => {
       getJournalList(filtersValues);
     }
   }, [filtersValues]);
+
+  useEffect(() => {
+    let filters;
+    if (Object.keys(filtersValues).length) {
+      filters = { ...filtersValues };
+    }
+    API.reports.ticketReports.getTicketsFilters(filters).then((res) => {
+      if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+        setFiltersOptions(res);
+      }
+    });
+  }, [filtersValues]);
+
+  const onFiltersChange = (newFiltersValue: any) => {
+    const copyFilters = { ...newFiltersValue };
+    if (copyFilters['OpenDateRange'] !== 0) {
+      delete copyFilters['FromDate'];
+      delete copyFilters['ToDate'];
+    } else {
+      copyFilters['FromDate'] = moment().format('DD/MM/yyyy');
+      copyFilters['ToDate'] = moment().format('DD/MM/yyyy');
+    }
+    setFiltersValues(copyFilters);
+  };
+
+  const onExportToExcel = (filters: any) => {
+    API.reports.ticketReports.exportTicketsToExcel(filters).then((res) => {
+      console.log(res);
+      if (res.ErrorCode === RESPONSE_STATUSES.OK && res.ReportURL) {
+        window.open(res.ReportURL, '_blank');
+      }
+    });
+  };
+
   return (
     <div className="flex-1 branchViewWrapper">
-      {/*<Filters*/}
-      {/*filters={getSalesFilters()}*/}
-      {/*onChange={setFiltersValues}*/}
-      {/*filtersValues={filtersValues}*/}
-      {/*/>*/}
+      <Filters
+        filters={getFilters(filtersOptions, t, filtersValues['OpenDateRange'] !== 0)}
+        onChange={onFiltersChange}
+        filtersValues={filtersValues}
+      />
       <div
         className="relative flex-1"
         ref={ref}
@@ -58,6 +96,19 @@ const JournalView: React.FC<any> = () => {
           type="primary"
           className="userDailyStatsBtn"
         />
+        <Tooltip
+          color="blue"
+          className="cursor-pointer d-inline"
+          placement="top"
+          title={t('exportToExcel')}
+        >
+          <Button
+            icon={<FileExcelFilled />}
+            onClick={() => onExportToExcel(filtersValues)}
+            type="primary"
+            className="exportToExcelBtn"
+          />
+        </Tooltip>
         <CustomTable
           data={journalList}
           columns={getSaleReportsTableColumns(t)}
@@ -71,7 +122,7 @@ const JournalView: React.FC<any> = () => {
                     colSpan={10}
                     index={1}
                   >
-                    {`${t('reports.ticketReports.TotalTicketsNumber')}: ${pageData.length}`}
+                    <Text strong>{`${t('reports.ticketReports.TotalTicketsNumber')}: ${pageData.length}`}</Text>
                   </Table.Summary.Cell>
                 </Table.Summary.Row>
               </Table.Summary>

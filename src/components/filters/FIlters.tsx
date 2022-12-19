@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Popconfirm, Space, Upload } from 'antd';
+import { Typography } from 'antd';
 import moment from 'moment';
 import { FilterItem, IFilterItem } from './FIlterItem';
+
+const { Text } = Typography;
 
 interface IFilters {
   filters: IFilterItem[];
@@ -19,14 +21,11 @@ const getCorrectDate = (date: string) => {
 const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
   const getFilterValue = (filter: IFilterItem) => {
     const { FromDate, ToDate } = filtersValues;
-    console.log(FromDate, ToDate, 'FromDate, ToDate');
     const replacedFrom = FromDate ? getCorrectDate(FromDate) : null;
     const replacedTo = FromDate ? getCorrectDate(ToDate) : null;
     switch (filter.type) {
       case 'DATE': {
-        return filter.type === 'DATE' && replacedFrom && replacedTo
-          ? [moment(replacedFrom), moment(replacedTo)]
-          : [moment(), moment()];
+        return filter.type === 'DATE' && replacedFrom && replacedTo ? [moment(replacedFrom), moment(replacedTo)] : null;
       }
       default:
         return filtersValues.value || filtersValues[filter.key];
@@ -37,15 +36,29 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
     return (
       <div
         key={filter.key}
-        className="w-64 pt-4 pl-4"
+        className={`filterMinWidth ${filter.type !== 'DATE' && 'w-64'} pt-4 pl-4`}
       >
+        <div className="filterLabelWrapper mb-1">
+          <Text
+            className={`${!filter.label && 'invisibleText'}`}
+            strong
+          >
+            {filter.label || 'inv'}
+          </Text>
+        </div>
         <FilterItem
           {...filter}
           value={getFilterValue(filter)}
           type={filter.type}
           key={filter.key}
           onChange={(value: any) => {
-            const newValue = filter.type === 'DATE' ? { ...value } : { [filter.key]: value };
+            const isEmptyDate = filter.type === 'DATE' && !value['FromDate'] && !value['ToDate'];
+            if (isEmptyDate) {
+              delete filtersValues['FromDate'];
+              delete filtersValues['ToDate'];
+            }
+            // eslint-disable-next-line
+            const newValue = filter.type === 'DATE' && !isEmptyDate ? { ...value } : filter.type === 'DATE' && isEmptyDate ? {} : { [filter.key]: value };
             onChange({ ...filtersValues, ...newValue });
           }}
         />

@@ -16,7 +16,6 @@ const Editor = () => {
   useEffect(() => {
     API.dailyInstruction.getDailyInstruction().then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK && res.Data) {
-        console.log(res, 'GET RESPONSE');
         try {
           const parsed = JSON.parse(res.Data);
           setDailyInstruction(parsed);
@@ -42,7 +41,6 @@ const Editor = () => {
     // @ts-ignore
     emailEditorRef.current.editor.exportHtml((data) => {
       const { design, html } = data;
-      console.log(html, 'DESIGN');
       API.dailyInstruction.saveDailyInstruction(JSON.stringify(design), JSON.stringify(html)).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           notification.success({

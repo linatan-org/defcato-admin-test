@@ -9,6 +9,7 @@ import {
   IDailyStats,
   IDailyUserStats,
   IDailyUserTargets,
+  IExportExcelTicketReport,
   IGeneralResponse,
   IKeyBoard,
   IKeyboardList,
@@ -18,6 +19,7 @@ import {
   ISeller,
   ISellersList,
   ISignInResponse,
+  ITicketFilters,
   ITicketReportJournalList,
   ITicketReportsBranchView,
   ITicketReportsBranchViewDetails,
@@ -114,6 +116,20 @@ export const API = {
           ...data
         });
         return res.data;
+      },
+      exportTicketsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
+        const res = await apiConfig.post('/AdminExportTickets2Excel.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
+      getTicketsFilters: async (filters: any): Promise<ITicketFilters> => {
+        const res = await apiConfig.post('/AdminCRMFetchTicketFilters.aspx', {
+          ...getSession(),
+          ...filters
+        });
+        return res.data;
       }
     },
     getSalesReports: async (data: any): Promise<ISalesReports> => {
@@ -196,7 +212,7 @@ export const API = {
       });
       return res.data;
     },
-    getCreateItems: async (InputData: string, CategoryCode: string): Promise<ICreateItemValues> => {
+    getCreateItems: async (InputData: string, CategoryCode?: string): Promise<ICreateItemValues> => {
       const res = await apiConfig.post('/FetchItemsForKeyboard.aspx', {
         ...getSession(),
         ...{ InputData, CategoryCode }
