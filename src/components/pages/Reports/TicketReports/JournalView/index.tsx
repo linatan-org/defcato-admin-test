@@ -56,14 +56,16 @@ const JournalView: React.FC<any> = () => {
         setFiltersOptions(res);
       }
     });
-  }, [filtersValues]);
+  }, []);
 
   const onFiltersChange = (newFiltersValue: any) => {
     const copyFilters = { ...newFiltersValue };
+    const oldOpenDateRange = filtersValues['OpenDateRange'];
+    const newOpenDateRange = newFiltersValue['OpenDateRange'];
     if (copyFilters['OpenDateRange'] !== 0) {
       delete copyFilters['FromDate'];
       delete copyFilters['ToDate'];
-    } else {
+    } else if (oldOpenDateRange !== 0 && newOpenDateRange === 0) {
       copyFilters['FromDate'] = moment().format('DD/MM/yyyy');
       copyFilters['ToDate'] = moment().format('DD/MM/yyyy');
     }
