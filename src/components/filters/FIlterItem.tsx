@@ -26,6 +26,7 @@ export interface IFilterItem {
   showSearch?: boolean;
   defaultValue?: any;
   getItems?: (search: string) => Promise<any[]>;
+  searchKeys?: string[];
 }
 
 const { RangePicker } = DatePicker;
@@ -48,6 +49,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
   disabled,
   showSearch,
   getItems,
+  searchKeys,
   defaultValue
 }) => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -131,7 +133,10 @@ export const FilterItem: React.FC<IFilterItem> = ({
             allowClear
             value={value}
             onChange={onChange}
-            filterOption={(input, option) => (option?.label || '').toLowerCase().includes(input.toLowerCase())}
+            filterOption={(input, option) => {
+              const matchedValue = searchKeys && searchKeys.map((key) => option[key]);
+              return ((matchedValue && matchedValue[0]) || '').toLowerCase().includes(input.toLowerCase());
+            }}
             fieldNames={selectFieldNames}
             options={options}
           />

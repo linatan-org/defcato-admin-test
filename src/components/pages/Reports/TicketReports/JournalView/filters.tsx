@@ -45,7 +45,9 @@ export const getFilters = (filtersOptions: ITicketFilters | null, t: any, disabl
       key: 'BranchSysId',
       options: filtersOptions ? filtersOptions['BranchList'] : [],
       selectFieldNames: SELECT_FIELD_NAMES,
-      label: t('reports.ticketReports.filterTitles.BranchList')
+      label: t('reports.ticketReports.filterTitles.BranchList'),
+      showSearch: true,
+      searchKeys: ['Value']
     },
     {
       type: 'SINGLE_API',

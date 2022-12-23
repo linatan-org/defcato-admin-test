@@ -1,6 +1,6 @@
 import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Table, Tooltip, Typography } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
@@ -98,19 +98,14 @@ const JournalView: React.FC<any> = () => {
           type="primary"
           className="userDailyStatsBtn"
         />
-        <Tooltip
-          color="blue"
-          className="cursor-pointer d-inline"
-          placement="top"
-          title={t('exportToExcel')}
+        <Button
+          icon={<FileExcelFilled />}
+          onClick={() => onExportToExcel(filtersValues)}
+          type="primary"
+          className="exportToExcelBtn"
         >
-          <Button
-            icon={<FileExcelFilled />}
-            onClick={() => onExportToExcel(filtersValues)}
-            type="primary"
-            className="exportToExcelBtn"
-          />
-        </Tooltip>
+          {t('exportToExcel')}
+        </Button>
         <CustomTable
           data={journalList}
           columns={getSaleReportsTableColumns(t)}
