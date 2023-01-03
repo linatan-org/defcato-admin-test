@@ -52,10 +52,23 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
           type={filter.type}
           key={filter.key}
           onChange={(value: any) => {
-            const isEmptyDate = filter.type === 'DATE' && !value['FromDate'] && !value['ToDate'];
-            if (isEmptyDate) {
-              delete filtersValues['FromDate'];
-              delete filtersValues['ToDate'];
+            let isEmptyDate = false;
+            if (filter.type === 'DATE') {
+              if (filter.datesKeys) {
+                const ToKey = filter.datesKeys.ToKey;
+                const FromKey = filter.datesKeys.FromKey;
+                isEmptyDate = !value[FromKey] && !value[ToKey];
+                if (isEmptyDate) {
+                  delete filtersValues[FromKey];
+                  delete filtersValues[ToKey];
+                }
+              } else {
+                isEmptyDate = !value['FromDate'] && !value['ToDate'];
+                if (isEmptyDate) {
+                  delete filtersValues['FromDate'];
+                  delete filtersValues['ToDate'];
+                }
+              }
             }
             // eslint-disable-next-line
             const newValue = filter.type === 'DATE' && !isEmptyDate ? { ...value } : filter.type === 'DATE' && isEmptyDate ? {} : { [filter.key]: value };

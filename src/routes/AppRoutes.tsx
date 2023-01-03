@@ -5,6 +5,7 @@ import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
 import Catalog from '../components/pages/Reports/Catalog';
+import OrdersReports from '../components/pages/Reports/OrdersReports';
 import TicketReports from '../components/pages/Reports/TicketReports';
 import Sellers from '../components/pages/Sellers';
 import { SignIn } from '../components/pages/SignIn';
@@ -87,6 +88,10 @@ const AppRoutes = () => {
             <Route
               path={routes.dashboard}
               component={Dashboard}
+            />
+            <Route
+              path={routes.ordersReports}
+              component={OrdersReports}
             />
             <Route
               path={routes.salesReports}

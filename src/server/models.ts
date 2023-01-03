@@ -170,6 +170,57 @@ export interface ITicketReportJournalList extends IGeneralResponse {
 export interface IExportExcelTicketReport extends IGeneralResponse {
   ReportURL: string;
 }
+export interface IGeneralFilterValue {
+  Key: string;
+  Value: string;
+}
+
+export interface IOrderFilterValues extends IGeneralResponse {
+  BranchList: IGeneralFilterValue[];
+  CancelReasons: IGeneralFilterValue[];
+  Cities: IGeneralFilterValue[];
+  DeliveryBranchList: IGeneralFilterValue[];
+  DeliveryTypes: IGeneralFilterValue[];
+  MemberTypes: IGeneralFilterValue[];
+  PaymentMethods: IGeneralFilterValue[];
+  Sellers: IGeneralFilterValue[];
+  StatusList: IGeneralFilterValue[];
+  TranTypes: IGeneralFilterValue[];
+  Promotions: IGeneralFilterValue[];
+}
+
+export interface IOrderReport {
+  BranchName: string;
+  BranchNetCode: string;
+  CancelReason: string;
+  CardNumber: string;
+  CreatedDate: string;
+  DeliveryDate: string;
+  DeliveryFromHour: number;
+  DeliveryFromMinute: number;
+  DeliveryRecipientName: string;
+  DeliveryToHour: number;
+  DeliveryToMinute: number;
+  DiscountPercent: number;
+  DiscountTotal: number;
+  ItemsTotal: number;
+  MemberBlankId: string | number;
+  MemberName: string;
+  MemberSysId: string | number;
+  OrderAddress: string;
+  OrderNumber: string;
+  PrintedDate: string;
+  SellerName: string;
+  StatusDescription: string;
+  SuppliedDate: string;
+  SuppliedHour: string;
+  TotalAfterVat: number;
+  TotalBeforeVat: number;
+}
+
+export interface IOrdersReportsList extends IGeneralResponse {
+  Orders: IOrderReport[];
+}
 
 export interface ITicketFilter {
   Key: string;

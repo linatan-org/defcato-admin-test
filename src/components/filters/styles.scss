@@ -57,13 +57,13 @@
         color: $primaryGreen;
         font-size: 1.1rem;
         text-overflow: ellipsis;
-        display: inline-block;
+        display: flex;
       }
     }
   }
 }
 
-.datepickerWrapRangePicker {
+.datepickerWrapRangePicker, .inputNumberWrapper {
   .ant-input-group-addon {
 
   }
@@ -100,7 +100,7 @@
   }
 }
 
-.datePickerRangePicker {
+.datePickerRangePicker, .inputNumberContainer {
   direction: rtl;
   .ant-picker-suffix {
     position: absolute;
@@ -111,5 +111,31 @@
     //margin-lef: 15px;
     font-size: 18px;
     color: $primaryGreen;
+  }
+}
+
+.inputNumberWrapper, .inputWrapper {
+  width: 100%;
+}
+
+.inputWrapper {
+  input {
+    font-size: 18px;
+    color: $primaryGreen;
+  }
+}
+
+.inputNumberContainer, .inputContainer {
+  width: 100%;
+  height: 38px;
+  border-color: $borderGray;
+  border-radius: 4px !important;
+  display: flex;
+  align-items: center;
+  .ant-input-number-input-wrap {
+    height: inherit;
+    input {
+      height: 100%;
+    }
   }
 }

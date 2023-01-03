@@ -13,6 +13,8 @@ import {
   IGeneralResponse,
   IKeyBoard,
   IKeyboardList,
+  IOrderFilterValues,
+  IOrdersReportsList,
   IPaymentDataItem,
   IPaymentsList,
   ISalesReports,
@@ -95,6 +97,21 @@ export const API = {
     }
   },
   reports: {
+    orderReports: {
+      getOrderFilters: async (): Promise<IOrderFilterValues> => {
+        const res = await apiConfig.post('/AdminCRMFetchOrderFilters.aspx', {
+          ...getSession()
+        });
+        return res.data;
+      },
+      getOrdersReport: async (filters: any): Promise<IOrdersReportsList> => {
+        const res = await apiConfig.post('/AdminCRMOrdersReport.aspx', {
+          ...getSession(),
+          ...filters
+        });
+        return res.data;
+      }
+    },
     ticketReports: {
       getBranchTickets: async (data: any): Promise<ITicketReportsBranchView> => {
         const res = await apiConfig.post('/FetchBranchTickets.aspx', {

@@ -8,11 +8,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import './i18n';
 import { store, persistor } from './reudux';
-// React setup
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
-// Root render
 root.render(
   <Provider store={store}>
     <BrowserRouter>

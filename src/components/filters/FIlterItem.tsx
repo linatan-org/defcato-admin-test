@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Select, Input, Typography } from 'antd';
+import { DatePicker, Select, Input, Typography, InputNumber } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import './styles.scss';
 import useDebounceValue from '../hooks/useDebounce';
 const { Text } = Typography;
 
-type FilterType = 'MULTI' | 'SINGLE' | 'SINGLE_API' | 'DATE' | 'SWITCH' | 'SINGLE_DATE' | 'INPUT';
+type FilterType = 'MULTI' | 'SINGLE' | 'SINGLE_API' | 'DATE' | 'SWITCH' | 'SINGLE_DATE' | 'INPUT' | 'INPUT_NUMBER';
 
 export interface IFilterItem {
   label?: string;
@@ -27,6 +27,7 @@ export interface IFilterItem {
   defaultValue?: any;
   getItems?: (search: string) => Promise<any[]>;
   searchKeys?: string[];
+  datesKeys?: { FromKey: string; ToKey: string };
 }
 
 const { RangePicker } = DatePicker;
@@ -50,10 +51,10 @@ export const FilterItem: React.FC<IFilterItem> = ({
   showSearch,
   getItems,
   searchKeys,
-  defaultValue
+  defaultValue,
+  datesKeys
 }) => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [singleApiOptions, setSingleApiOptions] = useState<any[]>([]);
   const debouncedInputValue = useDebounceValue<string>(inputValue, 700);
 
@@ -66,6 +67,9 @@ export const FilterItem: React.FC<IFilterItem> = ({
     if (type === 'INPUT' && debouncedInputValue && debouncedInputValue.length >= 3) {
       onChange && onChange(inputValue);
     }
+    if (type === 'INPUT_NUMBER' && (debouncedInputValue || +debouncedInputValue === 0)) {
+      onChange && onChange(inputValue);
+    }
     if (type === 'SINGLE_API' && getItems && debouncedInputValue && debouncedInputValue.length >= 3) {
       getSingleApiOptions(debouncedInputValue);
     }
@@ -75,15 +79,11 @@ export const FilterItem: React.FC<IFilterItem> = ({
     if (type === 'INPUT' && inputValue === '') {
       onChange && onChange(inputValue);
     }
-    if (type === 'SINGLE_API') {
-      setIsLoading(true);
-    }
   }, [inputValue]);
 
   const getSingleApiOptions = async (search: string) => {
     if (getItems) {
       const items = await getItems(search);
-      setIsLoading(false);
       setSingleApiOptions(items);
     }
   };
@@ -98,9 +98,17 @@ export const FilterItem: React.FC<IFilterItem> = ({
             format={'DD/MM/yyyy'}
             suffixIcon={<CalendarOutlined className="datePicker_icon" />}
             onChange={(v, s) => {
-              const FromDate = s[0] || undefined;
-              const ToDate = s[1] || undefined;
-              onChange && onChange({ FromDate, ToDate });
+              if (onChange) {
+                const FromDate = s[0] || undefined;
+                const ToDate = s[1] || undefined;
+                if (datesKeys) {
+                  const fromKey = datesKeys.FromKey;
+                  const ToKey = datesKeys.ToKey;
+                  onChange({ [fromKey]: FromDate, [ToKey]: ToDate });
+                  return;
+                }
+                onChange({ FromDate, ToDate });
+              }
             }}
           />
         </div>
@@ -108,10 +116,10 @@ export const FilterItem: React.FC<IFilterItem> = ({
     }
     case 'INPUT': {
       return (
-        <div className="datepickerWrapRangePicker">
+        <div className="inputWrapper">
           <Input
             disabled={!!disabled}
-            className="datePickerRangePicker"
+            className="inputContainer"
             value={inputValue || value || ''}
             onChange={(e) => {
               const { value: inputValue } = e.target;
@@ -143,6 +151,28 @@ export const FilterItem: React.FC<IFilterItem> = ({
         </div>
       );
     }
+    case 'MULTI': {
+      return (
+        <div className="filterSelectWrapper">
+          <Select
+            mode="multiple"
+            maxTagCount="responsive"
+            disabled={!!disabled}
+            showSearch={showSearch}
+            optionFilterProp="children"
+            allowClear
+            value={value}
+            onChange={onChange}
+            filterOption={(input, option) => {
+              const matchedValue = searchKeys && searchKeys.map((key) => option[key]);
+              return ((matchedValue && matchedValue[0]) || '').toLowerCase().includes(input.toLowerCase());
+            }}
+            fieldNames={selectFieldNames}
+            options={options}
+          />
+        </div>
+      );
+    }
     case 'SINGLE_API': {
       return (
         <div className="filterSelectWrapper">
@@ -154,6 +184,23 @@ export const FilterItem: React.FC<IFilterItem> = ({
             onSearch={setInputValue}
             options={singleApiOptions}
             fieldNames={selectFieldNames}
+          />
+        </div>
+      );
+    }
+    case 'INPUT_NUMBER': {
+      return (
+        <div className="inputNumberWrapper">
+          <InputNumber
+            type="number"
+            disabled={!!disabled}
+            className="inputNumberContainer"
+            value={inputValue || value || ''}
+            onChange={(value) => {
+              setInputValue(value);
+            }}
+            addonAfter={addonAfter || ''}
+            addonBefore={addonBefore || ''}
           />
         </div>
       );
