@@ -68,6 +68,10 @@ const AppRoutes = () => {
               path={routes.salesReports}
               component={SalesReports}
             />
+            <Route
+              path={routes.ordersReports}
+              component={OrdersReports}
+            />
           </>
         ) : (
           <>
