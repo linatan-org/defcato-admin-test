@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import { IOrderFilterValues, IOrderReport, RESPONSE_STATUSES } from '../../../../../server/models';
+import { IOrderFilterValues, ITotalOrderReport, RESPONSE_STATUSES } from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getColumns } from './columns';
@@ -14,9 +14,9 @@ interface Interface {
   ordersFiltersOptions: IOrderFilterValues | null;
 }
 
-const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
+const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const { t } = useTranslation();
-  const [ordersList, setOredersList] = useState<IOrderReport[]>([]);
+  const [totalOrdersList, setTotalOrdersList] = useState<ITotalOrderReport[]>([]);
   const [filtersValues, setFiltersValues] = useState<any>({});
 
   const [tableHeight, setTableHeight] = useState(600);
@@ -24,14 +24,15 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
 
   useEffect(() => {
     const node = ref.current;
+    console.log(node?.clientHeight, 'node?.clientHeight');
     // @ts-ignore
     // setTableHeight(node?.clientHeight - 150);
-  }, [ref]);
+  }, [ref?.current?.clientHeight]);
 
   const getJournalList = (filters: any) => {
-    API.reports.orderReports.getOrdersReport(filters).then((res) => {
+    API.reports.orderReports.getTotalOrdersReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-        setOredersList(res.Orders);
+        setTotalOrdersList(res.List);
       }
     });
   };
@@ -60,7 +61,7 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
           className="userDailyStatsBtn"
         />
         <CustomTable
-          data={ordersList}
+          data={totalOrdersList}
           columns={getColumns(t)}
           expandRowByClick
           scrollSize={tableHeight}
@@ -70,4 +71,4 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   );
 };
 
-export default JournalOrders;
+export default OrdersTotalReport;

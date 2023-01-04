@@ -222,6 +222,46 @@ export interface IOrdersReportsList extends IGeneralResponse {
   Orders: IOrderReport[];
 }
 
+export interface ITotalOrderReport {
+  BranchName: string;
+  BranchNetCode: string;
+  OrderAVG: number;
+  TotalAmountAfterVat: number;
+  TotalAmountBeforeVat: number;
+  TotalItems: number;
+  TotalOrders: number;
+}
+
+export interface ITotalOrderReportList extends IGeneralResponse {
+  List: ITotalOrderReport[];
+}
+
+export interface IItemsTotalReports {
+  ItemCode: string;
+  ItemDescription: string;
+  TotalAmount: number;
+  TotalQuantity: number;
+}
+
+export interface IItemsTotalReportsList extends IGeneralResponse {
+  List: IItemsTotalReports[];
+}
+
+export interface IRevenueReport {
+  Cost: number;
+  ItemCode: string;
+  ItemDescription: string;
+  Revenue: number;
+  RevenuePercent: number;
+  TotalAmount: number;
+  TotalAmountBeforeVat: number;
+  TotalQuantity: number;
+}
+
+export interface IRevenueReportList extends IGeneralResponse {
+  List: IRevenueReport[];
+}
+
 export interface ITicketFilter {
   Key: string;
   Value: string;

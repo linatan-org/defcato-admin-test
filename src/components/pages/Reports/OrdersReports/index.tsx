@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Space, Button, Tabs } from 'antd';
+import { Space, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
 import { API } from '../../../../server';
+import ItemsRevenueReport from './ItemsRevenueReport';
 import JournalOrders from './JournalOrders';
+import OrdersTotalReport from './OrdersTotalReport';
+import ItemsTotalReport from './ItemsTotalReport';
 import { IOrderFilterValues, RESPONSE_STATUSES } from '../../../../server/models';
 
 enum OrdersReportsEnum {
@@ -31,7 +34,7 @@ const OrdersReports: React.FC<any> = () => {
     },
     {
       id: OrdersReportsEnum.ITEMS_REVENUE_REPORTS,
-      title: t('reports.ordersReports.ItemsRevenueReport')
+      title: t('reports.ordersReports.ItemsRevenueReportTitle')
     }
   ];
   const [activeTab, setActiveTab] = useState(orderReportTabs[0].id);
@@ -41,6 +44,12 @@ const OrdersReports: React.FC<any> = () => {
     switch (active) {
       case OrdersReportsEnum.ORDERS_JOURNAL:
         return <JournalOrders ordersFiltersOptions={ordersFiltersOptions} />;
+      case OrdersReportsEnum.ORDERS_BY_PROPERTIES:
+        return <OrdersTotalReport ordersFiltersOptions={ordersFiltersOptions} />;
+      case OrdersReportsEnum.ITEMS_REPORTS:
+        return <ItemsTotalReport ordersFiltersOptions={ordersFiltersOptions} />;
+      case OrdersReportsEnum.ITEMS_REVENUE_REPORTS:
+        return <ItemsRevenueReport ordersFiltersOptions={ordersFiltersOptions} />;
       default:
         return null;
     }

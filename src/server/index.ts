@@ -11,12 +11,14 @@ import {
   IDailyUserTargets,
   IExportExcelTicketReport,
   IGeneralResponse,
+  IItemsTotalReportsList,
   IKeyBoard,
   IKeyboardList,
   IOrderFilterValues,
   IOrdersReportsList,
   IPaymentDataItem,
   IPaymentsList,
+  IRevenueReportList,
   ISalesReports,
   ISeller,
   ISellersList,
@@ -25,6 +27,7 @@ import {
   ITicketReportJournalList,
   ITicketReportsBranchView,
   ITicketReportsBranchViewDetails,
+  ITotalOrderReportList,
   IZReports
 } from './models';
 
@@ -106,6 +109,27 @@ export const API = {
       },
       getOrdersReport: async (filters: any): Promise<IOrdersReportsList> => {
         const res = await apiConfig.post('/AdminCRMOrdersReport.aspx', {
+          ...getSession(),
+          ...filters
+        });
+        return res.data;
+      },
+      getTotalOrdersReport: async (filters: any): Promise<ITotalOrderReportList> => {
+        const res = await apiConfig.post('/AdminCRMOrdersTotalReport.aspx', {
+          ...getSession(),
+          ...filters
+        });
+        return res.data;
+      },
+      getItemsTotalReport: async (filters: any): Promise<IItemsTotalReportsList> => {
+        const res = await apiConfig.post('/AdminCRMItemsTotalReport.aspx', {
+          ...getSession(),
+          ...filters
+        });
+        return res.data;
+      },
+      getItemsRevenueReport: async (filters: any): Promise<IRevenueReportList> => {
+        const res = await apiConfig.post('/AdminCRMItemsRevenueReport.aspx', {
           ...getSession(),
           ...filters
         });
