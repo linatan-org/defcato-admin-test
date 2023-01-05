@@ -1,6 +1,7 @@
 import React from 'react';
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import { FilterItem, IFilterItem } from './FIlterItem';
 
 const { Text } = Typography;
@@ -10,6 +11,7 @@ interface IFilters {
   filtersValues: any;
   onChange: (filters: any) => void;
   value?: any;
+  onSearch?: () => void;
 }
 
 const getCorrectDate = (date: string) => {
@@ -18,7 +20,8 @@ const getCorrectDate = (date: string) => {
   return `${splitDate[1]}-${splitDate[0]}-${splitDate[2]}`;
 };
 
-const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
+const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch }) => {
+  const { t } = useTranslation();
   const getFilterValue = (filter: IFilterItem) => {
     const { FromDate, ToDate } = filtersValues;
     const replacedFrom = FromDate ? getCorrectDate(FromDate) : null;
@@ -79,7 +82,22 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues }) => {
     );
   };
 
-  return <div className="pt-2 pb-6 flex items-center justify-start flex-wrap">{filters.map(renderFilterItem)}</div>;
+  return (
+    <div className="pt-2 pb-6 flex items-center justify-start flex-wrap">
+      {filters.map(renderFilterItem)}
+      {onSearch ? (
+        <Button
+          className="mt-10"
+          size="large"
+          key={t('reports.ZReports.ZReportDetails.PrintAndExist')}
+          type="primary"
+          onClick={onSearch}
+        >
+          {t('reports.ZReports.ZReportDetails.PrintAndExist')}
+        </Button>
+      ) : null}
+    </div>
+  );
 };
 
 export default Filters;

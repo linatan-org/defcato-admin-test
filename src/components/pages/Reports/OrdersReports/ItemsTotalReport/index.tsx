@@ -2,12 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import {
-  IItemsTotalReports,
-  IOrderFilterValues,
-  ITotalOrderReport,
-  RESPONSE_STATUSES
-} from '../../../../../server/models';
+import { IItemsTotalReports, IOrderFilterValues, RESPONSE_STATUSES } from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getColumns } from './columns';
@@ -42,11 +37,9 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     });
   };
 
-  useEffect(() => {
-    if (Object.keys(filtersValues).length) {
-      getJournalList(filtersValues);
-    }
-  }, [filtersValues]);
+  const onSearch = () => {
+    getJournalList(filtersValues);
+  };
 
   return (
     <div className="flex-1 branchViewWrapper">
@@ -54,6 +47,7 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         filters={getFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}
+        onSearch={onSearch}
       />
       <div
         className="relative flex-1"

@@ -29,56 +29,10 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
     },
     {
       type: 'MULTI',
-      key: 'StatusList',
-      label: t('reports.ordersReports.filters.Status'),
-      options: filtersOptions ? filtersOptions['StatusList'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'MULTI',
-      key: 'DeliveryTypes',
-      label: t('reports.ordersReports.filters.DeliveryType'),
-      options: filtersOptions ? filtersOptions['DeliveryTypes'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'MULTI',
-      key: 'BranchList',
-      label: t('reports.ordersReports.filters.Branch'),
-      options: filtersOptions ? filtersOptions['BranchList'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'MULTI',
       key: 'DeliveryBranchList',
       label: t('reports.ordersReports.filters.DeliveryBranch'),
       options: filtersOptions ? filtersOptions['DeliveryBranchList'] : [],
       selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'INPUT_NUMBER',
-      key: 'FromAmount',
-      label: t('reports.ordersReports.filters.FromAmount')
-    },
-    {
-      type: 'INPUT_NUMBER',
-      key: 'ToAmount',
-      label: t('reports.ordersReports.filters.ToAmount')
-    },
-    {
-      type: 'INPUT',
-      key: 'SellerCode',
-      label: t('reports.ordersReports.filters.Seller')
-    },
-    {
-      type: 'INPUT',
-      key: 'MemberSysId',
-      label: t('reports.ordersReports.filters.Customer')
-    },
-    {
-      type: 'INPUT',
-      key: 'OrderNumber',
-      label: t('reports.ordersReports.filters.Order')
     },
     {
       type: 'SINGLE_API',
@@ -105,46 +59,6 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
           return [];
         });
       }
-    },
-    {
-      type: 'MULTI',
-      key: 'PaymentMethods',
-      label: t('reports.ordersReports.filters.PaymentMethod'),
-      options: filtersOptions ? filtersOptions['PaymentMethods'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'MULTI',
-      key: 'MemberTypes',
-      label: t('reports.ordersReports.filters.MemberType'),
-      options: filtersOptions ? filtersOptions['MemberTypes'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'MULTI',
-      key: 'TranTypes',
-      label: t('reports.ordersReports.filters.TransactionType'),
-      options: filtersOptions ? filtersOptions['TranTypes'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'MULTI',
-      key: 'CancelReasons',
-      label: t('reports.ordersReports.filters.CancelReason'),
-      options: filtersOptions ? filtersOptions['CancelReasons'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'INPUT',
-      key: 'City',
-      label: t('reports.ordersReports.filters.City')
-    },
-    {
-      type: 'MULTI',
-      key: 'PromoId',
-      label: t('reports.ordersReports.filters.Promotion'),
-      options: filtersOptions ? filtersOptions['Promotions'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
     }
   ];
 };

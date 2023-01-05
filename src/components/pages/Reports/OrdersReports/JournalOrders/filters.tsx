@@ -133,18 +133,6 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       label: t('reports.ordersReports.filters.CancelReason'),
       options: filtersOptions ? filtersOptions['CancelReasons'] : [],
       selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
-      type: 'INPUT',
-      key: 'City',
-      label: t('reports.ordersReports.filters.City')
-    },
-    {
-      type: 'MULTI',
-      key: 'PromoId',
-      label: t('reports.ordersReports.filters.Promotion'),
-      options: filtersOptions ? filtersOptions['Promotions'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
     }
   ];
 };

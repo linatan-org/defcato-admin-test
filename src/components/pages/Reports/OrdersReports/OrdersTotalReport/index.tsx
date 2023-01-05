@@ -37,11 +37,9 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     });
   };
 
-  useEffect(() => {
-    if (Object.keys(filtersValues).length) {
-      getJournalList(filtersValues);
-    }
-  }, [filtersValues]);
+  const onSearch = () => {
+    getJournalList(filtersValues);
+  };
 
   return (
     <div className="flex-1 branchViewWrapper">
@@ -49,6 +47,7 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         filters={getFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}
+        onSearch={onSearch}
       />
       <div
         className="relative flex-1"
