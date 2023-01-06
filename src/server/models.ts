@@ -129,6 +129,45 @@ export interface ITicketReportsBranchViewDetails extends IGeneralResponse {
   List: ITicketReportBranchViewDetails[];
 }
 
+export interface ITargetReport {
+  Bonuses: number;
+  CallsOrdersConversion: number;
+  CallsPerHour: number;
+  CompletedCalls: number;
+  DeviceSysId: number;
+  HourRedemption: number;
+  IncomingCalls: number;
+  LastOrderTime: string;
+  LastTranDate: string;
+  Name: string;
+  OrderAVG: number;
+  OrdersPerHour: number;
+  SellerCode: string | number;
+  TotalOrders: number;
+  TotalRevenue: number;
+}
+
+export interface ITargetReportDetails {
+  Bonus: number;
+  CurrentPercent: number;
+  CurrentValue: number;
+  Description: string;
+  ShiftAVGPercent: number;
+  ShiftCurrentValue: number;
+  ShiftTargetValue: number;
+  Status: number;
+  TargetType: number;
+  TargetValue: number;
+}
+
+export interface ITargetReportDetailsList extends IGeneralResponse {
+  List: ITargetReportDetails[];
+}
+
+export interface ITargetReportsList extends IGeneralResponse {
+  List: ITargetReport[];
+}
+
 export interface ITicketReportJournal {
   BranchName: string;
   BranchNetCode: string;

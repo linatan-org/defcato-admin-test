@@ -5,7 +5,8 @@ import './styles.scss';
 import useDebounceValue from '../hooks/useDebounce';
 const { Text } = Typography;
 
-type FilterType = 'MULTI' | 'SINGLE' | 'SINGLE_API' | 'DATE' | 'SWITCH' | 'SINGLE_DATE' | 'INPUT' | 'INPUT_NUMBER';
+// eslint-disable-next-line
+type FilterType = 'MULTI' | 'SINGLE' | 'SINGLE_API' | 'DATE' | 'MONTH_DATE' | 'SWITCH' | 'SINGLE_DATE' | 'INPUT' | 'INPUT_NUMBER';
 
 export interface IFilterItem {
   label?: string;
@@ -28,6 +29,7 @@ export interface IFilterItem {
   getItems?: (search: string) => Promise<any[]>;
   searchKeys?: string[];
   datesKeys?: { FromKey: string; ToKey: string };
+  dateFormat?: string;
 }
 
 const { RangePicker } = DatePicker;
@@ -52,7 +54,8 @@ export const FilterItem: React.FC<IFilterItem> = ({
   getItems,
   searchKeys,
   defaultValue,
-  datesKeys
+  datesKeys,
+  dateFormat
 }) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [singleApiOptions, setSingleApiOptions] = useState<any[]>([]);
@@ -95,7 +98,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
             disabled={!!disabled}
             className="datePickerRangePicker"
             value={!value ? null : value}
-            format={'DD/MM/yyyy'}
+            format={dateFormat || 'DD/MM/yyyy'}
             suffixIcon={<CalendarOutlined className="datePicker_icon" />}
             onChange={(v, s) => {
               if (onChange) {
@@ -108,6 +111,27 @@ export const FilterItem: React.FC<IFilterItem> = ({
                   return;
                 }
                 onChange({ FromDate, ToDate });
+              }
+            }}
+          />
+        </div>
+      );
+    }
+    case 'MONTH_DATE': {
+      return (
+        <div className="datepickerWrapRangePicker">
+          <DatePicker
+            disabled={!!disabled}
+            className="datePickerRangePicker w-full"
+            // value={!value ? null : value}
+            format={dateFormat || 'MM/yyyy'}
+            picker="month"
+            defaultValue={defaultValue || null}
+            suffixIcon={<CalendarOutlined className="datePicker_icon" />}
+            onChange={(v, s) => {
+              console.log(s, 'VALUE');
+              if (onChange) {
+                onChange(s);
               }
             }}
           />

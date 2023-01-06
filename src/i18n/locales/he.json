@@ -7,6 +7,7 @@
   "changesHasBeenSaved": "שינויים נשמרו",
   "dates": "תאריכים",
   "exportToExcel": "יצוא  לאקסל",
+  "search": "חפש",
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",
@@ -23,7 +24,8 @@
     "catalog": "קטלוג",
     "sellers": "מוכרנים",
     "ticketReports": "דוח פניות",
-    "ordersReports": "דוח הזמנות"
+    "ordersReports": "דוח הזמנות",
+    "targetReports": "דוח יעדים"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",
@@ -77,6 +79,13 @@
       "branchName": "סניף",
       "memberName": "לקוח",
       "totalAmount": "סה‘כ"
+    },
+    "targetReports": {
+      "columns": {
+        "Bonus": "תגמול",
+        "Description": "יעד",
+        "Bonuses": "סה\"כ בונוסים"
+      }
     },
     "ordersReports": {
       "OrdersJournal": "דוח הזמנות",

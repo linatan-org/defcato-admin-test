@@ -23,6 +23,8 @@ import {
   ISeller,
   ISellersList,
   ISignInResponse,
+  ITargetReportDetailsList,
+  ITargetReportsList,
   ITicketFilters,
   ITicketReportJournalList,
   ITicketReportsBranchView,
@@ -144,8 +146,22 @@ export const API = {
         });
         return res.data;
       },
+      getTargetReports: async (data: any): Promise<ITargetReportsList> => {
+        const res = await apiConfig.post('/AdminCRMTargetsReport.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
       getBranchTicketsDetails: async (data: any): Promise<ITicketReportsBranchViewDetails> => {
         const res = await apiConfig.post('/FetchBranchTicketsDetails.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
+      getSellerTargetReportDetails: async (data: any): Promise<ITargetReportDetailsList> => {
+        const res = await apiConfig.post('/AdminCRMSellerTargetsReport.aspx', {
           ...getSession(),
           ...data
         });

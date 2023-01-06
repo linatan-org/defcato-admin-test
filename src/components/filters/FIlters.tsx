@@ -89,11 +89,10 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
         <Button
           className="mt-10"
           size="large"
-          key={t('reports.ZReports.ZReportDetails.PrintAndExist')}
           type="primary"
           onClick={onSearch}
         >
-          {t('reports.ZReports.ZReportDetails.PrintAndExist')}
+          {t('search')}
         </Button>
       ) : null}
     </div>
