@@ -36,9 +36,9 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
     },
     {
       type: 'MULTI',
-      key: 'DeliveryTypes',
-      label: t('reports.ordersReports.filters.DeliveryType'),
-      options: filtersOptions ? filtersOptions['DeliveryTypes'] : [],
+      key: 'DeliveryBranchList',
+      label: t('reports.ordersReports.filters.DeliveryBranch'),
+      options: filtersOptions ? filtersOptions['DeliveryBranchList'] : [],
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {
@@ -50,9 +50,9 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
     },
     {
       type: 'MULTI',
-      key: 'DeliveryBranchList',
-      label: t('reports.ordersReports.filters.DeliveryBranch'),
-      options: filtersOptions ? filtersOptions['DeliveryBranchList'] : [],
+      key: 'DeliveryTypes',
+      label: t('reports.ordersReports.filters.DeliveryType'),
+      options: filtersOptions ? filtersOptions['DeliveryTypes'] : [],
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {

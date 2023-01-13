@@ -23,9 +23,18 @@ const getCorrectDate = (date: string) => {
 const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch }) => {
   const { t } = useTranslation();
   const getFilterValue = (filter: IFilterItem) => {
-    const { FromDate, ToDate } = filtersValues;
-    const replacedFrom = FromDate ? getCorrectDate(FromDate) : null;
-    const replacedTo = FromDate ? getCorrectDate(ToDate) : null;
+    let replacedFrom;
+    let replacedTo;
+    if (filter.datesKeys) {
+      const FromDate = filtersValues[filter.datesKeys.FromKey];
+      const ToDate = filtersValues[filter.datesKeys.ToKey];
+      replacedFrom = FromDate ? getCorrectDate(FromDate) : null;
+      replacedTo = ToDate ? getCorrectDate(ToDate) : null;
+    } else {
+      const { FromDate, ToDate } = filtersValues;
+      replacedFrom = FromDate ? getCorrectDate(FromDate) : null;
+      replacedTo = FromDate ? getCorrectDate(ToDate) : null;
+    }
     switch (filter.type) {
       case 'DATE': {
         return filter.type === 'DATE' && replacedFrom && replacedTo ? [moment(replacedFrom), moment(replacedTo)] : null;
@@ -75,6 +84,7 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
             }
             // eslint-disable-next-line
             const newValue = filter.type === 'DATE' && !isEmptyDate ? { ...value } : filter.type === 'DATE' && isEmptyDate ? {} : { [filter.key]: value };
+            console.log({ ...filtersValues, ...newValue }, 'newValuenewValuenewValuenewValue');
             onChange({ ...filtersValues, ...newValue });
           }}
         />
