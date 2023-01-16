@@ -50,7 +50,7 @@ const TargetReport: React.FC<any> = () => {
     const isUpdatedData = currentDetails?.isUpdatedData;
 
     if (Object.keys(filtersValues).length && expanded && (!currentDetails || (currentDetails && !isUpdatedData))) {
-      const data = { ...filtersValues, ...{ BranchSysId: record.SellerCode } };
+      const data = { ...filtersValues, ...{ SellerCode: record.SellerCode } };
       API.reports.ticketReports.getSellerTargetReportDetails(data).then((res) => {
         if (res.ErrorCode === RESPONSE_STATUSES.OK) {
           const newDetails: BranchViewDetailsRecord = {

@@ -66,9 +66,11 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       label: t('reports.ordersReports.filters.ToAmount')
     },
     {
-      type: 'INPUT',
+      type: 'SINGLE',
       key: 'SellerCode',
-      label: t('reports.ordersReports.filters.Seller')
+      label: t('reports.ordersReports.filters.Seller'),
+      options: filtersOptions ? filtersOptions['Sellers'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
     },
     {
       type: 'INPUT',

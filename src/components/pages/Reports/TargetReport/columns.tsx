@@ -1,6 +1,6 @@
 export const getSaleReportsTableColumns = (t: any): any => [
   {
-    title: t('reports.ticketReports.branchViewTitle'),
+    title: t('navMenu.targetReports'),
     children: [
       {
         title: t('dashboard.dailyUserStats.name'),

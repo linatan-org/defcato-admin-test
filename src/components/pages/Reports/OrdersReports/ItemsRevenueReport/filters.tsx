@@ -42,9 +42,11 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {
-      type: 'INPUT',
+      type: 'SINGLE',
       key: 'SellerCode',
-      label: t('reports.ordersReports.filters.Seller')
+      label: t('reports.ordersReports.filters.Seller'),
+      options: filtersOptions ? filtersOptions['Sellers'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
     },
     {
       type: 'INPUT',
@@ -92,9 +94,11 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {
-      type: 'INPUT',
+      type: 'SINGLE',
       key: 'City',
-      label: t('reports.ordersReports.filters.City')
+      label: t('reports.ordersReports.filters.City'),
+      options: filtersOptions ? filtersOptions['Cities'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
     },
     {
       type: 'MULTI',
