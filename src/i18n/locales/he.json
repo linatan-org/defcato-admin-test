@@ -8,6 +8,7 @@
   "dates": "תאריכים",
   "exportToExcel": "יצוא  לאקסל",
   "search": "חפש",
+  "areYouSureYouWantLogout": "האם ברצונך לצאת ?",
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",
@@ -25,7 +26,8 @@
     "sellers": "מוכרנים",
     "ticketReports": "דוח פניות",
     "ordersReports": "דוח הזמנות",
-    "targetReports": "דוח יעדים"
+    "targetReports": "דוח יעדים",
+    "logOut": "יציאה"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",

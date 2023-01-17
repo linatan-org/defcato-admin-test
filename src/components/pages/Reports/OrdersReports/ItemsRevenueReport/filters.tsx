@@ -46,6 +46,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       key: 'SellerCode',
       label: t('reports.ordersReports.filters.Seller'),
       options: filtersOptions ? filtersOptions['Sellers'] : [],
+      showSearch: true,
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {
@@ -57,6 +58,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       type: 'SINGLE_API',
       key: 'CategoryCode',
       label: t('reports.ordersReports.filters.Category'),
+      selectFieldNames: SELECT_FIELD_NAMES,
       getItems: async (v) => {
         return await API.keyboard.getCreateItems(v).then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
@@ -70,6 +72,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       type: 'SINGLE_API',
       key: 'ItemCode',
       label: t('reports.ordersReports.filters.Item'),
+      selectFieldNames: SELECT_FIELD_NAMES,
       getItems: async (v) => {
         return await API.keyboard.getCreateItems(v).then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
@@ -98,6 +101,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       key: 'City',
       label: t('reports.ordersReports.filters.City'),
       options: filtersOptions ? filtersOptions['Cities'] : [],
+      showSearch: true,
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {

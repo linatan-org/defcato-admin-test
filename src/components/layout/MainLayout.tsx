@@ -1,6 +1,5 @@
-import { Html5Outlined } from '@ant-design/icons/lib';
-import React from 'react';
-import { Layout, Menu } from 'antd';
+import React, { useState } from 'react';
+import { Layout, Menu, Modal, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MenuProps } from 'antd';
@@ -16,9 +15,11 @@ import {
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { routes } from '../../constants/routes';
+import useAuth from '../../contexts/auth/hook';
 import GlobalLoader from '../GlobalLoader/GlobalLoader';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
+const { Text } = Typography;
 type MenuItem = Required<MenuProps>['items'][number];
 function getItem(
   label: React.ReactNode,
@@ -43,6 +44,8 @@ type LayoutProps = {
 const MainLayout = ({ children }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const authContext = useAuth();
+  const [isShowConfirmLogout, setIsShowConfirmLogout] = useState(false);
   const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
   const items: MenuItem[] = [
     getItem(t('navMenu.reports'), 'sub1', null, [
@@ -60,7 +63,8 @@ const MainLayout = ({ children }: LayoutProps) => {
       getItem(t('navMenu.dailyInstruction'), routes.dailyInstructionEditor),
       getItem(t('navMenu.catalog'), routes.catalog),
       getItem(t('navMenu.sellers'), routes.sellers)
-    ])
+    ]),
+    getItem(t('navMenu.logOut'), routes.signIn, null)
   ];
 
   const getDefaultSelectedKey = () => {
@@ -73,17 +77,32 @@ const MainLayout = ({ children }: LayoutProps) => {
       : (matchedRoute && (routes as any)[matchedRoute]) || routes.dashboard;
   };
 
+  const onMenuItemClick = (key: string) => {
+    if (key === routes.signIn) {
+      setIsShowConfirmLogout(true);
+      return;
+    }
+    history.push(key);
+  };
+
+  const onLogout = () => {
+    setIsShowConfirmLogout(false);
+    sessionStorage.removeItem('token');
+    authContext.setIsSignedIn(false);
+    history.push('/');
+  };
+
   return (
     <Layout className="min-h-screen">
       <GlobalLoader />
-      {!isDashboardAccessOnly ? (
+      {!isDashboardAccessOnly && authContext.isAuthenticated() ? (
         <Sider
           width={250}
           className="text-[#fff]"
         >
           <div>
             <Menu
-              onClick={(e) => history.push(e.key)}
+              onClick={(e) => onMenuItemClick(e.key)}
               defaultSelectedKeys={[getDefaultSelectedKey()]}
               mode="inline"
               theme="dark"
@@ -93,6 +112,24 @@ const MainLayout = ({ children }: LayoutProps) => {
         </Sider>
       ) : null}
       <Content className="flex flex-col min-h-screen gap-6 p-6">{children}</Content>
+      <Modal
+        title={t('navMenu.logOut')}
+        centered
+        visible={isShowConfirmLogout}
+        onOk={onLogout}
+        onCancel={() => setIsShowConfirmLogout(false)}
+        cancelText={t('cancel')}
+        okText={t('ok')}
+        width={'80%'}
+        cancelButtonProps={{
+          size: 'large'
+        }}
+        okButtonProps={{
+          size: 'large'
+        }}
+      >
+        <Text strong>{t('areYouSureYouWantLogout')}</Text>
+      </Modal>
     </Layout>
   );
 };
