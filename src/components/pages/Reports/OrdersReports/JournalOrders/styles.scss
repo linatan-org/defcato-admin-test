@@ -6,3 +6,11 @@
   top: 7px;
   z-index: 100;
 }
+.exportToExcelBtn {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+}

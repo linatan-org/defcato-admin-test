@@ -8,14 +8,7 @@ import ItemsRevenueReport from './ItemsRevenueReport';
 import JournalOrders from './JournalOrders';
 import OrdersTotalReport from './OrdersTotalReport';
 import ItemsTotalReport from './ItemsTotalReport';
-import { IOrderFilterValues, RESPONSE_STATUSES } from '../../../../server/models';
-
-enum OrdersReportsEnum {
-  ORDERS_JOURNAL,
-  ORDERS_BY_PROPERTIES,
-  ITEMS_REPORTS,
-  ITEMS_REVENUE_REPORTS
-}
+import { IOrderFilterValues, OrdersReportsEnum, RESPONSE_STATUSES } from '../../../../server/models';
 
 const OrdersReports: React.FC<any> = () => {
   const { t } = useTranslation();

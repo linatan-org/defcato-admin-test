@@ -30,7 +30,8 @@ import {
   ITicketReportsBranchView,
   ITicketReportsBranchViewDetails,
   ITotalOrderReportList,
-  IZReports
+  IZReports,
+  OrdersReportsEnum
 } from './models';
 
 let dispatch: any;
@@ -136,6 +137,19 @@ export const API = {
           ...filters
         });
         return res.data;
+      },
+      exportOrdersToExcel: async (data: any, type: OrdersReportsEnum): Promise<IExportExcelTicketReport> => {
+        const urls = {
+          [OrdersReportsEnum.ITEMS_REVENUE_REPORTS]: 'AdminExportCRMItemsRevenueReport2Excel.aspx',
+          [OrdersReportsEnum.ITEMS_REPORTS]: 'AdminExportCRMItemsTotalReport2Excel.aspx',
+          [OrdersReportsEnum.ORDERS_BY_PROPERTIES]: 'AdminExportCRMOrdersReport2Excel.aspx',
+          [OrdersReportsEnum.ORDERS_JOURNAL]: 'AdminExportCRMOrdersTotalReport2Excel.aspx'
+        };
+        const res = await apiConfig.post(urls[type], {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
       }
     },
     ticketReports: {
@@ -148,6 +162,13 @@ export const API = {
       },
       getTargetReports: async (data: any): Promise<ITargetReportsList> => {
         const res = await apiConfig.post('/AdminCRMTargetsReport.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
+      exportTargetReportsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
+        const res = await apiConfig.post('/AdminExportCRMSellersTargetsReport2Excel.aspx', {
           ...getSession(),
           ...data
         });

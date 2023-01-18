@@ -1,8 +1,9 @@
+import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import { IOrderFilterValues, IOrderReport, RESPONSE_STATUSES } from '../../../../../server/models';
+import { IOrderFilterValues, IOrderReport, OrdersReportsEnum, RESPONSE_STATUSES } from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getColumns } from './columns';
@@ -40,6 +41,15 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     getJournalList(filtersValues);
   };
 
+  const onExportToExcel = (filters: any) => {
+    API.reports.orderReports.exportOrdersToExcel(filters, OrdersReportsEnum.ORDERS_JOURNAL).then((res) => {
+      console.log(res);
+      if (res.ErrorCode === RESPONSE_STATUSES.OK && res.ReportURL) {
+        window.open(res.ReportURL, '_blank');
+      }
+    });
+  };
+
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
@@ -52,6 +62,15 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         className="relative flex-1"
         ref={ref}
       >
+        <Button
+          icon={<FileExcelFilled />}
+          onClick={() => onExportToExcel(filtersValues)}
+          type="primary"
+          className="exportToExcelBtn"
+          disabled={ordersList.length === 0}
+        >
+          {t('exportToExcel')}
+        </Button>
         <Button
           icon={<ReloadOutlined />}
           onClick={() => getJournalList(filtersValues)}

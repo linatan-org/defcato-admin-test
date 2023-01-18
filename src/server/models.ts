@@ -1,5 +1,12 @@
 import { ColumnsType } from 'antd/es/table';
 
+export enum OrdersReportsEnum {
+  ORDERS_JOURNAL,
+  ORDERS_BY_PROPERTIES,
+  ITEMS_REPORTS,
+  ITEMS_REVENUE_REPORTS
+}
+
 export interface IGeneralResponse {
   ErrorCode: number;
   ErrorMessage: string;
