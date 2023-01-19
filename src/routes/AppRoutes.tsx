@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import connect from 'react-redux/es/components/connect';
 import { Redirect, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
@@ -17,12 +18,12 @@ import Dashboard from '../components/pages/Dashboard';
 import SalesReports from '../components/pages/Reports/SalesReports';
 import { ToastContainer } from 'react-toastify';
 import KeyboardEditor from '../components/pages/KeyboardEditor/KeyboardEditor';
+import { setAuth } from '../reudux/auth/action';
 import { injectDispatch } from '../server';
 import { setDashboardAccessOnly } from '../reudux/settings/action';
 import ZReports from '../components/pages/Reports/ZReports';
 
-const AppRoutes = () => {
-  const authContext = useAuth();
+const AppRoutes = (props: any) => {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const navigation = useHistory();
@@ -35,7 +36,7 @@ const AppRoutes = () => {
       if (SessionKey) {
         dispatch(setDashboardAccessOnly(true));
         sessionStorage.setItem('token', SessionKey);
-        authContext.setIsSignedIn(true);
+        dispatch(setAuth(true));
         if (url) {
           navigation.replace(url);
         }
@@ -50,10 +51,10 @@ const AppRoutes = () => {
   useEffect(() => {
     if (!sessionStorage.token) {
       // dispatch(setDashboardAccessOnly(false));
-      authContext.setIsSignedIn(false);
+      dispatch(setAuth(false));
       navigation.replace('/');
     }
-  }, [authContext.isAuthenticated(), sessionStorage.token]);
+  }, [props.isAuth, sessionStorage.token]);
 
   return (
     <>
@@ -80,7 +81,7 @@ const AppRoutes = () => {
               path="/"
               exact
               render={() =>
-                authContext.isAuthenticated() || sessionStorage.token ? (
+                props.isAuth || sessionStorage.token ? (
                   <Redirect to={routes.dashboard} />
                 ) : (
                   <Route
@@ -158,4 +159,8 @@ const AppRoutes = () => {
   );
 };
 
-export default AppRoutes;
+const mapState = (state: any) => ({
+  isAuth: state.auth.isAuth
+});
+
+export default connect(mapState, {})(AppRoutes);

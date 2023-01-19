@@ -27,7 +27,6 @@ interface IKeyboardList {
 
 const KeyboardList: React.FC<IKeyboardList> = ({ keyboardList }) => {
   const { t } = useTranslation();
-  const authContext = useAuth();
   const navigation = useHistory();
   const dispatch = useDispatch();
   const [isVisibleConfirmDeleteModal, setIsVisibleConfirmDeleteModal] = useState(false);

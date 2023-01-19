@@ -1,12 +1,14 @@
 import { Form, Input, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { UserOutlined, LockOutlined, EnterOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
 import useAuth from '../../../../contexts/auth/hook';
 import { toast } from 'react-toastify';
 import { API } from '../../../../server';
 import axios from 'axios';
 import { AUTH_URL } from '../../../../constants/data';
 import { RESPONSE_STATUSES } from '../../../../server/models';
+import { setAuth } from '../../../../reudux/auth/action';
 
 type EnterForm = {
   username?: string;
@@ -14,8 +16,7 @@ type EnterForm = {
 };
 
 export default function SigninForm() {
-  const authContext = useAuth();
-  console.log(sessionStorage.key !== null);
+  const dispatch = useDispatch();
   const [loadingButton, setLoadingButton] = useState<boolean>();
   const [form] = Form.useForm();
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function SigninForm() {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
             console.log(res, 'RESPONSE');
             sessionStorage.setItem('token', res.SessionKey);
-            authContext.setIsSignedIn(true);
+            dispatch(setAuth(true));
           } else {
             setLoadingButton(false);
             toast(res.ErrorMessage);

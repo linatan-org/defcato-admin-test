@@ -6,11 +6,12 @@ import errorReducer from './error';
 import keyboardReducer from './keyboard';
 import globalLoaderReducer from './globalLoader';
 import settingsReducer from './settings';
+import authReducer from './auth';
 
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['keyboard'],
+  whitelist: ['keyboard', 'settings', 'auth'],
   blacklist: ['error'],
   timeout: null
 };
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   error: errorReducer,
   keyboard: keyboardReducer,
   globalLoader: globalLoaderReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  auth: authReducer
 });
 
 const pReducer = persistReducer(persistConfig, rootReducer);

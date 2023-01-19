@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Modal, Typography } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import connect from 'react-redux/es/components/connect';
 import { useHistory } from 'react-router-dom';
 import { MenuProps } from 'antd';
 import {
@@ -16,6 +17,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { routes } from '../../constants/routes';
 import useAuth from '../../contexts/auth/hook';
+import { setAuth } from '../../reudux/auth/action';
 import GlobalLoader from '../GlobalLoader/GlobalLoader';
 
 const { Sider, Content } = Layout;
@@ -39,12 +41,13 @@ function getItem(
 
 type LayoutProps = {
   children: React.ReactNode;
+  isAuth: boolean;
 };
 
-const MainLayout = ({ children }: LayoutProps) => {
+const MainLayout = ({ children, isAuth }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const authContext = useAuth();
+  const dispatch = useDispatch();
   const [isShowConfirmLogout, setIsShowConfirmLogout] = useState(false);
   const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
   const items: MenuItem[] = [
@@ -88,14 +91,14 @@ const MainLayout = ({ children }: LayoutProps) => {
   const onLogout = () => {
     setIsShowConfirmLogout(false);
     sessionStorage.removeItem('token');
-    authContext.setIsSignedIn(false);
+    dispatch(setAuth(false));
     history.push('/');
   };
 
   return (
     <Layout className="min-h-screen">
       <GlobalLoader />
-      {!isDashboardAccessOnly && authContext.isAuthenticated() ? (
+      {!isDashboardAccessOnly && isAuth ? (
         <Sider
           width={250}
           className="text-[#fff]"
@@ -134,4 +137,8 @@ const MainLayout = ({ children }: LayoutProps) => {
   );
 };
 
-export default MainLayout;
+const mapState = (state: any) => ({
+  isAuth: state.auth.isAuth
+});
+
+export default connect(mapState, {})(MainLayout);

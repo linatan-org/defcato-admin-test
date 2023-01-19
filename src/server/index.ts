@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { setLoading } from '../reudux/globalLoader/action';
 import {
   ICatalagCategories,
@@ -59,6 +60,9 @@ apiConfig.interceptors.request.use(
 apiConfig.interceptors.response.use(
   (response) => {
     dispatch(setLoading(false));
+    if (response.data.ErrorCode !== 0) {
+      toast.error(response.data.ErrorMessage, { className: 'toastError' });
+    }
     return Promise.resolve(response);
   },
   (error) => {

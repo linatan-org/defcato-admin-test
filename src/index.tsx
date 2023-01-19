@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import AppRoutes from './routes/AppRoutes';
 import { Provider } from 'react-redux';
@@ -16,9 +17,11 @@ root.render(
     <BrowserRouter>
       <ConfigProvider direction="rtl">
         <AppProvider>
-          <MainLayout>
-            <AppRoutes />
-          </MainLayout>
+          <HashRouter>
+            <MainLayout>
+              <AppRoutes />
+            </MainLayout>
+          </HashRouter>
         </AppProvider>
       </ConfigProvider>
     </BrowserRouter>

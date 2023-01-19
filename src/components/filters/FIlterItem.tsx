@@ -52,7 +52,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
   disabled,
   showSearch,
   getItems,
-  searchKeys,
+  searchKeys = ['Value'],
   defaultValue,
   datesKeys,
   dateFormat
@@ -189,6 +189,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
             onChange={onChange}
             filterOption={(input, option) => {
               const matchedValue = searchKeys && searchKeys.map((key) => option[key]);
+              console.log(matchedValue, 'matchedValue');
               return ((matchedValue && matchedValue[0]) || '').toLowerCase().includes(input.toLowerCase());
             }}
             fieldNames={selectFieldNames}
