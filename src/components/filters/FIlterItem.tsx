@@ -61,6 +61,8 @@ export const FilterItem: React.FC<IFilterItem> = ({
   const [singleApiOptions, setSingleApiOptions] = useState<any[]>([]);
   const debouncedInputValue = useDebounceValue<string>(inputValue, 700);
 
+  console.log(singleApiOptions, 'singleApiOptionssingleApiOptions');
+
   useEffect(() => {
     if (type === 'SINGLE_API' && getItems) {
       getSingleApiOptions('');
@@ -87,6 +89,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
   const getSingleApiOptions = async (search: string) => {
     if (getItems) {
       const items = await getItems(search);
+      console.log(items, 'itemsitemsitems');
       setSingleApiOptions(items);
     }
   };

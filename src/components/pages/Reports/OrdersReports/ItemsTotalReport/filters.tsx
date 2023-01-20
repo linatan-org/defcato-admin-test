@@ -42,7 +42,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       getItems: async (v) => {
         return await API.keyboard.getCreateItems(v).then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-            return res.Categories || [];
+            return res.Items || [];
           }
           return [];
         });
