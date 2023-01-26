@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { routes } from '../../constants/routes';
 import useAuth from '../../contexts/auth/hook';
 import { setAuth } from '../../reudux/auth/action';
+import { setDashboardAccessOnly } from '../../reudux/settings/action';
 import GlobalLoader from '../GlobalLoader/GlobalLoader';
 
 const { Sider, Content } = Layout;
@@ -70,6 +71,8 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
     getItem(t('navMenu.logOut'), routes.signIn, null)
   ];
 
+  const itemsLogout: MenuItem[] = [getItem(t('navMenu.logOut'), routes.signIn, null)];
+
   const getDefaultSelectedKey = () => {
     const currentPath = history.location.pathname;
     const matchedRoute = Object.keys(routes).find((k: string) => {
@@ -90,6 +93,7 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
 
   const onLogout = () => {
     setIsShowConfirmLogout(false);
+    dispatch(setDashboardAccessOnly(false));
     sessionStorage.removeItem('token');
     dispatch(setAuth(false));
     history.push('/');
@@ -98,7 +102,7 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
   return (
     <Layout className="min-h-screen">
       <GlobalLoader />
-      {!isDashboardAccessOnly && isAuth ? (
+      {isAuth ? (
         <Sider
           width={250}
           className="text-[#fff]"
@@ -109,7 +113,7 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
               defaultSelectedKeys={[getDefaultSelectedKey()]}
               mode="inline"
               theme="dark"
-              items={items}
+              items={isDashboardAccessOnly ? itemsLogout : items}
             />
           </div>
         </Sider>

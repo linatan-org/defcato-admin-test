@@ -36,10 +36,11 @@ const ZReports: React.FC<any> = () => {
     }
   }, [filtersValues]);
 
-  const printReport = () => {
-    if (checkedZReport) {
+  const printReport = (report?: IZReport) => {
+    if (checkedZReport || report) {
       API.reports
-        .printZReport(checkedZReport.DeclareStationSysId, checkedZReport.ZCounter)
+        // @ts-ignore
+        .printZReport((checkedZReport || report).DeclareStationSysId, (checkedZReport || report).ZCounter)
         .then((res) => {
           if (res.ErrorCode == RESPONSE_STATUSES.OK) {
             setCheckedZReport(null);
@@ -78,7 +79,7 @@ const ZReports: React.FC<any> = () => {
             size="large"
             key={t('reports.ZReports.ZReportDetails.PrintAndExist')}
             type="primary"
-            onClick={printReport}
+            onClick={() => printReport()}
           >
             {t('reports.ZReports.ZReportDetails.PrintAndExist')}
           </Button>
@@ -92,6 +93,10 @@ const ZReports: React.FC<any> = () => {
         </Button>
       </div>
     ];
+  };
+
+  const onOpenReportDetails = (report: IZReport) => {
+    setCheckedZReport(report);
   };
 
   return (
@@ -110,7 +115,7 @@ const ZReports: React.FC<any> = () => {
         />
         <CustomTable
           data={salesReports}
-          columns={getZReportsTableColumns(t)}
+          columns={getZReportsTableColumns(t, onOpenReportDetails, printReport)}
           onDoubleClick={setCheckedZReport}
         />
       </div>

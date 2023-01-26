@@ -1,8 +1,13 @@
+import { EyeFilled, PrinterFilled } from '@ant-design/icons/lib';
 import moment from 'moment';
 import { UseTranslationResponse } from 'react-i18next';
-import { IZReportParams } from '../../../../server/models';
+import { IZReport, IZReportParams } from '../../../../server/models';
 
-export const getZReportsTableColumns = (t: any): any => [
+export const getZReportsTableColumns = (
+  t: any,
+  onOpenReportDetails: (r: IZReport) => void,
+  printReport: (r: IZReport) => void
+): any => [
   {
     title: t('reports.ZReports.ZReport'),
     children: [
@@ -50,6 +55,23 @@ export const getZReportsTableColumns = (t: any): any => [
         title: t('reports.ZReports.Status'),
         dataIndex: 'ZStatus',
         key: 'ZStatus'
+      },
+      {
+        title: '',
+        dataIndex: 'icons',
+        key: 'icons',
+        render: (a: any, r: IZReport) => (
+          <div>
+            <PrinterFilled
+              className="text-lg mr-3"
+              onClick={() => printReport(r)}
+            />
+            <EyeFilled
+              className="text-lg mr-4"
+              onClick={() => onOpenReportDetails(r)}
+            />
+          </div>
+        )
       }
     ]
   }
