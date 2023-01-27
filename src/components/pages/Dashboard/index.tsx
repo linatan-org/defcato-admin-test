@@ -90,7 +90,7 @@ const Dashboard: React.FC<Props> = ({ isAuth }) => {
     }
   };
 
-  if (!sessionStorage.token) return <Redirect to={'/'} />;
+  if (!localStorage.token) return <Redirect to={'/'} />;
   return (
     <>
       <div className="datepickerWrap">

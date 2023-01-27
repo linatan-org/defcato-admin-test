@@ -72,7 +72,7 @@ apiConfig.interceptors.response.use(
 );
 
 const getSession = () => {
-  const SessionKey = sessionStorage.getItem('token');
+  const SessionKey = localStorage.getItem('token');
   return { SessionKey };
 };
 

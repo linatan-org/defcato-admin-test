@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Modal, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import connect from 'react-redux/es/components/connect';
@@ -94,11 +94,15 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
   const onLogout = () => {
     setIsShowConfirmLogout(false);
     dispatch(setDashboardAccessOnly(false));
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     dispatch(setAuth(false));
     history.push('/');
   };
 
+  useEffect(() => {
+    window.addEventListener('beforeunload', onLogout);
+    return () => window.removeEventListener('beforeunload', onLogout);
+  });
   return (
     <Layout className="min-h-screen">
       <GlobalLoader />

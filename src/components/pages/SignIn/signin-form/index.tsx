@@ -35,7 +35,7 @@ export default function SigninForm() {
         .then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
             console.log(res, 'RESPONSE');
-            sessionStorage.setItem('token', res.SessionKey);
+            localStorage.setItem('token', res.SessionKey);
             dispatch(setAuth(true));
           } else {
             setLoadingButton(false);

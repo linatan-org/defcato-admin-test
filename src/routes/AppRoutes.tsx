@@ -35,26 +35,28 @@ const AppRoutes = (props: any) => {
       const url = new URLSearchParams(search).get('url');
       if (SessionKey) {
         dispatch(setDashboardAccessOnly(true));
-        sessionStorage.setItem('token', SessionKey);
+        localStorage.setItem('token', SessionKey);
         dispatch(setAuth(true));
         if (url) {
           navigation.replace(url);
         }
       }
+    } else {
+      navigation.replace(`${routes.dashboard}`);
     }
-  }, [search]);
+  }, []);
 
   useEffect(() => {
     injectDispatch(dispatch);
   }, []);
 
   useEffect(() => {
-    if (!sessionStorage.token) {
+    if (!localStorage.token) {
       // dispatch(setDashboardAccessOnly(false));
       dispatch(setAuth(false));
       navigation.replace('/');
     }
-  }, [props.isAuth, sessionStorage.token]);
+  }, [props.isAuth, localStorage.token]);
 
   return (
     <>
@@ -81,7 +83,7 @@ const AppRoutes = (props: any) => {
               path="/"
               exact
               render={() =>
-                props.isAuth || sessionStorage.token ? (
+                props.isAuth || localStorage.token ? (
                   <Redirect to={routes.dashboard} />
                 ) : (
                   <Route
