@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, DatePicker, Space } from 'antd';
 import type { DatePickerProps } from 'antd';
+import connect from 'react-redux/es/components/connect';
 import { API } from '../../../server';
 import { IDailyStatsData, IDailyUserStatsData, IDailyUserTargetsData, RESPONSE_STATUSES } from '../../../server/models';
 import { Redirect } from 'react-router-dom';
@@ -16,7 +17,11 @@ import './styles.scss';
 
 type DATA_TYPE = 'DAILY_STATS' | 'USER_DAILY_STATS' | 'DAILY_USER_TARGETS';
 
-const Dashboard = () => {
+interface Props {
+  isAuth: boolean;
+}
+
+const Dashboard: React.FC<Props> = ({ isAuth }) => {
   const { t } = useTranslation();
   const dashboardCardsData = getDashboardCardsValues(t);
   const [checkedUserIdx, setCheckedUserIdx] = useState<string>('');
@@ -50,9 +55,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    getDailyStat(selectedDate);
-    getDailyUserStat(selectedDate);
-  }, [selectedDate]);
+    if (isAuth) {
+      getDailyStat(selectedDate);
+      getDailyUserStat(selectedDate);
+    }
+  }, [selectedDate, isAuth]);
 
   useEffect(() => {
     if (checkedUserIdx !== '') {
@@ -150,4 +157,9 @@ const Dashboard = () => {
     </>
   );
 };
-export default Dashboard;
+
+const mapState = (state: any) => ({
+  isAuth: state.auth.isAuth
+});
+
+export default connect(mapState, {})(Dashboard);

@@ -11,7 +11,7 @@ import authReducer from './auth';
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['keyboard', 'settings', 'auth'],
+  whitelist: ['keyboard'],
   blacklist: ['error'],
   timeout: null
 };
