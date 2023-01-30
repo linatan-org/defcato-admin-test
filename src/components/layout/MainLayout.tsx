@@ -71,8 +71,6 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
     getItem(t('navMenu.logOut'), routes.signIn, null)
   ];
 
-  const itemsLogout: MenuItem[] = [getItem(t('navMenu.logOut'), routes.signIn, null)];
-
   const getDefaultSelectedKey = () => {
     const currentPath = history.location.pathname;
     const matchedRoute = Object.keys(routes).find((k: string) => {
@@ -100,13 +98,15 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
   };
 
   useEffect(() => {
-    window.addEventListener('beforeunload', onLogout);
+    if (isDashboardAccessOnly) {
+      window.addEventListener('beforeunload', onLogout);
+    }
     return () => window.removeEventListener('beforeunload', onLogout);
   });
   return (
     <Layout className="min-h-screen">
       <GlobalLoader />
-      {isAuth ? (
+      {isAuth && !isDashboardAccessOnly ? (
         <Sider
           width={250}
           className="text-[#fff]"
@@ -117,7 +117,7 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
               defaultSelectedKeys={[getDefaultSelectedKey()]}
               mode="inline"
               theme="dark"
-              items={isDashboardAccessOnly ? itemsLogout : items}
+              items={items}
             />
           </div>
         </Sider>
