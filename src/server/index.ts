@@ -20,7 +20,9 @@ import {
   IPaymentDataItem,
   IPaymentsList,
   IRevenueReportList,
+  ISalesReport,
   ISalesReports,
+  ISalesReportsDetailsResponse,
   ISeller,
   ISellersList,
   ISignInResponse,
@@ -218,6 +220,13 @@ export const API = {
       const res = await apiConfig.post('/FetchTranJournalList.aspx', {
         ...getSession(),
         ...data
+      });
+      return res.data;
+    },
+    getSalesReportDetails: async (report: ISalesReport): Promise<ISalesReportsDetailsResponse> => {
+      const res = await apiConfig.post('/AdminCRMFetchTransaction.aspx', {
+        ...getSession(),
+        ...{ TranNumber: report.TranNumber }
       });
       return res.data;
     },

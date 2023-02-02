@@ -80,7 +80,28 @@
       "sellerNumber": "מספר מוכרן",
       "branchName": "סניף",
       "memberName": "לקוח",
-      "totalAmount": "סה‘כ"
+      "totalAmount": "סה‘כ",
+      "salesReportDetails": {
+        "TransactionNumber": "מזהה עסק",
+        "salesReportDetailsTitle": "פירוט מכירה",
+        "SaleNumber": "מספר עסק",
+        "Branch": "סניף",
+        "Date": "תאריך",
+        "Paid": "שולם",
+        "Items": "פריטים",
+        "Discounts": "מבצעים",
+        "itemsColumns": {
+          "Code": "קוד",
+          "Description": "תאור",
+          "Quantity": "כמות",
+          "Total": "סה“\\כ"
+        },
+        "discountColumns": {
+          "PromotionId": "מספר מבצע",
+          "Description": "תאור",
+          "Amount": "סה“\\כ"
+        }
+      }
     },
     "targetReports": {
       "columns": {
@@ -154,12 +175,14 @@
         "Status": "סטטוס",
         "DeliveryType": "סוג משלוח",
         "Branch": "סניף מייצר",
+        "Branch2": "סניף",
         "DeliveryBranch": "סניף אחראי",
         "FromAmount": "מסכום",
         "ToAmount": "עד סכום",
         "Seller": "נציג",
         "Customer": "לקוח",
         "Order": "הזמנה",
+        "Order2": "עסקה",
         "Category": "קטגוריה",
         "Item": "פריט",
         "PaymentMethod": "סוג תשלום",

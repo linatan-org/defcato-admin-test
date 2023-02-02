@@ -42,7 +42,7 @@ const AppRoutes = (props: any) => {
         }
       }
     } else {
-      navigation.replace(`${routes.dashboard}`);
+      // navigation.replace(`${routes.dashboard}`);
     }
   }, []);
 

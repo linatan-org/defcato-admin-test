@@ -7,11 +7,53 @@ const SELECT_FIELD_NAMES = {
   value: 'Key'
 };
 
-export const getSalesFilters = (filtersOptions: IOrderFilterValues | null, t: any): IFilterItem[] => {
+export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): IFilterItem[] => {
   return [
     {
       type: 'DATE',
-      key: 'dateRange'
+      key: 'CreatedDate',
+      label: t('reports.ordersReports.filters.CreatedDate'),
+      datesKeys: {
+        FromKey: 'FromCreatedDate',
+        ToKey: 'ToCreatedDate'
+      }
+    },
+    {
+      type: 'DATE',
+      key: 'SupplyDate',
+      label: t('reports.ordersReports.filters.SupplyDate'),
+      datesKeys: {
+        FromKey: 'FromDeliveryDate',
+        ToKey: 'ToDeliveryDate'
+      }
+    },
+    {
+      type: 'MULTI',
+      key: 'StatusList',
+      label: t('reports.ordersReports.filters.Status'),
+      options: filtersOptions ? filtersOptions['StatusList'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'MULTI',
+      key: 'DeliveryBranchList',
+      label: t('reports.ordersReports.filters.DeliveryBranch'),
+      options: filtersOptions ? filtersOptions['DeliveryBranchList'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'MULTI',
+      key: 'BranchList',
+      label: t('reports.ordersReports.filters.Branch'),
+      options: filtersOptions ? filtersOptions['BranchList'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'MULTI',
+      key: 'DeliveryTypes',
+      label: t('reports.ordersReports.filters.DeliveryType'),
+      options: filtersOptions ? filtersOptions['DeliveryTypes'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
     },
     {
       type: 'INPUT_NUMBER',
@@ -22,13 +64,6 @@ export const getSalesFilters = (filtersOptions: IOrderFilterValues | null, t: an
       type: 'INPUT_NUMBER',
       key: 'ToAmount',
       label: t('reports.ordersReports.filters.ToAmount')
-    },
-    {
-      type: 'MULTI',
-      key: 'BranchList',
-      label: t('reports.ordersReports.filters.Branch2'),
-      options: filtersOptions ? filtersOptions['BranchList'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
     },
     {
       type: 'SINGLE',
@@ -46,7 +81,7 @@ export const getSalesFilters = (filtersOptions: IOrderFilterValues | null, t: an
     {
       type: 'INPUT',
       key: 'OrderNumber',
-      label: t('reports.ordersReports.filters.Order2')
+      label: t('reports.ordersReports.filters.Order')
     },
     {
       type: 'SINGLE_API',
@@ -85,9 +120,23 @@ export const getSalesFilters = (filtersOptions: IOrderFilterValues | null, t: an
     },
     {
       type: 'MULTI',
+      key: 'MemberTypes',
+      label: t('reports.ordersReports.filters.MemberType'),
+      options: filtersOptions ? filtersOptions['MemberTypes'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'MULTI',
       key: 'TranTypes',
       label: t('reports.ordersReports.filters.TransactionType'),
       options: filtersOptions ? filtersOptions['TranTypes'] : [],
+      selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'MULTI',
+      key: 'CancelReasons',
+      label: t('reports.ordersReports.filters.CancelReason'),
+      options: filtersOptions ? filtersOptions['CancelReasons'] : [],
       selectFieldNames: SELECT_FIELD_NAMES
     }
   ];

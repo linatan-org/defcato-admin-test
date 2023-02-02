@@ -1,7 +1,8 @@
+import { EyeFilled } from '@ant-design/icons/lib';
 import moment from 'moment';
-import { UseTranslationResponse } from 'react-i18next';
+import { ISalesReport } from '../../../../server/models';
 
-export const getSaleReportsTableColumns = (t: any): any => [
+export const getSaleReportsTableColumns = (t: any, onOpenReportDetails: (r: ISalesReport) => void): any => [
   {
     title: t('reports.saleReports.salesReports'),
     children: [
@@ -45,6 +46,19 @@ export const getSaleReportsTableColumns = (t: any): any => [
         title: t('reports.saleReports.totalAmount'),
         dataIndex: 'TotalAmount',
         key: 'TotalAmount'
+      },
+      {
+        title: '',
+        dataIndex: 'icons',
+        key: 'icons',
+        render: (a: any, r: ISalesReport) => (
+          <div>
+            <EyeFilled
+              className="text-lg mr-4"
+              onClick={() => onOpenReportDetails(r)}
+            />
+          </div>
+        )
       }
     ]
   }
