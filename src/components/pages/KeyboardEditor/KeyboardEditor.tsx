@@ -186,6 +186,7 @@ const KeyboardEditor: React.FC = () => {
         <Space key="btns-category">
           {editButton(rowInfo)}
           {addButton(rowInfo)}
+          {addButton(rowInfo, false, true)}
           {deleteButton(rowInfo)}
         </Space>
       ];
@@ -216,11 +217,14 @@ const KeyboardEditor: React.FC = () => {
     const isAllCategories =
       item && item.IsCategory && item.children && item.children.length && item.children.every((c) => c.IsCategory);
     const isCategory = item && item.IsCategory;
+    console.log(item?.IsCategory, 'item.IsCategory');
     return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel;
   };
 
   const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean, isAddRefItems?: boolean) => {
-    const tooltipText = rowInfo.node.IsCategory ? t('keyboard.addProductTooltip') : t('keyboard.addSubProductTooltip');
+    const tooltipText =
+      // eslint-disable-next-line
+      rowInfo.node.IsCategory && isAddRefItems ? t('keyboard.refItems') : rowInfo.node.IsCategory ? t('keyboard.addProductTooltip') : t('keyboard.addSubProductTooltip');
     return (
       <Tooltip
         key={tooltipText}
@@ -231,8 +235,9 @@ const KeyboardEditor: React.FC = () => {
       >
         <Button
           icon={<PlusOutlined />}
+          className={rowInfo.node.IsCategory && isAddRefItems ? 'addRefToCatBtn' : ''}
           shape="circle"
-          key="addButton"
+          key={rowInfo.node.IsCategory && isAddRefItems ? 'addRefToCat' : 'addButton'}
           type="primary"
           onClick={() => {
             if (!isAddTopCategory || isAddRefItems) {
@@ -305,11 +310,12 @@ const KeyboardEditor: React.FC = () => {
   };
 
   const onAddReffItems = (data: { References: string[]; Items: IItem[] }) => {
+    console.log(data, 'datadatadata', checkedRowInfo);
     let newTree: any;
     if (isAddRefItems && checkedRowInfo) {
       const copyInfo = { ...checkedRowInfo };
       copyInfo.node.References = [...data.References];
-      copyInfo.node.Items = [...data.Items];
+      copyInfo.node.Items = copyInfo.node.IsCategory ? [...data.Items, ...copyInfo.node.children] : [...data.Items];
       newTree = changeNodeAtPath({
         treeData: newTreeData,
         path: checkedRowInfo.path,
@@ -329,6 +335,7 @@ const KeyboardEditor: React.FC = () => {
         }).treeData;
       });
     }
+    console.log(newTree, 'newTreenewTreenewTreenewTree');
     setNewStreeData(newTree);
     clearData();
   };
@@ -381,6 +388,7 @@ const KeyboardEditor: React.FC = () => {
               ${rowinfo.node.IsCategory && 'categoryItem'}
               ${rowinfo.node.IsReferenceItem && 'referenceItem'}
               ${!rowinfo.node.IsCategory && 'productItem'}
+              ${rowinfo.node.IsReferenceItem && 'categoryItemWithRefItems'}
               ${(
                 !rowinfo.node.IsCategory && rowinfo.node.Items && rowinfo.node.Items.length
                 || !rowinfo.node.IsCategory && rowinfo.node.children && rowinfo.node.children.length

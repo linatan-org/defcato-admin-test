@@ -49,6 +49,11 @@
   color: $primaryGreenLight;
 }
 
+.addRefToCatBtn {
+  border-color: $primaryBlue !important;
+  background-color: $primaryBlue !important;
+}
+
 .categoryItem {
   .rst__rowContents {
     background: $gray8;
@@ -60,6 +65,12 @@
   .rst__rowContents {
     background: $gray6;
     color: white;
+  }
+}
+
+.categoryItemWithRefItems {
+  .rst__moveHandle {
+    background-color: $primaryBlue !important;
   }
 }
 

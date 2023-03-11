@@ -297,6 +297,7 @@
   "keyboard": {
     "addNewCategory": "הוסף קטגוריה חדשה",
     "addProductTooltip": "הוסף קטגוריה / פריט",
+    "refItems": "פרטים נלווים",
     "addSubProductTooltip": "הוסף פריט נלווה",
     "editCategoryTooltip": "עורך קטגוריה",
     "keyboardName": "שם מקלדת"
