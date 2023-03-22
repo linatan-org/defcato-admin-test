@@ -15,15 +15,13 @@ const root = createRoot(container);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ConfigProvider direction="rtl">
-        <AppProvider>
-          <HashRouter>
-            <MainLayout>
-              <AppRoutes />
-            </MainLayout>
-          </HashRouter>
-        </AppProvider>
-      </ConfigProvider>
+      <AppProvider>
+        <HashRouter>
+          <MainLayout>
+            <AppRoutes />
+          </MainLayout>
+        </HashRouter>
+      </AppProvider>
     </BrowserRouter>
   </Provider>
 );

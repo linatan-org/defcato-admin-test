@@ -17,7 +17,7 @@ export const SaleDetailsReportHeader: React.FC<Props> = ({ saleReport }) => {
   return (
     <div className="flex flex-row items-start flex-1 p-4 salesHeaderWrapper">
       <div className="flex flex-row items-center flex-1">
-        <UserOutlined className="ml-2 text-lg" />
+        <UserOutlined className="rtl:ml-2 ltr:mr-2 text-lg" />
         <Text strong>{saleReport.TranMember?.Name || '-'}</Text>
       </div>
       <div className="flex flex-col items-start flex-1">
@@ -57,7 +57,7 @@ export const SaleDetailsReportHeader: React.FC<Props> = ({ saleReport }) => {
           >
             {t('reports.saleReports.salesReportDetails.Date')} &nbsp;
           </Text>
-          <Text strong>{moment(saleReport.TranDate).format('DD/mm/yyyy')}</Text>
+          <Text strong>{moment(saleReport.TranDate).format('DD/MM/yyyy')}</Text>
         </div>
       </div>
     </div>

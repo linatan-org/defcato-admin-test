@@ -9,7 +9,7 @@ import { getCatalogTableColumns } from './columns';
 import { getCatalogFilters } from './filters';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
-import { SellerItem } from './components/SellerItem';
+import SellerItem from './components/SellerItem';
 
 const Sellers: React.FC<any> = () => {
   const { t } = useTranslation();

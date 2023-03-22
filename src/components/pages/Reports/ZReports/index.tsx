@@ -8,7 +8,7 @@ import CustomTable from '../../Dashboard/CustomTable';
 import Filters from '../../../filters/FIlters';
 import { KeyboardItem } from '../../KeyboardList/components/KeyboardItem/KeyboardItem';
 import { getZReportsTableColumns } from './columns';
-import { ZReportDetails } from './components/ZReportDetails/ZReportDetails';
+import ZReportDetails from './components/ZReportDetails/ZReportDetails';
 import { getSalesFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';

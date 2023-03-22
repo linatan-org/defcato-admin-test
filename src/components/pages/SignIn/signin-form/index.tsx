@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { UserOutlined, LockOutlined, EnterOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,23 @@ import axios from 'axios';
 import { AUTH_URL } from '../../../../constants/data';
 import { RESPONSE_STATUSES } from '../../../../server/models';
 import { setAuth } from '../../../../reudux/auth/action';
+import { onChangeLang } from '../../../../reudux/configs/action';
+
+const SELECT_FIELD_NAMES = {
+  label: 'key',
+  value: 'value'
+};
+
+const LANGS = [
+  {
+    key: 'Hebrew',
+    value: 'he'
+  },
+  {
+    key: 'English',
+    value: 'en'
+  }
+];
 
 type EnterForm = {
   username?: string;
@@ -18,6 +35,7 @@ type EnterForm = {
 export default function SigninForm() {
   const dispatch = useDispatch();
   const [loadingButton, setLoadingButton] = useState<boolean>();
+  const [currentLang, setCurrentLang] = useState('he');
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
@@ -25,6 +43,11 @@ export default function SigninForm() {
       password: '1234'
     });
   }, [form]);
+
+  useEffect(() => {
+    // i18n.changeLanguage(currentLang);
+    dispatch(onChangeLang(currentLang));
+  }, [currentLang]);
 
   const onFinish = (values: EnterForm) => {
     const { username, password } = values;
@@ -82,6 +105,16 @@ export default function SigninForm() {
             placeholder="password"
           />
         </Form.Item>
+        <div className="w-full mb-5 h-12">
+          <Select
+            className="w-full h-12 selectLangWrapper"
+            optionFilterProp="children"
+            value={currentLang}
+            onChange={setCurrentLang}
+            fieldNames={SELECT_FIELD_NAMES}
+            options={LANGS}
+          />
+        </div>
         <Form.Item>
           <Button
             icon={<EnterOutlined />}

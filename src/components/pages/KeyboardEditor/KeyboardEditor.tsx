@@ -34,7 +34,7 @@ const KeyboardEditor: React.FC = () => {
   const params: { id: string } = useParams();
   const navigation = useHistory();
   const location = useLocation();
-  const [IsAllowDefineItemOnCategoryLevel, setIsAllowDefineItemOnCategoryLevel] = useState(true);
+  const [IsAllowDefineItemOnCategoryLevel, setIsAllowDefineItemOnCategoryLevel] = useState(false);
 
   const isDuplicate = navigation.location.pathname.includes('duplicate');
   const isCreateNew = navigation.location.pathname.includes('new');
@@ -121,6 +121,7 @@ const KeyboardEditor: React.FC = () => {
         // addAsFirstChild: state.addAsFirstChild
       }).treeData;
     }
+    console.log(newTree, 'newTreenewTreenewTree');
     // @ts-ignore
     setNewStreeData(newTree);
     clearData();
@@ -184,9 +185,9 @@ const KeyboardEditor: React.FC = () => {
     if (rowInfo.node.IsCategory) {
       return [
         <Space key="btns-category">
+          {addButton(rowInfo, false, true)}
           {editButton(rowInfo)}
           {addButton(rowInfo)}
-          {addButton(rowInfo, false, true)}
           {deleteButton(rowInfo)}
         </Space>
       ];
@@ -206,19 +207,30 @@ const KeyboardEditor: React.FC = () => {
     setIsVisibleAddNewItemModal(true);
   };
 
-  const isForbiddenCreateCategory = (item: IKeyboardItem | null): boolean => {
+  const isForbiddenCreateCategory = (item: IKeyboardItem | null, isReff: boolean): boolean => {
+    const refs = item?.References;
     const isAllProducts =
-      item && item.IsCategory && item.children && item.children.length && item.children.every((c) => !c.IsCategory);
+      item &&
+      item.IsCategory &&
+      item.children &&
+      item.children.length &&
+      item.children.filter((c) => !refs?.includes(c.ItemCode)).every((c) => !c.IsCategory);
     const isProduct = item && !item.IsCategory;
     return (!!isAllProducts || !!isProduct) && !IsAllowDefineItemOnCategoryLevel;
   };
 
-  const isForbiddenCreateProduct = (item: IKeyboardItem | null): boolean => {
+  const isForbiddenCreateProduct = (item: IKeyboardItem | null, isReff: boolean): boolean => {
+    const refs = item?.References;
     const isAllCategories =
-      item && item.IsCategory && item.children && item.children.length && item.children.every((c) => c.IsCategory);
+      item &&
+      item.IsCategory &&
+      item.children &&
+      item.children.length &&
+      item.children.filter((c) => !refs?.includes(c.ItemCode)).every((c) => c.IsCategory);
+    console.log(item, 'itemitemitem', refs);
     const isCategory = item && item.IsCategory;
-    console.log(item?.IsCategory, 'item.IsCategory');
-    return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel;
+    console.log(isAllCategories, 'isAllCategories', isCategory);
+    return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel && !isReff;
   };
 
   const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean, isAddRefItems?: boolean) => {
@@ -235,7 +247,7 @@ const KeyboardEditor: React.FC = () => {
       >
         <Button
           icon={<PlusOutlined />}
-          className={rowInfo.node.IsCategory && isAddRefItems ? 'addRefToCatBtn' : ''}
+          className={rowInfo.node.IsCategory && isAddRefItems ? 'addRefToCatBtn rtl:ml-5 ltr:mr-5' : ''}
           shape="circle"
           key={rowInfo.node.IsCategory && isAddRefItems ? 'addRefToCat' : 'addButton'}
           type="primary"
@@ -399,8 +411,8 @@ const KeyboardEditor: React.FC = () => {
         />
       </div>
       <AddNewItemModal
-        forbiddenCreateCategory={isForbiddenCreateCategory(checkedRowInfo?.node)}
-        forbiddenCreateProduct={isForbiddenCreateProduct(checkedRowInfo?.node)}
+        forbiddenCreateCategory={isForbiddenCreateCategory(checkedRowInfo?.node, isAddRefItems)}
+        forbiddenCreateProduct={isForbiddenCreateProduct(checkedRowInfo?.node, isAddRefItems)}
         isAddTopCategory={!checkedRowInfo}
         editableItem={editableItem && editableItem.node}
         onCancel={onCancelNewItem}

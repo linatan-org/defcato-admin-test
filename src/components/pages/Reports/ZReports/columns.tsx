@@ -63,11 +63,11 @@ export const getZReportsTableColumns = (
         render: (a: any, r: IZReport) => (
           <div>
             <PrinterFilled
-              className="text-lg mr-3"
+              className="text-lg rtl:mr-3 ltr:ml-3"
               onClick={() => printReport(r)}
             />
             <EyeFilled
-              className="text-lg mr-4"
+              className="text-lg rtl:mr-4 ltr:ml-4"
               onClick={() => onOpenReportDetails(r)}
             />
           </div>

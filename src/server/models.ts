@@ -693,7 +693,7 @@ export interface IKeyboardItem {
   children: IKeyboardItem[];
   Name: string;
   title: string;
-  References: number[];
+  References: string[];
   Row: number;
   StockOnHand: number;
   TargetType: number;

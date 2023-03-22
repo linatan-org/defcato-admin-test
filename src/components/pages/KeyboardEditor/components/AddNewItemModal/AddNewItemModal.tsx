@@ -73,6 +73,8 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     if (forbiddenCreateCategory) {
       setIsCategory(false);
     }
+    // eslint-disable-next-line
+    console.log(isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory, 'isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory');
   }, [isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory]);
 
   useEffect(() => {
@@ -202,7 +204,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
         ) : (
           <div className="flex flex-1">
             <Select
-              className="flex-1 flex ml-5"
+              className="flex-1 flex rtl:ml-5 ltr:mr-5"
               placeholder={t('addKeyboardItemModal.product')}
               options={items}
               fieldNames={SELECT_FIELD_NAMES}
@@ -219,7 +221,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
               notFoundContent={null}
             />
             <Select
-              className="flex-1 mr-5"
+              className="flex-1 rtl:mr-5 ltr:ml-5"
               fieldNames={SELECT_FIELD_NAMES}
               options={categories}
               placeholder={t('addKeyboardItemModal.category')}

@@ -1,15 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import connect from 'react-redux/es/components/connect';
 import { IZReportParams } from '../../../../../../server/models';
 
 interface IZReport {
   reportParams: IZReportParams;
+  lang: string;
 }
 
-export const ZReportDetails: React.FC<IZReport> = ({ reportParams }) => {
+const ZReportDetails: React.FC<IZReport> = ({ reportParams, lang }) => {
   const { t } = useTranslation();
   return (
-    <div className="main-content">
+    <div
+      dir={lang === 'en' ? 'ltr' : 'rtl'}
+      className="main-content"
+    >
       <div className="flex-direction-column">
         <div className="header-content">
           <div className="header-column">
@@ -99,7 +104,7 @@ export const ZReportDetails: React.FC<IZReport> = ({ reportParams }) => {
             </div>
           </div>
         </div>
-        <div className="d-flex flex-direction-column flex-grow-1 tables-content mr-1">
+        <div className="d-flex flex-direction-column flex-grow-1 tables-content rtl:mr-1 ltr:ml-1">
           <div className="header-left">
             <span>{t('reports.ZReports.ZReportDetails.Details')}</span>
           </div>
@@ -163,3 +168,8 @@ export const ZReportDetails: React.FC<IZReport> = ({ reportParams }) => {
     </div>
   );
 };
+
+const mapState = (state: any) => ({
+  lang: state.configs.lang
+});
+export default connect(mapState, {})(ZReportDetails);

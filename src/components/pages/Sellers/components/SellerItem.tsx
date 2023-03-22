@@ -2,6 +2,7 @@ import React from 'react';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Input, Checkbox, Typography, Space, Form, FormInstance, InputNumber } from 'antd';
 import { useTranslation } from 'react-i18next';
+import connect from 'react-redux/es/components/connect';
 import { ISeller } from '../../../../server/models';
 import './styles.scss';
 
@@ -11,9 +12,10 @@ interface CatalogItemProps {
   form: FormInstance;
   editMode?: boolean;
   onFinish: (v: ISeller) => void;
+  lang: string;
 }
 
-export const SellerItem: React.FC<CatalogItemProps> = ({ form, onFinish, editMode }) => {
+const SellerItem: React.FC<CatalogItemProps> = ({ form, onFinish, editMode, lang }) => {
   const { t } = useTranslation();
 
   const onFinishFailed = () => {};
@@ -26,6 +28,7 @@ export const SellerItem: React.FC<CatalogItemProps> = ({ form, onFinish, editMod
   };
   return (
     <Form
+      dir={lang === 'en' ? 'ltr' : 'rtl'}
       form={form}
       name="basic"
       onFinish={onFinish}
@@ -96,3 +99,7 @@ export const SellerItem: React.FC<CatalogItemProps> = ({ form, onFinish, editMod
     </Form>
   );
 };
+const mapState = (state: any) => ({
+  lang: state.configs.lang
+});
+export default connect(mapState, {})(SellerItem);

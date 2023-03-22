@@ -23,6 +23,12 @@ export const getSaleReportsTableColumns = (t: any, onOpenReportDetails: (r: ISal
         render: (v: string) => moment(v).format('DD/MM/yyyy')
       },
       {
+        title: t('reports.saleReports.time'),
+        dataIndex: 'TranDate',
+        key: 'TranDate',
+        render: (v: string) => moment(v).format('HH:mm')
+      },
+      {
         title: t('reports.saleReports.operatorNumber'),
         dataIndex: 'OperatorNumber',
         key: 'OperatorNumber'
@@ -54,7 +60,7 @@ export const getSaleReportsTableColumns = (t: any, onOpenReportDetails: (r: ISal
         render: (a: any, r: ISalesReport) => (
           <div>
             <EyeFilled
-              className="text-lg mr-4"
+              className="text-lg rtl:mr-4 ltr:ml-4"
               onClick={() => onOpenReportDetails(r)}
             />
           </div>

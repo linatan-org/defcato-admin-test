@@ -76,6 +76,7 @@
       "deviceTranReference": "מספר עסקה",
       "tranType": "סוג מסמך",
       "tranDate": "תאריך",
+      "time": "שעה",
       "operatorNumber": "שם מוכרן",
       "sellerNumber": "מספר מוכרן",
       "branchName": "סניף",

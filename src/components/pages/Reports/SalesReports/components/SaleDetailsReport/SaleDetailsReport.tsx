@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons/lib';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import connect from 'react-redux/es/components/connect';
 import { ISalesReport, ISalesReportsDetails } from '../../../../../../server/models';
 import CustomTable from '../../../../Dashboard/CustomTable';
 import { getDiscountsColumns, getItemsColumns } from './columnts';
@@ -12,6 +13,7 @@ const { Text } = Typography;
 
 interface Props {
   saleReport: ISalesReportsDetails;
+  lang: string;
 }
 
 enum SALES_REPORT_TAB {
@@ -19,14 +21,17 @@ enum SALES_REPORT_TAB {
   DISCOUNTS
 }
 
-export const SaleDetailsReport: React.FC<Props> = ({ saleReport }) => {
+const SaleDetailsReport: React.FC<Props> = ({ saleReport, lang }) => {
   const { t } = useTranslation();
   const [checkedTab, setCheckedTab] = useState(SALES_REPORT_TAB.ITEMS);
   return (
-    <div className="flex flex-col flex-1">
+    <div
+      className="flex flex-col flex-1"
+      dir={lang === 'en' ? 'ltr' : 'rtl'}
+    >
       <SaleDetailsReportHeader saleReport={saleReport} />
       <div className="flex flex-row mt-3">
-        <div className="flex flex-col ml-4">
+        <div className="flex flex-col rtl:ml-4 ltr:mr-4">
           <Button
             onClick={() => setCheckedTab(SALES_REPORT_TAB.ITEMS)}
             type={checkedTab === SALES_REPORT_TAB.ITEMS ? 'primary' : 'default'}
@@ -70,3 +75,9 @@ export const SaleDetailsReport: React.FC<Props> = ({ saleReport }) => {
     </div>
   );
 };
+
+const mapState = (state: any) => ({
+  lang: state.configs.lang
+});
+
+export default connect(mapState, {})(SaleDetailsReport);
