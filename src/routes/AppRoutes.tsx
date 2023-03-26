@@ -34,12 +34,19 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
   const { search } = useLocation();
   const navigation = useHistory();
   const [direction, setDirection] = useState(lang === 'he' ? 'rtl' : 'ltr');
+  const [localLang, setLocalLang] = useState('');
   const { isDashboardAccessOnly } = useSelector((state: any) => state.settings);
 
   useEffect(() => {
     if (search) {
       const SessionKey = new URLSearchParams(search).get('SessionKey');
       const url = new URLSearchParams(search).get('url');
+      const langParams = new URLSearchParams(search).get('lang');
+      if (langParams && ['en', 'he'].includes(langParams)) {
+        setLocalLang(langParams);
+      } else {
+        setLocalLang(lang);
+      }
       if (SessionKey) {
         dispatch(setDashboardAccessOnly(true));
         localStorage.setItem('token', SessionKey);
@@ -54,9 +61,10 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
   }, []);
 
   useEffect(() => {
-    i18n.changeLanguage(lang);
-    setDirection(lang === 'he' ? 'rtl' : 'ltr');
-  }, [lang]);
+    console.log(localLang, 'LOCAL LANG==========');
+    i18n.changeLanguage(localLang);
+    setDirection(localLang === 'he' ? 'rtl' : 'ltr');
+  }, [localLang]);
 
   useEffect(() => {
     injectDispatch(dispatch);
