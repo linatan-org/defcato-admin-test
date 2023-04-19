@@ -67,6 +67,11 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
   }, [localLang]);
 
   useEffect(() => {
+    i18n.changeLanguage(lang);
+    setDirection(lang === 'he' ? 'rtl' : 'ltr');
+  }, [lang]);
+
+  useEffect(() => {
     injectDispatch(dispatch);
   }, []);
 

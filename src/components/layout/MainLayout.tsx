@@ -43,9 +43,10 @@ function getItem(
 type LayoutProps = {
   children: React.ReactNode;
   isAuth: boolean;
+  lang: string;
 };
 
-const MainLayout = ({ children, isAuth }: LayoutProps) => {
+const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -104,7 +105,10 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
     return () => window.removeEventListener('beforeunload', onLogout);
   });
   return (
-    <Layout className="min-h-screen">
+    <Layout
+      className="min-h-screen"
+      dir={lang === 'he' ? 'rtl' : 'ltr'}
+    >
       <GlobalLoader />
       {isAuth && !isDashboardAccessOnly ? (
         <Sider
@@ -146,7 +150,8 @@ const MainLayout = ({ children, isAuth }: LayoutProps) => {
 };
 
 const mapState = (state: any) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  lang: state.configs.lang
 });
 
 export default connect(mapState, {})(MainLayout);

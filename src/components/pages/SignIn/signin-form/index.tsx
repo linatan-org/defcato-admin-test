@@ -1,7 +1,9 @@
+import React from 'react';
 import { Form, Input, Button, Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { UserOutlined, LockOutlined, EnterOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
+import connect from 'react-redux/es/components/connect';
 import useAuth from '../../../../contexts/auth/hook';
 import { toast } from 'react-toastify';
 import { API } from '../../../../server';
@@ -32,10 +34,14 @@ type EnterForm = {
   password?: string;
 };
 
-export default function SigninForm() {
+interface Props {
+  lang: string;
+}
+
+const SigninForm: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const [loadingButton, setLoadingButton] = useState<boolean>();
-  const [currentLang, setCurrentLang] = useState('he');
+  const [currentLang, setCurrentLang] = useState(props.lang || 'he');
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
@@ -129,4 +135,11 @@ export default function SigninForm() {
       </Form>
     </div>
   );
-}
+};
+
+const mapState = (state: any) => ({
+  isAuth: state.auth.isAuth,
+  lang: state.configs.lang
+});
+
+export default connect(mapState, {})(SigninForm);

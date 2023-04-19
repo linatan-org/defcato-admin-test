@@ -2,7 +2,12 @@ import { EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons/l
 import { FormInstance } from 'antd/es/form';
 import React, { useEffect, useState } from 'react';
 import { Button, Typography, Modal, PageHeader, Space, notification, Input, Form, Tooltip } from 'antd';
-import SortableTree, { addNodeUnderParent, changeNodeAtPath, removeNodeAtPath } from '@nosferatu500/react-sortable-tree';
+import SortableTree, {
+  addNodeUnderParent,
+  changeNodeAtPath,
+  getNodeAtPath,
+  removeNodeAtPath
+} from '@nosferatu500/react-sortable-tree';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams, useLocation } from 'react-router';
@@ -121,7 +126,6 @@ const KeyboardEditor: React.FC = () => {
         // addAsFirstChild: state.addAsFirstChild
       }).treeData;
     }
-    console.log(newTree, 'newTreenewTreenewTree');
     // @ts-ignore
     setNewStreeData(newTree);
     clearData();
@@ -163,8 +167,29 @@ const KeyboardEditor: React.FC = () => {
 
   const onConfirmDeleteItem = () => {
     if (checkedRowInfo) {
-      const newTree = removeNodeAtPath({
-        treeData: newTreeData,
+      let newTree;
+      if (checkedRowInfo.node.IsReferenceItem) {
+        const referenceCode = checkedRowInfo.node.ItemCode;
+        const parentPath = [...checkedRowInfo.path];
+        parentPath.length = parentPath.length - 1;
+        const parentNode = getNodeAtPath({
+          treeData: newTreeData,
+          path: parentPath,
+          getNodeKey
+        })?.node;
+        if (parentNode) {
+          parentNode.References = parentNode.References.filter((r: string) => r !== referenceCode);
+          newTree = changeNodeAtPath({
+            treeData: newTreeData,
+            path: parentPath,
+            // @ts-ignore
+            getNodeKey,
+            newNode: parentNode
+          });
+        }
+      }
+      newTree = removeNodeAtPath({
+        treeData: newTree || newTreeData,
         path: checkedRowInfo.path,
         getNodeKey
       });
@@ -227,9 +252,7 @@ const KeyboardEditor: React.FC = () => {
       item.children &&
       item.children.length &&
       item.children.filter((c) => !refs?.includes(c.ItemCode)).every((c) => c.IsCategory);
-    console.log(item, 'itemitemitem', refs);
     const isCategory = item && item.IsCategory;
-    console.log(isAllCategories, 'isAllCategories', isCategory);
     return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel && !isReff;
   };
 
@@ -326,7 +349,8 @@ const KeyboardEditor: React.FC = () => {
     let newTree: any;
     if (isAddRefItems && checkedRowInfo) {
       const copyInfo = { ...checkedRowInfo };
-      copyInfo.node.References = [...data.References];
+      const oldRefs = copyInfo.node.References;
+      copyInfo.node.References = oldRefs ? [...oldRefs, ...data.References] : [...data.References];
       copyInfo.node.Items = copyInfo.node.IsCategory ? [...data.Items, ...copyInfo.node.children] : [...data.Items];
       newTree = changeNodeAtPath({
         treeData: newTreeData,
@@ -347,7 +371,6 @@ const KeyboardEditor: React.FC = () => {
         }).treeData;
       });
     }
-    console.log(newTree, 'newTreenewTreenewTreenewTree');
     setNewStreeData(newTree);
     clearData();
   };
