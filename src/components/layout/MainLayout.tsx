@@ -4,22 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import connect from 'react-redux/es/components/connect';
 import { useHistory } from 'react-router-dom';
 import { MenuProps } from 'antd';
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  PieChartOutlined,
-  TableOutlined,
-  SettingOutlined,
-  BranchesOutlined
-} from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { routes } from '../../constants/routes';
-import useAuth from '../../contexts/auth/hook';
 import { setAuth } from '../../reudux/auth/action';
 import { setDashboardAccessOnly } from '../../reudux/settings/action';
 import GlobalLoader from '../GlobalLoader/GlobalLoader';
+import './styles.scss';
 
 const { Sider, Content } = Layout;
 const { Text } = Typography;
@@ -117,6 +107,7 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
         >
           <div>
             <Menu
+              className={lang === 'he' ? 'rtl-menu' : ''}
               onClick={(e) => onMenuItemClick(e.key)}
               defaultSelectedKeys={[getDefaultSelectedKey()]}
               mode="inline"
