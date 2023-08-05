@@ -9,6 +9,7 @@
   "exportToExcel": "יצוא  לאקסל",
   "search": "חפש",
   "areYouSureYouWantLogout": "האם ברצונך לצאת ?",
+  "TotalRecords": "סה\"כ רשומות",
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",
@@ -114,7 +115,7 @@
     "ordersReports": {
       "OrdersJournal": "דוח הזמנות",
       "OrdersByProperties": "דוח מאפיינים",
-      "ItemsReport": "דוח פרטים",
+      "ItemsReport": "דוח פריטים",
       "ItemsRevenueReportTitle": "דוח רווחיות לפריטים",
       "JournalReports": {
         "columns": {

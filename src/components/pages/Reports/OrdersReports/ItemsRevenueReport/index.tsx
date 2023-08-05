@@ -54,6 +54,7 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
+        totalRecords={revenueItems.length}
         filters={getFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}

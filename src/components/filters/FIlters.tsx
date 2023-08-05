@@ -12,6 +12,7 @@ interface IFilters {
   onChange: (filters: any) => void;
   value?: any;
   onSearch?: () => void;
+  totalRecords?: number;
 }
 
 const getCorrectDate = (date: string) => {
@@ -20,7 +21,7 @@ const getCorrectDate = (date: string) => {
   return `${splitDate[1]}-${splitDate[0]}-${splitDate[2]}`;
 };
 
-const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch }) => {
+const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch, totalRecords }) => {
   const { t } = useTranslation();
   const getFilterValue = (filter: IFilterItem) => {
     let replacedFrom;
@@ -96,14 +97,23 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
     <div className="pt-2 pb-6 flex items-center justify-start flex-wrap">
       {filters.map(renderFilterItem)}
       {onSearch ? (
-        <Button
-          className="mt-10"
-          size="large"
-          type="primary"
-          onClick={onSearch}
-        >
-          {t('search')}
-        </Button>
+        <div className="flex flex-1 flex-row">
+          <Button
+            className="mt-10"
+            size="large"
+            type="primary"
+            onClick={onSearch}
+          >
+            {t('search')}
+          </Button>
+          {totalRecords !== undefined ? (
+            <div className="flex-1 flex flex-row items-end justify-end">
+              <Text strong>{t('TotalRecords')}</Text>
+              &nbsp;
+              <Text strong>: {totalRecords}</Text>
+            </div>
+          ) : null}
+        </div>
       ) : null}
     </div>
   );

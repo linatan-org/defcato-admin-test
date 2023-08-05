@@ -9,6 +9,7 @@
   "exportToExcel": "Export To Excel",
   "search": "Search",
   "areYouSureYouWantLogout": "Are You Sure ?",
+  "TotalRecords": "Total Records",
   "navMenu": {
     "currentTradingDay": "Trading Day",
     "reports": "Reports",

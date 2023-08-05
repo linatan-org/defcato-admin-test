@@ -154,7 +154,7 @@ const TargetReport: React.FC<any> = () => {
           columns={getSaleReportsTableColumns(t)}
           expandRowByClick
           expandable={{ expandedRowRender, onExpand }}
-          scrollSize={tableHeight}
+          // scrollSize={tableHeight}
           // @ts-ignore
           // summary={getTabletSummary}
         />

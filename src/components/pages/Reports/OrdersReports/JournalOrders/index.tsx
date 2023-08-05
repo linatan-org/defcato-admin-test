@@ -53,6 +53,7 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
+        totalRecords={ordersList.length}
         filters={getFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}
