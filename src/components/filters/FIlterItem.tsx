@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DatePicker, Select, Input, Typography, InputNumber } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
+const debounce = require('lodash.debounce');
 import './styles.scss';
 import useDebounceValue from '../hooks/useDebounce';
 const { Text } = Typography;
@@ -33,6 +34,7 @@ export interface IFilterItem {
 }
 
 const { RangePicker } = DatePicker;
+const debounceTimeout = 700;
 
 const getSelectOptions = (selectValueKey?: string, selectDisplayKey?: string, values?: any[]) => {
   // eslint-disable-next-line
@@ -59,10 +61,9 @@ export const FilterItem: React.FC<IFilterItem> = ({
 }) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [singleApiOptions, setSingleApiOptions] = useState<any[]>([]);
-  const debouncedInputValue = useDebounceValue<string>(inputValue, 700);
-
-  console.log(singleApiOptions, 'singleApiOptionssingleApiOptions');
-
+  const [localLoading, setLocalLoading] = useState(false);
+  const debouncedInputValue = useDebounceValue<string>(inputValue, debounceTimeout);
+  const fetchRef = useRef(0);
   useEffect(() => {
     if (type === 'SINGLE_API' && getItems) {
       getSingleApiOptions('');
@@ -86,10 +87,32 @@ export const FilterItem: React.FC<IFilterItem> = ({
     }
   }, [inputValue]);
 
+  const debounceFetcher = useMemo(() => {
+    const loadOptions = (search: string) => {
+      fetchRef.current += 1;
+      const fetchId = fetchRef.current;
+      setSingleApiOptions([]);
+      setLocalLoading(true);
+      if (getItems) {
+        getItems(search).then((res) => {
+          if (fetchId !== fetchRef.current) {
+            // for fetch callback order
+            return;
+          }
+          setSingleApiOptions(res);
+          setLocalLoading(false);
+        });
+      }
+    };
+
+    return debounce(loadOptions, debounceTimeout);
+  }, [getItems, debounceTimeout]);
+
   const getSingleApiOptions = async (search: string) => {
     if (getItems) {
+      setLocalLoading(true);
       const items = await getItems(search);
-      console.log(items, 'itemsitemsitems');
+      setLocalLoading(false);
       setSingleApiOptions(items);
     }
   };
@@ -209,10 +232,12 @@ export const FilterItem: React.FC<IFilterItem> = ({
             showSearch
             allowClear
             onChange={onChange}
-            onSearch={setInputValue}
+            onSearch={debounceFetcher}
             options={singleApiOptions}
             fieldNames={selectFieldNames}
-          />
+            labelInValue
+            filterOption={false}
+          ></Select>
         </div>
       );
     }

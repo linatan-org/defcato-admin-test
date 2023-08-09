@@ -19,6 +19,7 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const { t } = useTranslation();
   const [itemsTotalList, setItemsTotalList] = useState<IItemsTotalReports[]>([]);
   const [filtersValues, setFiltersValues] = useState<any>({});
+  const [totalRecords, setTotalRecords] = useState(0);
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
@@ -34,6 +35,7 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     API.reports.orderReports.getItemsTotalReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setItemsTotalList(res.List);
+        setTotalRecords(res.TotalRecords);
       }
     });
   };
@@ -54,7 +56,7 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
-        totalRecords={itemsTotalList.length}
+        totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}

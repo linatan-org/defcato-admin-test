@@ -539,6 +539,7 @@ export interface IOrderReport {
 
 export interface IOrdersReportsList extends IGeneralResponse {
   Orders: IOrderReport[];
+  TotalRecords: number;
 }
 
 export interface ITotalOrderReport {
@@ -553,6 +554,7 @@ export interface ITotalOrderReport {
 
 export interface ITotalOrderReportList extends IGeneralResponse {
   List: ITotalOrderReport[];
+  TotalRecords: number;
 }
 
 export interface IItemsTotalReports {
@@ -564,6 +566,7 @@ export interface IItemsTotalReports {
 
 export interface IItemsTotalReportsList extends IGeneralResponse {
   List: IItemsTotalReports[];
+  TotalRecords: number;
 }
 
 export interface IRevenueReport {
@@ -579,6 +582,7 @@ export interface IRevenueReport {
 
 export interface IRevenueReportList extends IGeneralResponse {
   List: IRevenueReport[];
+  TotalRecords: number;
 }
 
 export interface ITicketFilter {

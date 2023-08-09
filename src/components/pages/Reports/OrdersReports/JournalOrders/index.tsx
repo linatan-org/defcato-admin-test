@@ -19,6 +19,7 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const { t } = useTranslation();
   const [ordersList, setOredersList] = useState<IOrderReport[]>([]);
   const [filtersValues, setFiltersValues] = useState<any>({});
+  const [totalRecords, setTotalRecords] = useState(0);
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
@@ -32,6 +33,7 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const getJournalList = (filters: any) => {
     API.reports.orderReports.getOrdersReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+        setTotalRecords(res.TotalRecords);
         setOredersList(res.Orders);
       }
     });
@@ -53,7 +55,7 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
-        totalRecords={ordersList.length}
+        totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}
