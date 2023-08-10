@@ -89,6 +89,10 @@ export const FilterItem: React.FC<IFilterItem> = ({
 
   const debounceFetcher = useMemo(() => {
     const loadOptions = (search: string) => {
+      if (!search.length) {
+        setSingleApiOptions([]);
+        return;
+      }
       fetchRef.current += 1;
       const fetchId = fetchRef.current;
       setSingleApiOptions([]);
@@ -99,6 +103,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
             // for fetch callback order
             return;
           }
+          console.log(res, '=======');
           setSingleApiOptions(res);
           setLocalLoading(false);
         });
@@ -235,7 +240,6 @@ export const FilterItem: React.FC<IFilterItem> = ({
             onSearch={debounceFetcher}
             options={singleApiOptions}
             fieldNames={selectFieldNames}
-            labelInValue
             filterOption={false}
           ></Select>
         </div>
