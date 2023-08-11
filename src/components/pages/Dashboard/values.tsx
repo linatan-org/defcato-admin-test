@@ -56,9 +56,19 @@ export const getDashboardTableValues = (t: any): any => [
         key: 'Name'
       },
       {
+        title: t('dashboard.dailyStats.IncomingCalls'),
+        dataIndex: 'IncomingCalls',
+        key: 'IncomingCalls'
+      },
+      {
         title: t('dashboard.dailyStats.totalOrders'),
         dataIndex: 'TotalOrders',
         key: 'TotalOrders'
+      },
+      {
+        title: t('dashboard.dailyStats.TotalTickets'),
+        dataIndex: 'TotalTickets',
+        key: 'TotalTickets'
       },
       {
         title: t('dashboard.dailyStats.hourRedemption'),

@@ -41,7 +41,9 @@
       "hourRedemption": "פדיון שעתי",
       "incomingCalls": "שיחות נכנסות",
       "callsPerHours": "ממוצע שיחות לשעה",
-      "callsOrdersConversion": "אחוז סגירת שיחות"
+      "callsOrdersConversion": "אחוז סגירת שיחות",
+      "IncomingCalls": "סה\"כ שיחות",
+      "TotalTickets": "כמות ק. שירות"
     },
     "dailyUserStats": {
       "seller": "נציג מכירות",

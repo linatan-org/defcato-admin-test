@@ -41,7 +41,9 @@
       "hourRedemption": "Hour Redemption",
       "incomingCalls": "Incoming Calls",
       "callsPerHours": "Calls Per Hour",
-      "callsOrdersConversion": "Conversion"
+      "callsOrdersConversion": "Conversion",
+      "IncomingCalls": "Incoming Calls",
+      "TotalTickets": "Total Tickets"
     },
     "dailyUserStats": {
       "seller": "Seller",
