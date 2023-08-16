@@ -8,6 +8,7 @@ const { Text } = Typography;
 
 interface IFilters {
   filters: IFilterItem[];
+  additionalFilters?: IFilterItem[];
   filtersValues: any;
   onChange: (filters: any) => void;
   value?: any;
@@ -21,7 +22,7 @@ const getCorrectDate = (date: string) => {
   return `${splitDate[1]}-${splitDate[0]}-${splitDate[2]}`;
 };
 
-const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch, totalRecords }) => {
+const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch, totalRecords, additionalFilters }) => {
   const { t } = useTranslation();
   const getFilterValue = (filter: IFilterItem) => {
     let replacedFrom;
@@ -85,7 +86,6 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
             }
             // eslint-disable-next-line
             const newValue = filter.type === 'DATE' && !isEmptyDate ? { ...value } : filter.type === 'DATE' && isEmptyDate ? {} : { [filter.key]: value };
-            console.log({ ...filtersValues, ...newValue }, 'newValuenewValuenewValuenewValue');
             onChange({ ...filtersValues, ...newValue });
           }}
         />
@@ -94,28 +94,31 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
   };
 
   return (
-    <div className="pt-2 pb-6 flex items-center justify-start flex-wrap">
-      {filters.map(renderFilterItem)}
-      {onSearch ? (
-        <div className="flex flex-1 flex-row">
-          <Button
-            className="mt-10"
-            size="large"
-            type="primary"
-            onClick={onSearch}
-          >
-            {t('search')}
-          </Button>
-          {totalRecords !== undefined ? (
-            <div className="flex-1 flex flex-row items-end justify-end">
-              <Text strong>{t('TotalRecords')}</Text>
-              &nbsp;
-              <Text strong>: {totalRecords}</Text>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-    </div>
+    <>
+      <div className={`${!additionalFilters && 'pb-6'} pt-2 flex items-center justify-start flex-wrap`}>
+        {filters.map(renderFilterItem)}
+        {onSearch ? (
+          <div className="flex flex-1 flex-row">
+            <Button
+              className="mt-10"
+              size="large"
+              type="primary"
+              onClick={onSearch}
+            >
+              {t('search')}
+            </Button>
+            {totalRecords !== undefined ? (
+              <div className="flex-1 flex flex-row items-end justify-end">
+                <Text strong>{t('TotalRecords')}</Text>
+                &nbsp;
+                <Text strong>: {totalRecords}</Text>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+      <div className="pt-2 pb-6 flex items-center justify-start flex-wrap">{additionalFilters?.map(renderFilterItem)}</div>
+    </>
   );
 };
 

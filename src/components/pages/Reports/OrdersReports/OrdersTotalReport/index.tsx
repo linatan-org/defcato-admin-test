@@ -7,7 +7,7 @@ import { IOrderFilterValues, ITotalOrderReport, OrdersReportsEnum, RESPONSE_STAT
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getColumns } from './columns';
-import { getFilters } from './filters';
+import { getAdditionalFilters, getFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
 
@@ -58,6 +58,7 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
       <Filters
         totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
+        additionalFilters={getAdditionalFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}
         onSearch={onSearch}

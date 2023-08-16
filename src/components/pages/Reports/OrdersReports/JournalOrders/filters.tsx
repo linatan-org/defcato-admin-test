@@ -138,6 +138,32 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       label: t('reports.ordersReports.filters.CancelReason'),
       options: filtersOptions ? filtersOptions['CancelReasons'] : [],
       selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'INPUT',
+      key: 'InvoiceNumber',
+      label: t('reports.ordersReports.filters.Invoice')
+    },
+    {
+      type: 'SINGLE',
+      key: 'SellerDepartment',
+      label: t('reports.ordersReports.filters.SellerDepartments'),
+      options: filtersOptions ? filtersOptions['SellerDepartments'] : [],
+      showSearch: true,
+      selectFieldNames: SELECT_FIELD_NAMES
+    }
+  ];
+};
+
+export const getAdditionalFilters = (filtersOptions: IOrderFilterValues | null, t: any): IFilterItem[] => {
+  return [
+    {
+      type: 'SINGLE',
+      key: 'OrdersSortType',
+      label: t('reports.ordersReports.filters.OrdersSortTypes'),
+      options: filtersOptions ? filtersOptions['OrdersSortTypes'] : [],
+      showSearch: true,
+      selectFieldNames: SELECT_FIELD_NAMES
     }
   ];
 };

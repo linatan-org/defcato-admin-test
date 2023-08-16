@@ -194,7 +194,12 @@
         "TransactionType": "סוג עסקה",
         "CancelReason": "סיבת ביטול",
         "City": "עיר",
-        "Promotion": "מבצע"
+        "Promotion": "מבצע",
+        "Invoice": "חשבונית מס",
+        "SellerDepartments": "מחלקות עובדים",
+        "OrdersSortTypes": "שיטת מיון",
+        "OrdersSummaryTypes": "שיטת ריכוז",
+        "ItemsSummaryTypes": "שיטת ריכוז"
       }
     },
     "ticketReports": {

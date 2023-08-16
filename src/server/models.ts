@@ -506,6 +506,10 @@ export interface IOrderFilterValues extends IGeneralResponse {
   StatusList: IGeneralFilterValue[];
   TranTypes: IGeneralFilterValue[];
   Promotions: IGeneralFilterValue[];
+  SellerDepartments: IGeneralFilterValue[];
+  OrdersSortTypes: IGeneralFilterValue[];
+  OrdersSummaryTypes: IGeneralFilterValue[];
+  ItemsSummaryTypes: IGeneralFilterValue[];
 }
 
 export interface IOrderReport {

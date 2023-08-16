@@ -6,6 +6,7 @@ import { API } from '../../../../../server';
 import { IOrderFilterValues, IRevenueReport, OrdersReportsEnum, RESPONSE_STATUSES } from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
+import { getAdditionalFilters } from '../ItemsTotalReport/filters';
 import { getColumns } from './columns';
 import { getFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
@@ -58,6 +59,7 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
       <Filters
         totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
+        additionalFilters={getAdditionalFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
         filtersValues={filtersValues}
         onSearch={onSearch}

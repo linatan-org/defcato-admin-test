@@ -113,3 +113,16 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
     }
   ];
 };
+
+export const getAdditionalFilters = (filtersOptions: IOrderFilterValues | null, t: any): IFilterItem[] => {
+  return [
+    {
+      type: 'SINGLE',
+      key: 'OrdersSummaryType',
+      label: t('reports.ordersReports.filters.OrdersSummaryTypes'),
+      options: filtersOptions ? filtersOptions['OrdersSummaryTypes'] : [],
+      showSearch: true,
+      selectFieldNames: SELECT_FIELD_NAMES
+    }
+  ];
+};

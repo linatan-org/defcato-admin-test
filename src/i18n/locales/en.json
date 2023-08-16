@@ -194,7 +194,12 @@
         "TransactionType": "Sale Type",
         "CancelReason": "Cancel Reason",
         "City": "City",
-        "Promotion": "Promotion"
+        "Promotion": "Promotion",
+        "Invoice": "Invoice",
+        "SellerDepartments": "Seller Departments",
+        "OrdersSortTypes": "Sort By",
+        "OrdersSummaryTypes": "Summary By",
+        "ItemsSummaryTypes": "Summary By"
       }
     },
     "ticketReports": {
