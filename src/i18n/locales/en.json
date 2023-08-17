@@ -10,6 +10,13 @@
   "search": "Search",
   "areYouSureYouWantLogout": "Are You Sure ?",
   "TotalRecords": "Total Records",
+  "TotalBeforeVat": "Total Befor eVat",
+  "TotalAfterVat": "Total After Vat",
+  "TotalItems": "Total Items",
+  "OrderAVG": "Order AVG",
+  "TotalCost": "Total Cost",
+  "TotalRevenue": "Total Revenue",
+  "TotalRevenuePercent": "Total Revenue Percent %",
   "navMenu": {
     "currentTradingDay": "Trading Day",
     "reports": "Reports",

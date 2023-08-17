@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { UseTranslationResponse } from 'react-i18next';
 
 export const getColumns = (t: any): any => [
   {

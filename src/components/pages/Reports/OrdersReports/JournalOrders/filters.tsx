@@ -133,13 +133,6 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       selectFieldNames: SELECT_FIELD_NAMES
     },
     {
-      type: 'MULTI',
-      key: 'CancelReasons',
-      label: t('reports.ordersReports.filters.CancelReason'),
-      options: filtersOptions ? filtersOptions['CancelReasons'] : [],
-      selectFieldNames: SELECT_FIELD_NAMES
-    },
-    {
       type: 'INPUT',
       key: 'InvoiceNumber',
       label: t('reports.ordersReports.filters.Invoice')

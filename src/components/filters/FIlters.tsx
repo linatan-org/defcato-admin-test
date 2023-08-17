@@ -13,7 +13,6 @@ interface IFilters {
   onChange: (filters: any) => void;
   value?: any;
   onSearch?: () => void;
-  totalRecords?: number;
 }
 
 const getCorrectDate = (date: string) => {
@@ -22,7 +21,7 @@ const getCorrectDate = (date: string) => {
   return `${splitDate[1]}-${splitDate[0]}-${splitDate[2]}`;
 };
 
-const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch, totalRecords, additionalFilters }) => {
+const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearch, additionalFilters }) => {
   const { t } = useTranslation();
   const getFilterValue = (filter: IFilterItem) => {
     let replacedFrom;
@@ -107,13 +106,6 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
             >
               {t('search')}
             </Button>
-            {totalRecords !== undefined ? (
-              <div className="flex-1 flex flex-row items-end justify-end">
-                <Text strong>{t('TotalRecords')}</Text>
-                &nbsp;
-                <Text strong>: {totalRecords}</Text>
-              </div>
-            ) : null}
           </div>
         ) : null}
       </div>

@@ -10,6 +10,13 @@
   "search": "חפש",
   "areYouSureYouWantLogout": "האם ברצונך לצאת ?",
   "TotalRecords": "סה\"כ רשומות",
+  "TotalBeforeVat": "סה\"כ לפי מע\"מ",
+  "TotalAfterVat": "סה\"כ כולל מע\"מ",
+  "TotalItems": "סה\"כ פריטים",
+  "OrderAVG": "ממוצע להזמנה",
+  "TotalCost": "סה\"כ  עלות",
+  "TotalRevenue": "סה\"כ רווח גולמי",
+  "TotalRevenuePercent": "סה\"כ רווח גולמי %",
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",

@@ -1,15 +1,23 @@
 import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import { IItemsTotalReports, IOrderFilterValues, OrdersReportsEnum, RESPONSE_STATUSES } from '../../../../../server/models';
+import {
+  IItemsTotalReports,
+  IOrderFilterValues,
+  ITotalOrderReportList,
+  OrdersReportsEnum,
+  RESPONSE_STATUSES
+} from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getColumns } from './columns';
 import { getAdditionalFilters, getFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
+
+const { Text } = Typography;
 
 interface Interface {
   ordersFiltersOptions: IOrderFilterValues | null;
@@ -19,7 +27,13 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const { t } = useTranslation();
   const [itemsTotalList, setItemsTotalList] = useState<IItemsTotalReports[]>([]);
   const [filtersValues, setFiltersValues] = useState<any>({});
-  const [totalRecords, setTotalRecords] = useState(0);
+  const [totalRecords, setTotalRecords] = useState<{
+    TotalAfterVat: number;
+    TotalRecords: number;
+  }>({
+    TotalRecords: 0,
+    TotalAfterVat: 0
+  });
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
@@ -35,7 +49,7 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     API.reports.orderReports.getItemsTotalReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setItemsTotalList(res.List);
-        setTotalRecords(res.TotalRecords);
+        setTotalRecords({ TotalAfterVat: res.TotalAfterVat, TotalRecords: res.TotalRecords });
       }
     });
   };
@@ -53,10 +67,29 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     });
   };
 
+  const getTabletSummary = (pageData: IItemsTotalReports[]) => {
+    return (
+      <Table.Summary fixed="bottom">
+        <Table.Summary.Row>
+          <Table.Summary.Cell index={0}>
+            <Text strong>
+              {t('TotalRecords')}: {totalRecords.TotalRecords}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={0}>
+            <Text strong>
+              {t('TotalAfterVat')}: {totalRecords.TotalAfterVat}
+            </Text>
+          </Table.Summary.Cell>
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  };
+
+
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
-        totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
         additionalFilters={getAdditionalFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
@@ -87,6 +120,8 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
           columns={getColumns(t)}
           expandRowByClick
           scrollSize={tableHeight}
+          // @ts-ignore
+          summary={getTabletSummary}
         />
       </div>
     </div>

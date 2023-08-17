@@ -1,9 +1,15 @@
 import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import { IOrderFilterValues, IRevenueReport, OrdersReportsEnum, RESPONSE_STATUSES } from '../../../../../server/models';
+import {
+  IOrderFilterValues,
+  IRevenueReport,
+  ITotalOrderReportList,
+  OrdersReportsEnum,
+  RESPONSE_STATUSES
+} from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getAdditionalFilters } from '../ItemsTotalReport/filters';
@@ -11,6 +17,8 @@ import { getColumns } from './columns';
 import { getFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
+
+const { Text } = Typography;
 
 interface Interface {
   ordersFiltersOptions: IOrderFilterValues | null;
@@ -20,7 +28,21 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const { t } = useTranslation();
   const [revenueItems, setRevenueItems] = useState<IRevenueReport[]>([]);
   const [filtersValues, setFiltersValues] = useState<any>({});
-  const [totalRecords, setTotalRecords] = useState(0);
+  const [totalRecords, setTotalRecords] = useState<{
+    TotalCost: number;
+    TotalAfterVat: number;
+    TotalBeforeVat: number;
+    TotalRevenue: number;
+    TotalRevenuePercent: number;
+    TotalRecords: number;
+  }>({
+    TotalCost: 0,
+    TotalAfterVat: 0,
+    TotalBeforeVat: 0,
+    TotalRevenuePercent: 0,
+    TotalRevenue: 0,
+    TotalRecords: 0
+  });
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
@@ -36,7 +58,14 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     API.reports.orderReports.getItemsRevenueReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setRevenueItems(res.List);
-        setTotalRecords(res.TotalRecords);
+        setTotalRecords({
+          TotalRevenue: res.TotalRevenue,
+          TotalAfterVat: res.TotalAfterVat,
+          TotalBeforeVat: res.TotalBeforeVat,
+          TotalCost: res.TotalCost,
+          TotalRevenuePercent: res.TotalRevenuePercent,
+          TotalRecords: res.TotalRecords
+        });
       }
     });
   };
@@ -54,10 +83,48 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     });
   };
 
+  const getTabletSummary = (pageData: IRevenueReport[]) => {
+    return (
+      <Table.Summary fixed="bottom">
+        <Table.Summary.Row>
+          <Table.Summary.Cell index={0}>
+            <Text strong>
+              {t('TotalRecords')}: {totalRecords.TotalRecords}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={0}>
+            <Text strong>
+              {t('TotalCost')}: {totalRecords.TotalCost}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={1}>
+            <Text strong>
+              {t('TotalBeforeVat')}: {totalRecords.TotalBeforeVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={2}>
+            <Text strong>
+              {t('TotalAfterVat')}: {totalRecords.TotalAfterVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={3}>
+            <Text strong>
+              {t('TotalRevenue')}: {totalRecords.TotalRevenue}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={3}>
+            <Text strong>
+              {t('TotalRevenuePercent')}: {totalRecords.TotalRevenuePercent}
+            </Text>
+          </Table.Summary.Cell>
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  };
+
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
-        totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
         additionalFilters={getAdditionalFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
@@ -88,6 +155,8 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
           columns={getColumns(t)}
           expandRowByClick
           scrollSize={tableHeight}
+          // @ts-ignore
+          summary={getTabletSummary}
         />
       </div>
     </div>

@@ -540,10 +540,17 @@ export interface IOrderReport {
   TotalAfterVat: number;
   TotalBeforeVat: number;
 }
+export interface FieldsViewMap {
+  Key: string;
+  Value: number;
+}
 
 export interface IOrdersReportsList extends IGeneralResponse {
   Orders: IOrderReport[];
+  FieldsViewMap: FieldsViewMap[];
   TotalRecords: number;
+  TotalAfterVat: number;
+  TotalBeforeVat: number;
 }
 
 export interface ITotalOrderReport {
@@ -559,6 +566,10 @@ export interface ITotalOrderReport {
 export interface ITotalOrderReportList extends IGeneralResponse {
   List: ITotalOrderReport[];
   TotalRecords: number;
+  TotalItems: number;
+  TotalAfterVat: number;
+  TotalBeforeVat: number;
+  OrderAVG: number;
 }
 
 export interface IItemsTotalReports {
@@ -571,6 +582,7 @@ export interface IItemsTotalReports {
 export interface IItemsTotalReportsList extends IGeneralResponse {
   List: IItemsTotalReports[];
   TotalRecords: number;
+  TotalAfterVat: number;
 }
 
 export interface IRevenueReport {
@@ -587,6 +599,11 @@ export interface IRevenueReport {
 export interface IRevenueReportList extends IGeneralResponse {
   List: IRevenueReport[];
   TotalRecords: number;
+  TotalRevenuePercent: number;
+  TotalCost: number;
+  TotalAfterVat: number;
+  TotalBeforeVat: number;
+  TotalRevenue: number;
 }
 
 export interface ITicketFilter {

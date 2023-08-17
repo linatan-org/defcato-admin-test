@@ -1,15 +1,23 @@
 import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../../server';
-import { IOrderFilterValues, ITotalOrderReport, OrdersReportsEnum, RESPONSE_STATUSES } from '../../../../../server/models';
+import {
+  IOrderFilterValues,
+  ITotalOrderReport,
+  ITotalOrderReportList,
+  OrdersReportsEnum,
+  RESPONSE_STATUSES
+} from '../../../../../server/models';
 import CustomTable from '../../../Dashboard/CustomTable';
 import Filters from '../../../../filters/FIlters';
 import { getColumns } from './columns';
 import { getAdditionalFilters, getFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
+
+const { Text } = Typography;
 
 interface Interface {
   ordersFiltersOptions: IOrderFilterValues | null;
@@ -19,7 +27,19 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const { t } = useTranslation();
   const [totalOrdersList, setTotalOrdersList] = useState<ITotalOrderReport[]>([]);
   const [filtersValues, setFiltersValues] = useState<any>({});
-  const [totalRecords, setTotalRecords] = useState(0);
+  const [totalRecords, setTotalRecords] = useState<{
+    TotalItems: number;
+    TotalAfterVat: number;
+    TotalBeforeVat: number;
+    OrderAVG: number;
+    TotalRecords: number;
+  }>({
+    TotalItems: 0,
+    TotalAfterVat: 0,
+    TotalBeforeVat: 0,
+    OrderAVG: 0,
+    TotalRecords: 0
+  });
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
@@ -34,7 +54,13 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const getJournalList = (filters: any) => {
     API.reports.orderReports.getTotalOrdersReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-        setTotalRecords(res.TotalRecords);
+        setTotalRecords({
+          TotalItems: res.TotalItems,
+          TotalAfterVat: res.TotalAfterVat,
+          TotalBeforeVat: res.TotalBeforeVat,
+          OrderAVG: res.OrderAVG,
+          TotalRecords: res.TotalRecords
+        });
         setTotalOrdersList(res.List);
       }
     });
@@ -53,10 +79,43 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     });
   };
 
+  const getTabletSummary = (pageData: ITotalOrderReportList[]) => {
+    return (
+      <Table.Summary fixed="bottom">
+        <Table.Summary.Row>
+          <Table.Summary.Cell index={0}>
+            <Text strong>
+              {t('TotalRecords')}: {totalRecords.TotalRecords}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={0}>
+            <Text strong>
+              {t('TotalItems')}: {totalRecords.TotalItems}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={1}>
+            <Text strong>
+              {t('TotalBeforeVat')}: {totalRecords.TotalBeforeVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={2}>
+            <Text strong>
+              {t('TotalAfterVat')}: {totalRecords.TotalAfterVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={3}>
+            <Text strong>
+              {t('OrderAVG')}: {totalRecords.OrderAVG}
+            </Text>
+          </Table.Summary.Cell>
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  };
+
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters
-        totalRecords={totalRecords}
         filters={getFilters(ordersFiltersOptions, t)}
         additionalFilters={getAdditionalFilters(ordersFiltersOptions, t)}
         onChange={setFiltersValues}
@@ -83,10 +142,13 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
           className="userDailyStatsBtn"
         />
         <CustomTable
+          // @ts-ignore
           data={totalOrdersList}
           columns={getColumns(t)}
           expandRowByClick
           scrollSize={tableHeight}
+          // @ts-ignore
+          summary={getTabletSummary}
         />
       </div>
     </div>
