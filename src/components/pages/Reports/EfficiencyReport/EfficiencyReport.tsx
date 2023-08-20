@@ -96,10 +96,12 @@ export const EfficiencyReport = () => {
           suffixIcon={<CalendarOutlined className="datePicker_icon" />}
         />
       </div>
-      <EfficiencyCard
-        dailyStats={efficiencyData?.Data}
-        t={t}
-      />
+      {efficiencyData ? (
+        <EfficiencyCard
+          dailyStats={efficiencyData?.Data}
+          t={t}
+        />
+      ) : null}
       <Radio.Group
         className="mt-5 mb-5"
         onChange={onChangeTab}
