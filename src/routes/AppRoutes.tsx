@@ -6,6 +6,7 @@ import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
 import Catalog from '../components/pages/Reports/Catalog';
+import { EfficiencyReport } from '../components/pages/Reports/EfficiencyReport/EfficiencyReport';
 import OrdersReports from '../components/pages/Reports/OrdersReports';
 import TargetReport from '../components/pages/Reports/TargetReport';
 import TicketReports from '../components/pages/Reports/TicketReports';
@@ -139,6 +140,10 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
               <Route
                 path={routes.salesReports}
                 component={SalesReports}
+              />
+              <Route
+                path={routes.efficiencyReport}
+                component={EfficiencyReport}
               />
               <Route
                 path={routes.keyboardEditor}

@@ -13,5 +13,6 @@ export const routes = {
   sellers: '/sellers',
   keyboardEditorDuplicate: '/keyboardEditor/:id/duplicate',
   keyboardList: '/keyboardList',
-  paymentsEditor: '/paymentsEditor'
+  paymentsEditor: '/paymentsEditor',
+  efficiencyReport: '/efficiencyReport'
 };

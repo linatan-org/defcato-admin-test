@@ -10,6 +10,9 @@ import {
   IDailyStats,
   IDailyUserStats,
   IDailyUserTargets,
+  IEfficiencyData,
+  IEfficiencyDetailsCancelsByReason,
+  IEfficiencyDetailsCancelsByUser,
   IExportExcelTicketReport,
   IGeneralResponse,
   IItemsTotalReportsList,
@@ -154,6 +157,34 @@ export const API = {
         const res = await apiConfig.post(urls[type], {
           ...getSession(),
           ...data
+        });
+        return res.data;
+      }
+    },
+    efficiencyReports: {
+      getDailyEfficiency: async (SelectedDate: string): Promise<IEfficiencyData> => {
+        const res = await apiConfig.post('/FetchDailyEfficiency.aspx', {
+          ...getSession(),
+          SelectedDate
+        });
+        return res.data;
+      },
+      getDailyCancelsByUser: async (DeviceSysId: string, SelectedDate: string): Promise<IEfficiencyDetailsCancelsByUser> => {
+        const res = await apiConfig.post('/FetchDailyCancelsByUser.aspx', {
+          ...getSession(),
+          SelectedDate,
+          DeviceSysId
+        });
+        return res.data;
+      },
+      getDailyCancelsByReason: async (
+        DeviceSysId: string,
+        SelectedDate: string
+      ): Promise<IEfficiencyDetailsCancelsByReason> => {
+        const res = await apiConfig.post('/FetchDailyCancelsByReason.aspx', {
+          ...getSession(),
+          SelectedDate,
+          DeviceSysId
         });
         return res.data;
       }

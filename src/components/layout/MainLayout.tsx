@@ -49,7 +49,8 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
       getItem(t('navMenu.zReport'), routes.zReports),
       getItem(t('navMenu.ticketReports'), routes.ticketReports),
       getItem(t('navMenu.ordersReports'), routes.ordersReports),
-      getItem(t('navMenu.targetReports'), routes.targetReports)
+      getItem(t('navMenu.targetReports'), routes.targetReports),
+      getItem(t('navMenu.efficiencyReport'), routes.efficiencyReport)
       // getItem(t('navMenu.itemsReport'), '6')
     ]),
     getItem(t('navMenu.settings'), 'sub2', null, [

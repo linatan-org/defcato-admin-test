@@ -1,4 +1,5 @@
 import { ColumnsType } from 'antd/es/table';
+import { EfficiencyReport } from '../components/pages/Reports/EfficiencyReport/EfficiencyReport';
 
 export enum OrdersReportsEnum {
   ORDERS_JOURNAL,
@@ -838,6 +839,51 @@ export interface IPaymentDataItem extends Partial<IPayment> {
 
 export interface IPaymentsList extends IGeneralResponse {
   Presets: IPayment[];
+}
+
+export interface IEfficiencyData extends IGeneralResponse {
+  Data: IEfficiencyTotalData;
+  CancelsByReason: IEfficiencyCancelsByReason[];
+  CancelsByUser: IEfficiencyCancelsByUser[];
+}
+
+export interface IEfficiencyDetailsCancelsByUser extends IGeneralResponse {
+  CancelsByReason: IEfficiencyCancelsByReason[];
+}
+
+export interface IEfficiencyDetailsCancelsByReason extends IGeneralResponse {
+  CancelsByUser: IEfficiencyCancelsByUser[];
+}
+
+export interface IEfficiencyTotal {
+  IncomingCalls: number;
+  TotalOrders: number;
+  NotCompletedOrders: number;
+  CallsOrdersConversion: number;
+}
+
+export interface IEfficiencyCancelsByReason {
+  Description: string;
+  ReasonSysId: number;
+  Total: number;
+}
+
+export interface IEfficiencyCancelsByUser extends IEfficiencyCancelsByReason {}
+
+export interface IEfficiencyTotalData {
+  CallsOrdersConversion: number;
+  CallsPerHour: number;
+  CompletedCalls: number;
+  HourRedemption: number;
+  IncomingCalls: number;
+  LastOrderTime: string;
+  LastTranDate: string;
+  NotCompletedOrders: number;
+  OrderAVG: number;
+  OrdersPerHour: number;
+  TotalOrders: number;
+  TotalRevenue: number;
+  TotalTickets: number;
 }
 
 export enum RESPONSE_STATUSES {

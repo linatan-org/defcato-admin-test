@@ -22,6 +22,7 @@
     "reports": "Reports",
     "salesReport": "Sales Report",
     "ordersReport": "Orders Report",
+    "efficiencyReport": "efficiencyReport",
     "itemsReport": "Items Report",
     "keyboardEditor": "Item Keyboards",
     "keyboardList": "Keyboard List",
@@ -81,6 +82,22 @@
     "sellersTableTitle": "Sellers"
   },
   "reports": {
+    "efficiencyReports": {
+      "ViewByUser": "View By User",
+      "ViewByReason": "View By Reason",
+      "NotCompletedOrdersDetails": "Not Completed Orders Details",
+      "IncomingCalls": "Incoming Calls",
+      "TotalOrders": "Total Orders",
+      "NotCompletedOrders": "Not Completed Orders",
+      "CallsOrdersConversion": "Calls Orders Conversion",
+      "columns": {
+        "Reason": "Description",
+        "TotalOrders": "Total",
+        "ReasonByUser": "Description",
+        "Total": "Total",
+        "User": "User"
+      }
+    },
     "saleReports": {
       "salesReports": "Sales Report",
       "deviceTranReference": "Trx Number",

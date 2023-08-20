@@ -86,7 +86,6 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     );
   };
 
-
   return (
     <div className="flex-1 branchViewWrapper">
       <Filters

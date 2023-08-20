@@ -22,6 +22,7 @@
     "reports": "דוחות",
     "salesReport": "דוח מכירות",
     "ordersReport": "דוח הזמנות",
+    "efficiencyReport": "דוח יעילות",
     "itemsReport": "דוח פריטים",
     "keyboardEditor": "תכנון מקלדת",
     "keyboardList": "רשימת מקלדות",
@@ -81,6 +82,22 @@
     "sellersTableTitle": "אנשי מכירות"
   },
   "reports": {
+    "efficiencyReports": {
+      "ViewByUser": "הצג לפי נציג",
+      "ViewByReason": "הצג לפי סיבה",
+      "NotCompletedOrdersDetails": "פירוט הזמנות שלא נסגרו",
+      "IncomingCalls": "שיחות נכנסות",
+      "TotalOrders": "כמות הזמנות",
+      "NotCompletedOrders": "הזמנות שלא נסגרו",
+      "CallsOrdersConversion": "אחוז סגירת שיחות",
+      "columns": {
+        "Reason": "סיבת ביטול",
+        "TotalOrders": "כמות",
+        "ReasonByUser": "סיבה",
+        "Total": "סה\"כ",
+        "User": "נציג"
+      }
+    },
     "saleReports": {
       "salesReports": "דוח מכירות",
       "deviceTranReference": "מספר עסקה",
