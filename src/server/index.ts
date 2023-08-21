@@ -152,7 +152,8 @@ export const API = {
           [OrdersReportsEnum.ITEMS_REVENUE_REPORTS]: 'AdminExportCRMItemsRevenueReport2Excel.aspx',
           [OrdersReportsEnum.ITEMS_REPORTS]: 'AdminExportCRMItemsTotalReport2Excel.aspx',
           [OrdersReportsEnum.ORDERS_BY_PROPERTIES]: 'AdminExportCRMOrdersTotalReport2Excel.aspx',
-          [OrdersReportsEnum.ORDERS_JOURNAL]: 'AdminExportCRMOrdersReport2Excel.aspx'
+          [OrdersReportsEnum.ORDERS_JOURNAL]: 'AdminExportCRMOrdersReport2Excel.aspx',
+          [OrdersReportsEnum.EFFICIENCY_REPORT]: 'ExportEfficiencyReport2Excel.aspx'
         };
         const res = await apiConfig.post(urls[type], {
           ...getSession(),

@@ -5,7 +5,8 @@ export enum OrdersReportsEnum {
   ORDERS_JOURNAL,
   ORDERS_BY_PROPERTIES,
   ITEMS_REPORTS,
-  ITEMS_REVENUE_REPORTS
+  ITEMS_REVENUE_REPORTS,
+  EFFICIENCY_REPORT
 }
 
 export interface IGeneralResponse {

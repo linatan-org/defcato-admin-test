@@ -1,6 +1,6 @@
 import './EfficiencyReport.module.scss';
 import { CalendarOutlined, FileExcelFilled, ReloadOutlined } from '@ant-design/icons';
-import { Radio, DatePicker, DatePickerProps } from 'antd';
+import { Radio, DatePicker, DatePickerProps, Button } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import moment, { Moment } from 'moment/moment';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +11,9 @@ import {
   IEfficiencyCancelsByReason,
   IEfficiencyCancelsByUser,
   IEfficiencyData,
-  ITargetReport
+  ITargetReport,
+  OrdersReportsEnum,
+  RESPONSE_STATUSES
 } from '../../../../server/models';
 import Filters from '../../../filters/FIlters';
 import CustomTable from '../../Dashboard/CustomTable';
@@ -45,6 +47,16 @@ export const EfficiencyReport = () => {
       setEfficiencyData(res);
     });
   };
+  const onExportToExcel = () => {
+    API.reports.orderReports
+      .exportOrdersToExcel({ SelectedDate: selectedDate }, OrdersReportsEnum.EFFICIENCY_REPORT)
+      .then((res) => {
+        console.log(res);
+        if (res.ErrorCode === RESPONSE_STATUSES.OK && res.ReportURL) {
+          window.open(res.ReportURL, '_blank');
+        }
+      });
+  };
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     setSelectedDateMoment(date);
     setSelectedDate(dateString);
@@ -61,7 +73,11 @@ export const EfficiencyReport = () => {
     );
   };
   const onExpand = (expanded: boolean, record: IEfficiencyCancelsByReason | IEfficiencyCancelsByUser) => {
-    console.log(record, 'RECORD===');
+    if (!expanded) {
+      setExpandedKeys([]);
+      setDetailsData([]);
+      return;
+    }
     const isByUser = selectedTab === REASON_TYPE.BY_USER;
     const idKey = isByUser ? 'DeviceSysId' : 'ReasonSysId';
     const request = isByUser
@@ -80,7 +96,6 @@ export const EfficiencyReport = () => {
         // @ts-ignore
         setDetailsData(res.CancelsByUser);
       }
-      console.log(res, 'RESPONSE========');
     });
   };
   console.log(expandedKeys, 'expandedKeys');
@@ -111,6 +126,25 @@ export const EfficiencyReport = () => {
         <Radio value={REASON_TYPE.BY_REASON}>{t('reports.efficiencyReports.ViewByReason')}</Radio>
       </Radio.Group>
       <div className="relative flex-1">
+        <Button
+          icon={<FileExcelFilled />}
+          onClick={() => onExportToExcel()}
+          type="primary"
+          className="exportToExcelBtn"
+          disabled={
+            selectedTab === REASON_TYPE.BY_USER
+              ? efficiencyData?.CancelsByUser?.length === 0
+              : efficiencyData?.CancelsByReason?.length === 0
+          }
+        >
+          {t('exportToExcel')}
+        </Button>
+        <Button
+          icon={<ReloadOutlined />}
+          onClick={() => getDailyEfficiency(selectedDate)}
+          type="primary"
+          className="userDailyStatsBtn"
+        />
         <CustomTable
           data={
             selectedTab === REASON_TYPE.BY_USER ? efficiencyData?.CancelsByUser || [] : efficiencyData?.CancelsByReason || []
