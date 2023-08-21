@@ -2,6 +2,7 @@ import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { getOrderedTableColumns } from '../../../../../helpers/helpers';
 import { API } from '../../../../../server';
 import {
   FieldsViewMap,
@@ -32,7 +33,6 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     TotalAfterVat: 0,
     TotalBeforeVat: 0
   });
-  // eslint-disable-next-line no-undef
   const [fieldsOrder, setFieldsOrder] = useState<FieldsViewMap[]>([]);
 
   const [tableHeight, setTableHeight] = useState(600);
@@ -134,7 +134,11 @@ const JournalOrders: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         />
         <CustomTable
           data={ordersList}
-          columns={getColumns(t)}
+          columns={
+            fieldsOrder.length
+              ? getOrderedTableColumns(t('reports.ordersReports.OrdersJournal'), fieldsOrder, t)
+              : getColumns(t)
+          }
           expandRowByClick
           scrollSize={tableHeight}
           // @ts-ignore

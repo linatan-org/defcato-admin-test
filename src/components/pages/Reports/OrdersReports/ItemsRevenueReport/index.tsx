@@ -2,8 +2,10 @@ import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { getOrderedTableColumns } from '../../../../../helpers/helpers';
 import { API } from '../../../../../server';
 import {
+  FieldsViewMap,
   IOrderFilterValues,
   IRevenueReport,
   ITotalOrderReportList,
@@ -43,13 +45,13 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     TotalRevenue: 0,
     TotalRecords: 0
   });
+  const [fieldsOrder, setFieldsOrder] = useState<FieldsViewMap[]>([]);
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const node = ref.current;
-    console.log(node?.clientHeight, 'node?.clientHeight');
     // @ts-ignore
     // setTableHeight(node?.clientHeight - 150);
   }, [ref?.current?.clientHeight]);
@@ -58,6 +60,7 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     API.reports.orderReports.getItemsRevenueReport(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setRevenueItems(res.List);
+        setFieldsOrder(res.FieldsViewMap);
         setTotalRecords({
           TotalRevenue: res.TotalRevenue,
           TotalAfterVat: res.TotalAfterVat,
@@ -152,7 +155,11 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         />
         <CustomTable
           data={revenueItems}
-          columns={getColumns(t)}
+          columns={
+            fieldsOrder.length
+              ? getOrderedTableColumns(t('reports.ordersReports.ItemsRevenueReportTitle'), fieldsOrder, t)
+              : getColumns(t)
+          }
           expandRowByClick
           scrollSize={tableHeight}
           // @ts-ignore

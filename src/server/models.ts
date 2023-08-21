@@ -566,6 +566,7 @@ export interface ITotalOrderReport {
 }
 
 export interface ITotalOrderReportList extends IGeneralResponse {
+  FieldsViewMap: FieldsViewMap[];
   List: ITotalOrderReport[];
   TotalRecords: number;
   TotalItems: number;
@@ -582,6 +583,7 @@ export interface IItemsTotalReports {
 }
 
 export interface IItemsTotalReportsList extends IGeneralResponse {
+  FieldsViewMap: FieldsViewMap[];
   List: IItemsTotalReports[];
   TotalRecords: number;
   TotalAfterVat: number;
@@ -599,6 +601,7 @@ export interface IRevenueReport {
 }
 
 export interface IRevenueReportList extends IGeneralResponse {
+  FieldsViewMap: FieldsViewMap[];
   List: IRevenueReport[];
   TotalRecords: number;
   TotalRevenuePercent: number;

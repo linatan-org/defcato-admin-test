@@ -2,8 +2,10 @@ import { FileExcelFilled } from '@ant-design/icons/lib';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { getOrderedTableColumns } from '../../../../../helpers/helpers';
 import { API } from '../../../../../server';
 import {
+  FieldsViewMap,
   IOrderFilterValues,
   ITotalOrderReport,
   ITotalOrderReportList,
@@ -40,6 +42,7 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     OrderAVG: 0,
     TotalRecords: 0
   });
+  const [fieldsOrder, setFieldsOrder] = useState<FieldsViewMap[]>([]);
 
   const [tableHeight, setTableHeight] = useState(600);
   const ref = useRef<HTMLDivElement>(null);
@@ -61,6 +64,7 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
           OrderAVG: res.OrderAVG,
           TotalRecords: res.TotalRecords
         });
+        setFieldsOrder(res.FieldsViewMap);
         setTotalOrdersList(res.List);
       }
     });
@@ -144,7 +148,11 @@ const OrdersTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         <CustomTable
           // @ts-ignore
           data={totalOrdersList}
-          columns={getColumns(t)}
+          columns={
+            fieldsOrder.length
+              ? getOrderedTableColumns(t('reports.ordersReports.OrdersByProperties'), fieldsOrder, t)
+              : getColumns(t)
+          }
           expandRowByClick
           scrollSize={tableHeight}
           // @ts-ignore
