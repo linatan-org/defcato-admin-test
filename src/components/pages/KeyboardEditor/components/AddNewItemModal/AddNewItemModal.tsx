@@ -54,7 +54,7 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
   const debouncedProductSearch = useDebounceValue<string>(productSearchValue, 700);
 
   const getFilterData = (debouncedProductSearch: string, categoryCode: string) => {
-    API.keyboard.getCreateItems(debouncedProductSearch, categoryCode).then((res) => {
+    API.keyboard.getCreateItems(debouncedProductSearch, undefined, categoryCode).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setCategories(res.Categories);
         setItems(res.Items);

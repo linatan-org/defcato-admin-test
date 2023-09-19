@@ -50,6 +50,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
   options,
   selectValueKey,
   selectDisplayKey,
+  key,
   selectFieldNames,
   disabled,
   showSearch,
@@ -98,6 +99,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
       setSingleApiOptions([]);
       setLocalLoading(true);
       if (getItems) {
+        console.log(selectValueKey, 'KEY======');
         getItems(search).then((res) => {
           if (fetchId !== fetchRef.current) {
             // for fetch callback order

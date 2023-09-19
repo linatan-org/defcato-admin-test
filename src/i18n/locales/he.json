@@ -50,7 +50,21 @@
     "ItemCode": "קוד פריט",
     "ItemDescription": "שם פריט",
     "TotalQuantity": "כמות",
-    "TotalAmount": "סה\"כ"
+    "TotalAmount": "סה\"כ",
+    "MemberCard": "כרטיס לקוח",
+    "TenderType": "סוג תשלום",
+    "Department": "מחלקה",
+    "Day": "יום",
+    "Week": "שבוע",
+    "Month": "חודש",
+    "Year": "שנה",
+    "Сity": "עיר",
+    "Area": "איזור",
+    "EventType": "סוג אירוע",
+    "Hour": "שעה",
+    "Street": "רחוב",
+    "CustomerType": "סוג לקוח",
+    "CustomerClassification": "סיווג לקוח"
   },
   "navMenu" : {
     "currentTradingDay": "פרטי יום מסחר",

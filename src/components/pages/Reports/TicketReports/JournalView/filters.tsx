@@ -55,7 +55,7 @@ export const getFilters = (filtersOptions: ITicketFilters | null, t: any, disabl
       selectFieldNames: SELECT_FIELD_NAMES,
       label: t('reports.ticketReports.filterTitles.ItemCode'),
       getItems: async (v) => {
-        return await API.keyboard.getCreateItems(v).then((res) => {
+        return await API.keyboard.getCreateItems(v, 'ItemCode').then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
             return res.Items || [];
           }

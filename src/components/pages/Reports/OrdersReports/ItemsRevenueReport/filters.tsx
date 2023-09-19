@@ -60,7 +60,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       label: t('reports.ordersReports.filters.Category'),
       selectFieldNames: SELECT_FIELD_NAMES,
       getItems: async (v) => {
-        return await API.keyboard.getCreateItems(v).then((res) => {
+        return await API.keyboard.getCreateItems(v, 'CategoryCode').then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
             return res.Categories || [];
           }
@@ -74,7 +74,7 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       label: t('reports.ordersReports.filters.Item'),
       selectFieldNames: SELECT_FIELD_NAMES,
       getItems: async (v) => {
-        return await API.keyboard.getCreateItems(v).then((res) => {
+        return await API.keyboard.getCreateItems(v, 'ItemCode').then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
             return res.Items || [];
           }

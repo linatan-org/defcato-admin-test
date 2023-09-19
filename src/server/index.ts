@@ -335,10 +335,14 @@ export const API = {
       });
       return res.data;
     },
-    getCreateItems: async (InputData: string, CategoryCode?: string): Promise<ICreateItemValues> => {
+    getCreateItems: async (
+      InputData: string,
+      fieldName: string | undefined,
+      CategoryCode?: string
+    ): Promise<ICreateItemValues> => {
       const res = await apiConfig.post('/FetchItemsForKeyboard.aspx', {
         ...getSession(),
-        ...{ InputData, CategoryCode }
+        ...{ InputData, CategoryCode, fieldName }
       });
       return res.data;
     },

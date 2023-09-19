@@ -50,7 +50,21 @@
     "ItemCode": "Item Code",
     "ItemDescription": "Item Description",
     "TotalQuantity": "TotalQuantity",
-    "TotalAmount": "Total Amount"
+    "TotalAmount": "Total Amount",
+    "MemberCard": "Member Card",
+    "TenderType": "Tender Type",
+    "Department": "Department",
+    "Day": "Day",
+    "Week": "Week",
+    "Month": "Month",
+    "Year": "Year",
+    "Сity": "Сity",
+    "Area": "Area",
+    "EventType": "EventType",
+    "Hour": "Hour",
+    "Street": "Street",
+    "CustomerType": "Customer Type",
+    "CustomerClassification": "Customer Classification"
   },
   "navMenu": {
     "currentTradingDay": "Trading Day",
