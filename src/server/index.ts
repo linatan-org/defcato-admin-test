@@ -46,35 +46,13 @@ export const injectDispatch = (_dispatch: any) => {
   dispatch = _dispatch;
 };
 
-const apiConfig = axios.create({
+export const apiConfig = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json'
   }
 });
-
-apiConfig.interceptors.request.use(
-  (config) => {
-    dispatch(setLoading(true));
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-apiConfig.interceptors.response.use(
-  (response) => {
-    dispatch(setLoading(false));
-    if (response.data.ErrorCode !== 0) {
-      toast.error(response.data.ErrorMessage, { className: 'toastError' });
-    }
-    return Promise.resolve(response);
-  },
-  (error) => {
-    dispatch(setLoading(false));
-    return Promise.reject(error);
-  }
-);
 
 const getSession = () => {
   const SessionKey = localStorage.getItem('token');
@@ -180,12 +158,13 @@ export const API = {
       },
       getDailyCancelsByReason: async (
         DeviceSysId: string,
-        SelectedDate: string
+        SelectedDate: string,
+        key: string
       ): Promise<IEfficiencyDetailsCancelsByReason> => {
         const res = await apiConfig.post('/FetchDailyCancelsByReason.aspx', {
           ...getSession(),
           SelectedDate,
-          DeviceSysId
+          [key]: DeviceSysId
         });
         return res.data;
       }

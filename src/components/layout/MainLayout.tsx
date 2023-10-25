@@ -5,9 +5,13 @@ import connect from 'react-redux/es/components/connect';
 import { useHistory } from 'react-router-dom';
 import { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { errors } from '../../constants/errors';
 import { routes } from '../../constants/routes';
 import { setAuth } from '../../reudux/auth/action';
+import { setLoading } from '../../reudux/globalLoader/action';
 import { setDashboardAccessOnly } from '../../reudux/settings/action';
+import { apiConfig } from '../../server';
 import GlobalLoader from '../GlobalLoader/GlobalLoader';
 import './styles.scss';
 
@@ -62,6 +66,33 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
     ]),
     getItem(t('navMenu.logOut'), routes.signIn, null)
   ];
+  // TODO Refactor to provider
+  useEffect(() => {
+    apiConfig.interceptors.request.use(
+      (config) => {
+        dispatch(setLoading(true));
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    apiConfig.interceptors.response.use(
+      (response) => {
+        dispatch(setLoading(false));
+        if (response.data.ErrorCode !== 0) {
+          const messageObj = errors.find((e) => e.code === response.data.ErrorCode);
+          // @ts-ignore
+          const message = messageObj ? messageObj[lang] : response.data.ErrorMessage;
+          toast.error(message, { className: 'toastError' });
+        }
+        return Promise.resolve(response);
+      },
+      (error) => {
+        dispatch(setLoading(false));
+        return Promise.reject(error);
+      }
+    );
+  }, []);
 
   const getDefaultSelectedKey = () => {
     const currentPath = history.location.pathname;

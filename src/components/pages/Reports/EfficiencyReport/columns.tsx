@@ -8,9 +8,14 @@ export const getColumns = (t: any): any => [
         key: 'Description'
       },
       {
-        title: t('reports.efficiencyReports.columns.TotalOrders'),
+        title: t('reports.efficiencyReports.columns.Total'),
         dataIndex: 'Total',
         key: 'Total'
+      },
+      {
+        title: t('reports.efficiencyReports.TotalOrders'),
+        dataIndex: 'TotalOrders',
+        key: 'TotalOrders'
       }
     ]
   }

@@ -3,7 +3,7 @@ import { CalendarOutlined, FileExcelFilled, ReloadOutlined } from '@ant-design/i
 import { Radio, DatePicker, DatePickerProps, Button } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import moment, { Moment } from 'moment/moment';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../server';
 import {
@@ -72,32 +72,35 @@ export const EfficiencyReport = () => {
       />
     );
   };
-  const onExpand = (expanded: boolean, record: IEfficiencyCancelsByReason | IEfficiencyCancelsByUser) => {
-    if (!expanded) {
-      setExpandedKeys([]);
-      setDetailsData([]);
-      return;
-    }
-    const isByUser = selectedTab === REASON_TYPE.BY_USER;
-    const idKey = isByUser ? 'DeviceSysId' : 'ReasonSysId';
-    const request = isByUser
-      ? API.reports.efficiencyReports.getDailyCancelsByUser
-      : API.reports.efficiencyReports.getDailyCancelsByReason;
-    // @ts-ignore
-    const newExpandedKey = [record.key];
-    // @ts-ignore
-    setExpandedKeys(newExpandedKey);
-    // @ts-ignore
-    request(record[idKey], selectedDate).then((res) => {
-      if (isByUser) {
-        // @ts-ignore
-        setDetailsData(res.CancelsByReason);
-      } else {
-        // @ts-ignore
-        setDetailsData(res.CancelsByUser);
+  const onExpand = useCallback(
+    (expanded: boolean, record: IEfficiencyCancelsByReason | IEfficiencyCancelsByUser) => {
+      if (!expanded) {
+        setExpandedKeys([]);
+        setDetailsData([]);
+        return;
       }
-    });
-  };
+      const isByUser = selectedTab === REASON_TYPE.BY_USER;
+      const idKey = isByUser ? 'DeviceSysId' : 'ReasonSysId';
+      const request = isByUser
+        ? API.reports.efficiencyReports.getDailyCancelsByUser
+        : API.reports.efficiencyReports.getDailyCancelsByReason;
+      // @ts-ignore
+      const newExpandedKey = [record.key];
+      // @ts-ignore
+      setExpandedKeys(newExpandedKey);
+      // @ts-ignore
+      request(record[idKey], selectedDate, idKey).then((res) => {
+        if (isByUser) {
+          // @ts-ignore
+          setDetailsData(res.CancelsByReason);
+        } else {
+          // @ts-ignore
+          setDetailsData(res.CancelsByUser);
+        }
+      });
+    },
+    [setExpandedKeys, setDetailsData, selectedTab]
+  );
   console.log(expandedKeys, 'expandedKeys');
   return (
     <div className="ticketReportsWrapper">
