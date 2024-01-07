@@ -64,7 +64,10 @@
     "Hour": "Hour",
     "Street": "Street",
     "CustomerType": "Customer Type",
-    "CustomerClassification": "Customer Classification"
+    "CustomerClassification": "Customer Classification",
+    "PaymentMethod": "Payment Method",
+    "SellerCode": "Seller Code",
+    "DeliveryCity": "Delivery City"
   },
   "navMenu": {
     "currentTradingDay": "Trading Day",
@@ -138,8 +141,12 @@
       "IncomingCalls": "Incoming Calls",
       "TotalOrders": "Total Orders",
       "NotCompletedOrders": "Not Completed Orders",
+      "ConversationDetails": "Conversation Details",
       "CallsOrdersConversion": "Calls Orders Conversion",
       "columns": {
+        "NotCompletedOrders": "Not Completed Orders",
+        "CallsOrdersConversion": "Calls Orders Conversion",
+        "UserName": "User Name",
         "Reason": "Description",
         "TotalOrders": "Total",
         "ReasonByUser": "Description",

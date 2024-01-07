@@ -7,18 +7,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../server';
 import {
-  IDailyStatsData,
   IEfficiencyCancelsByReason,
   IEfficiencyCancelsByUser,
   IEfficiencyData,
-  ITargetReport,
   OrdersReportsEnum,
   RESPONSE_STATUSES
 } from '../../../../server/models';
-import Filters from '../../../filters/FIlters';
 import CustomTable from '../../Dashboard/CustomTable';
-import TargetReportDetails from '../TargetReport/TargetReportDetails';
-import { getColumns, getColumnsByReason, getColumnsByUser } from './columns';
+import { getColumnsByReasonMain, getColumnsByUserMain, getColumnsByReason, getColumnsByUser } from './columns';
 import EfficiencyCard from './EfficiencyCard';
 
 enum REASON_TYPE {
@@ -152,7 +148,7 @@ export const EfficiencyReport = () => {
           data={
             selectedTab === REASON_TYPE.BY_USER ? efficiencyData?.CancelsByUser || [] : efficiencyData?.CancelsByReason || []
           }
-          columns={getColumns(t)}
+          columns={selectedTab === REASON_TYPE.BY_USER ? getColumnsByUserMain(t) : getColumnsByReasonMain(t)}
           expandRowByClick
           expandable={{ expandedRowRender, onExpand }}
           expandedRowKeys={expandedKeys}
