@@ -33,6 +33,11 @@ export const getColumnsByUserMain = (t: any): any => [
         key: 'Description'
       },
       {
+        title: t('reports.efficiencyReports.columns.TotalConversations'),
+        dataIndex: 'Total',
+        key: 'Total'
+      },
+      {
         title: t('reports.efficiencyReports.TotalOrders'),
         dataIndex: 'TotalOrders',
         key: 'TotalOrders'

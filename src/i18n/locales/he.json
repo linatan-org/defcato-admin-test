@@ -146,9 +146,10 @@
       "columns": {
         "NotCompletedOrders": "הזמנות שלא נסגרו",
         "CallsOrdersConversion": "אחוז סגירת שיחות",
-        "UserName": "שם נמיג",
+        "UserName": "שם נציג",
         "Reason": "סיבת ביטול",
         "TotalOrders": "כמות",
+        "TotalConversations": "כמות שיחות",
         "ReasonByUser": "סיבה",
         "Total": "סה\"כ",
         "User": "נציג"

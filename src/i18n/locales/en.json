@@ -149,6 +149,7 @@
         "UserName": "User Name",
         "Reason": "Description",
         "TotalOrders": "Total",
+        "TotalConversations": "Total Conversations",
         "ReasonByUser": "Description",
         "Total": "Total",
         "User": "User"
