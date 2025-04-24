@@ -13,8 +13,8 @@ export const getSaleReportsTableColumns = (t: any, onOpenReportDetails: (r: ISal
       },
       {
         title: t('reports.saleReports.tranType'),
-        dataIndex: 'TranType',
-        key: 'TranType'
+        dataIndex: 'TranTypeDescription',
+        key: 'TranTypeDescription'
       },
       {
         title: t('reports.saleReports.tranDate'),

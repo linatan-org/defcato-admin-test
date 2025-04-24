@@ -14,5 +14,8 @@ export const routes = {
   keyboardEditorDuplicate: '/keyboardEditor/:id/duplicate',
   keyboardList: '/keyboardList',
   paymentsEditor: '/paymentsEditor',
-  efficiencyReport: '/efficiencyReport'
+  efficiencyReport: '/efficiencyReport',
+  couponReport: '/couponReport',
+  timeReport: '/timeReport',
+  activityReport: '/activityReport'
 };

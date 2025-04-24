@@ -125,6 +125,14 @@ export const CatalogItem: React.FC<CatalogItemProps> = ({
                   <Text>{t('reports.catalog.catalogItemDetails.IsNotActive')}</Text>
                 </Checkbox>
               </Form.Item>
+              <Form.Item
+                name="IsNotForSale"
+                valuePropName="checked"
+              >
+                <Checkbox className="checkboxWrapper">
+                  <Text>{t('reports.catalog.catalogItemDetails.NotForSale')}</Text>
+                </Checkbox>
+              </Form.Item>
             </Space>
             <div className="codeContainer">
               <Text className="title">{t('reports.catalog.catalogItemDetails.BarCode')}</Text>
@@ -215,6 +223,33 @@ export const CatalogItem: React.FC<CatalogItemProps> = ({
                 </Tooltip>
               }
             />
+          </Form.Item>
+        </div>
+        <div className="codeContainer">
+          <Text className="title">{t('reports.catalog.catalogItemDetails.ClassificationCode1')}</Text>
+          <Form.Item
+            className="flex-1"
+            name="ClassificationCode1"
+          >
+            <Input />
+          </Form.Item>
+        </div>
+        <div className="codeContainer">
+          <Text className="title">{t('reports.catalog.catalogItemDetails.ClassificationCode2')}</Text>
+          <Form.Item
+            className="flex-1"
+            name="ClassificationCode2"
+          >
+            <Input />
+          </Form.Item>
+        </div>
+        <div className="codeContainer">
+          <Text className="title">{t('reports.catalog.catalogItemDetails.ClassificationCode3')}</Text>
+          <Form.Item
+            className="flex-1"
+            name="ClassificationCode3"
+          >
+            <Input />
           </Form.Item>
         </div>
       </Space>

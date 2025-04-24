@@ -17,6 +17,7 @@
   "TotalCost": "Total Cost",
   "TotalRevenue": "Total Revenue",
   "TotalRevenuePercent": "Total Revenue Percent %",
+  "TotalAmountAfterTranDiscount": "Total Amount After Discount",
   "sharedColumns": {
     "BranchNetCode": "Branch Net Code",
     "CreatedDate": "Created Date",
@@ -70,6 +71,7 @@
     "DeliveryCity": "Delivery City"
   },
   "navMenu": {
+    "timeReport": "Time Report",
     "currentTradingDay": "Trading Day",
     "reports": "Reports",
     "salesReport": "Sales Report",
@@ -88,12 +90,15 @@
     "ticketReports": "Tickets Report",
     "ordersReports": "Orders Report",
     "targetReports": "Targers Report",
+    "couponReports": "Coupon Reports",
+    "activityReports": "Activity Reports",
     "logOut": "LogOut"
   },
   "dashboard": {
     "datePickerPlaceholder": "Other Date",
     "dailyStats": {
       "totalRevenue": "Total Revenue",
+      "totalRevenueTitle": "Revenue",
       "totalOrders": "Total Orders",
       "lastOrderTime": "last Order Time",
       "orderAVG": "Order AVG",
@@ -134,6 +139,19 @@
     "sellersTableTitle": "Sellers"
   },
   "reports": {
+    "timeReport": {
+      "title": "Time Report",
+      "DateRange": "Date Range",
+      "Employees": "Employees",
+      "columns": {
+        "Employee": "Employee",
+        "TotalHours": "Total Hours",
+        "Date": "Date",
+        "EnterTime": "Enter Time",
+        "DepartureTime": "Departure Time",
+        "TimeClockReport": "Time Clock Report"
+      }
+    },
     "efficiencyReports": {
       "ViewByUser": "View By User",
       "ViewByReason": "View By Reason",
@@ -179,6 +197,7 @@
           "Code": "Code",
           "Description": "Date",
           "Quantity": "Quantity",
+          "PercentDiscount": "Percent Discount ",
           "Total": "Total"
         },
         "discountColumns": {
@@ -369,7 +388,11 @@
         "CategoryCode": "Category Code",
         "Add": "Add",
         "Update": "Update",
-        "Exit": "Exit"
+        "Exit": "Exit",
+        "ClassificationCode1": "Classification Code1",
+        "ClassificationCode2": "Classification Code2",
+        "ClassificationCode3": "Classification Code3",
+        "NotForSale": "Not For Sale"
       }
     }
   },

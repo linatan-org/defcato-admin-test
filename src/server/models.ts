@@ -6,7 +6,8 @@ export enum OrdersReportsEnum {
   ORDERS_BY_PROPERTIES,
   ITEMS_REPORTS,
   ITEMS_REVENUE_REPORTS,
-  EFFICIENCY_REPORT
+  EFFICIENCY_REPORT,
+  TIME_REPORTS
 }
 
 export interface IGeneralResponse {
@@ -16,6 +17,7 @@ export interface IGeneralResponse {
 
 export interface ISignInResponse extends IGeneralResponse {
   SessionKey: string;
+  IsTechnicalSupport?: boolean;
   UserProfile: any;
 }
 
@@ -387,6 +389,8 @@ export interface ISalesReportsDetailsResponse extends IGeneralResponse {
 }
 
 export interface ISalesReports extends IGeneralResponse {
+  TotalAmountAfterTranDiscount: number;
+  TotalRecords: number;
   List: ISalesReport[];
 }
 
@@ -587,6 +591,7 @@ export interface IItemsTotalReportsList extends IGeneralResponse {
   List: IItemsTotalReports[];
   TotalRecords: number;
   TotalAfterVat: number;
+  TotalQuantity: number;
 }
 
 export interface IRevenueReport {
@@ -609,6 +614,7 @@ export interface IRevenueReportList extends IGeneralResponse {
   TotalAfterVat: number;
   TotalBeforeVat: number;
   TotalRevenue: number;
+  TotalQuantity: number;
 }
 
 export interface ITicketFilter {
@@ -657,6 +663,12 @@ export interface IZReportParams {
   Vat: number;
 }
 
+export interface ICoupon {
+  Amount: number;
+  CouponNumber: string;
+  ProducedDate: string;
+}
+
 export interface IZReport {
   AuthorizedBy: string;
   AuthorizedDate: string;
@@ -690,8 +702,64 @@ export interface IZReport {
   ReportParams: IZReportParams;
 }
 
+export interface ICouponReports extends IGeneralResponse {
+  List: ICoupon[];
+  TotalRecords: number;
+  TotalAfterVat: number;
+}
+
 export interface IZReports extends IGeneralResponse {
   ReportList: IZReport[];
+}
+
+export interface ITImeReportShift {
+  DepartureTime: string;
+  EnterTime: string;
+  ShiftDate: string;
+  Total: number;
+}
+
+export interface ITimeReportsResponse extends IGeneralResponse {
+  Employees: ITimeReport[];
+}
+
+export interface IActivityReport {
+  AccountName: string;
+  Info: string;
+  Issue: string;
+  SiteName: string;
+  StatusDescription: string;
+  SysId: number;
+  TypeDescription: string;
+  ReportDate: string;
+}
+
+export interface IActivityReportsResponse extends IGeneralResponse {
+  Lines: IActivityReport[];
+  TotalRecords: number;
+}
+
+export interface IActivityReportFilter {
+  Name: string;
+  SysId: number;
+}
+
+export interface IActivityReportFiltersResponse extends IGeneralResponse {
+  Issues: IActivityReportFilter[];
+  ReportTypes: IActivityReportFilter[];
+  Sites: {
+    Name: string;
+    SysId: number;
+    Accounts: IActivityReportFilter[];
+  }[];
+  StatusList: IActivityReportFilter[];
+}
+
+export interface ITimeReport {
+  Code: string;
+  Name: string;
+  Total: number;
+  Shifts: ITImeReportShift[];
 }
 
 export interface DashboardValues {
@@ -787,7 +855,11 @@ export interface ICatalogItem {
   Code: string | number;
   Description: string;
   IsNotActive: boolean;
+  IsNotForSale: boolean;
   Price: number;
+  ClassificationCode1?: string;
+  ClassificationCode2?: string;
+  ClassificationCode3?: string;
 }
 
 export interface ICatalog extends IGeneralResponse {

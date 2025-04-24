@@ -24,6 +24,9 @@ enum SALES_REPORT_TAB {
 const SaleDetailsReport: React.FC<Props> = ({ saleReport, lang }) => {
   const { t } = useTranslation();
   const [checkedTab, setCheckedTab] = useState(SALES_REPORT_TAB.ITEMS);
+  const colorMap: Record<string, string> = {
+    true: 'IsManualDiscountItem'
+  };
   return (
     <div
       className="flex flex-col flex-1"
@@ -49,6 +52,8 @@ const SaleDetailsReport: React.FC<Props> = ({ saleReport, lang }) => {
         </div>
         <div className="flex-1">
           <CustomTable
+            colorMap={checkedTab === SALES_REPORT_TAB.ITEMS ? colorMap : undefined}
+            colorMapKey={'IsManualDiscountItem'}
             data={checkedTab === SALES_REPORT_TAB.ITEMS ? saleReport.Items : saleReport.Discounts}
             columns={checkedTab === SALES_REPORT_TAB.ITEMS ? getItemsColumns(t) : getDiscountsColumns(t)}
           />

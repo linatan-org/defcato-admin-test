@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import connect from 'react-redux/es/components/connect';
-import { Redirect, Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import Editor from '../components/pages/Editor';
 import KeyboardList from '../components/pages/KeyboardList/KeyboardList';
 import PaymentKeyboardEditor from '../components/pages/PaymentKeyboardEditor/PaymentKeyboardEditor';
 import Catalog from '../components/pages/Reports/Catalog';
+import CouponReports from '../components/pages/Reports/CouponReports';
 import { EfficiencyReport } from '../components/pages/Reports/EfficiencyReport/EfficiencyReport';
 import OrdersReports from '../components/pages/Reports/OrdersReports';
 import TargetReport from '../components/pages/Reports/TargetReport';
@@ -13,8 +14,6 @@ import TicketReports from '../components/pages/Reports/TicketReports';
 import Sellers from '../components/pages/Sellers';
 import { SignIn } from '../components/pages/SignIn';
 import { routes } from '../constants/routes';
-import useAuth from '../contexts/auth/hook';
-import { NotFound } from '../components/pages/NotFound';
 import Dashboard from '../components/pages/Dashboard';
 import SalesReports from '../components/pages/Reports/SalesReports';
 import { ToastContainer } from 'react-toastify';
@@ -26,11 +25,15 @@ import ZReports from '../components/pages/Reports/ZReports';
 import { ConfigProvider } from 'antd';
 import { DirectionType } from 'antd/lib/config-provider';
 import i18n from '../i18n';
+import TimeReport from '../components/pages/Reports/TimeReport';
+import ActivityReport from '../components/pages/Reports/ActivityReport';
 
 interface Props {
   lang: string;
+  isTechnicalSupportAccess: boolean;
 }
-const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
+
+const AppRoutes: React.FC<Props> = ({ lang, isTechnicalSupportAccess }, props: any) => {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const navigation = useHistory();
@@ -62,7 +65,6 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
   }, []);
 
   useEffect(() => {
-    console.log(localLang, 'LOCAL LANG==========');
     i18n.changeLanguage(localLang);
     setDirection(localLang === 'he' ? 'rtl' : 'ltr');
   }, [localLang]);
@@ -85,6 +87,12 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
     // eslint-disable-next-line react/prop-types
   }, [props.isAuth, localStorage.token]);
 
+  useEffect(() => {
+    if (isTechnicalSupportAccess) {
+      navigation.replace(routes.activityReport);
+    }
+  }, [isTechnicalSupportAccess]);
+
   return (
     <div
       style={{ height: '100%' }}
@@ -93,7 +101,12 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
       <ConfigProvider direction={direction as DirectionType}>
         <ToastContainer />
         <Switch>
-          {isDashboardAccessOnly ? (
+          {isTechnicalSupportAccess ? (
+            <Route
+              path={routes.activityReport}
+              component={ActivityReport}
+            />
+          ) : isDashboardAccessOnly ? (
             <>
               <Route
                 path={routes.dashboard}
@@ -185,6 +198,18 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
                 path={routes.ticketReports}
                 component={TicketReports}
               />
+              <Route
+                path={routes.couponReport}
+                component={CouponReports}
+              />
+              <Route
+                path={routes.timeReport}
+                component={TimeReport}
+              />
+              <Route
+                path={routes.activityReport}
+                component={ActivityReport}
+              />
               {/*<Route*/}
               {/*path="*"*/}
               {/*exact={true}*/}
@@ -200,7 +225,8 @@ const AppRoutes: React.FC<Props> = ({ lang }, props: any) => {
 
 const mapState = (state: any) => ({
   isAuth: state.auth.isAuth,
-  lang: state.configs.lang
+  lang: state.configs.lang,
+  isTechnicalSupportAccess: state.settings.isTechnicalSupportAccess
 });
 
 export default connect(mapState, {})(AppRoutes);

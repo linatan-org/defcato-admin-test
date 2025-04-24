@@ -17,6 +17,12 @@ body {
   //letter-spacing: 0.01px !important;
 }
 
+.ant-image-preview-img-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 
 $darkText: #2E341E;
@@ -132,7 +138,7 @@ $gold6: #faad14;
   }
   .ant-table-row {
     .ant-table-cell {
-      background: $lightGray2 !important;
+      background: $lightGray2;
     }
     .ant-table-cell {
       color: $darkText;
@@ -149,9 +155,9 @@ $gold6: #faad14;
   }
 }
 
-.ant-table-cell {
-  background: white !important;
-}
+//.ant-table-cell {
+//  background: white !important;
+//}
 
 .ant-table-thead > tr > th {
   color: $primaryGreenDark !important;

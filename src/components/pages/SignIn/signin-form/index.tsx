@@ -12,6 +12,7 @@ import { AUTH_URL } from '../../../../constants/data';
 import { RESPONSE_STATUSES } from '../../../../server/models';
 import { setAuth } from '../../../../reudux/auth/action';
 import { onChangeLang } from '../../../../reudux/configs/action';
+import { setTechnicalSupportAccess } from '../../../../reudux/settings/action';
 
 const SELECT_FIELD_NAMES = {
   label: 'key',
@@ -63,9 +64,11 @@ const SigninForm: React.FC<Props> = (props) => {
         .signIn(username, password)
         .then((res) => {
           if (res.ErrorCode === RESPONSE_STATUSES.OK) {
-            console.log(res, 'RESPONSE');
             localStorage.setItem('token', res.SessionKey);
             dispatch(setAuth(true));
+            if (res.IsTechnicalSupport) {
+              dispatch(setTechnicalSupportAccess(true));
+            }
           } else {
             setLoadingButton(false);
             form.resetFields();

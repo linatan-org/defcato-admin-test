@@ -17,6 +17,7 @@
   "TotalCost": "סה\"כ  עלות",
   "TotalRevenue": "סה\"כ רווח גולמי",
   "TotalRevenuePercent": "סה\"כ רווח גולמי %",
+  "TotalAmountAfterTranDiscount": "סה\"כ",
   "sharedColumns": {
     "BranchNetCode": "חנות",
     "CreatedDate": "תאריך רישום",
@@ -70,6 +71,7 @@
     "DeliveryCity": "ישוב"
   },
   "navMenu" : {
+    "timeReport": "דוח שעון נוכחות",
     "currentTradingDay": "פרטי יום מסחר",
     "reports": "דוחות",
     "salesReport": "דוח מכירות",
@@ -88,12 +90,15 @@
     "ticketReports": "דוח פניות",
     "ordersReports": "דוח הזמנות",
     "targetReports": "דוח יעדים",
+    "couponReports": "דוח פיצויים",
+    "activityReports": "דוח ניתור שגיאות",
     "logOut": "יציאה"
   },
   "dashboard": {
     "datePickerPlaceholder": "תאריך אחר",
     "dailyStats": {
       "totalRevenue": "סה'כ הזמנות",
+      "totalRevenueTitle": "פדיון",
       "totalOrders": "כמות הזמנות",
       "lastOrderTime": "שעת הזמנה אחרונה",
       "orderAVG": "ממוצע להזמנה",
@@ -134,6 +139,27 @@
     "sellersTableTitle": "אנשי מכירות"
   },
   "reports": {
+    "couponReports": {
+      "couponReportsTitle": "דוח פיצויים",
+      "columns": {
+        "ProducedDate": "תאריך הנפקה",
+        "Number": "מספר",
+        "Value": "ערך"
+      }
+    },
+    "timeReport": {
+      "title": "דוח שעון נוכחות",
+      "DateRange": "טווח תאריכים",
+      "Employees": "עובדים",
+      "columns": {
+        "Employee": "עובד",
+        "TotalHours": "סה\"כ שעות",
+        "Date": "תאריך",
+        "EnterTime": "שעת כניסה",
+        "DepartureTime": "שעת יציאה",
+        "TimeClockReport": "דוח שעון נוכחות"
+      }
+    },
     "efficiencyReports": {
       "ViewByUser": "הצג לפי נציג",
       "ViewByReason": "הצג לפי סיבת הביטול",
@@ -179,6 +205,7 @@
           "Code": "קוד",
           "Description": "תאור",
           "Quantity": "כמות",
+          "PercentDiscount": "אחוז הנחה",
           "Total": "סה“\\כ"
         },
         "discountColumns": {
@@ -369,7 +396,11 @@
         "CategoryCode": "קטגוריה",
         "Add": "הוסף",
         "Update": "עדכן",
-        "Exit": "יציאה"
+        "Exit": "יציאה",
+        "ClassificationCode1": "סיווג 1",
+        "ClassificationCode2": "סיווג 2",
+        "ClassificationCode3": "סיווג 3",
+        "NotForSale": "לא למכירה"
       }
     }
   },

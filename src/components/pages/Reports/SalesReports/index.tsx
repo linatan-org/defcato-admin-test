@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Space, Layout, Button, Modal } from 'antd';
+import { Layout, Button, Modal, Table, Typography } from 'antd';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../../../server';
@@ -12,6 +12,8 @@ import { getSalesFilters } from './filters';
 import { ReloadOutlined } from '@ant-design/icons';
 import './styles.scss';
 
+const { Text } = Typography;
+
 const SalesReports: React.FC<any> = () => {
   const { t } = useTranslation();
   const [salesReports, setSalesReport] = useState<ISalesReport[]>([]);
@@ -22,11 +24,22 @@ const SalesReports: React.FC<any> = () => {
     FromDate: moment().format('DD/MM/yyyy'),
     ToDate: moment().format('DD/MM/yyyy')
   });
+  const [totalRecords, setTotalRecords] = useState<{
+    TotalAmountAfterTranDiscount: number;
+    TotalRecords: number;
+  }>({
+    TotalAmountAfterTranDiscount: 0,
+    TotalRecords: 0
+  });
 
   const getSaleReports = (filters: any) => {
     API.reports.getSalesReports(filters).then((res) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setSalesReport(res.List);
+        setTotalRecords({
+          TotalRecords: res.TotalRecords,
+          TotalAmountAfterTranDiscount: res.TotalAmountAfterTranDiscount
+        });
       }
     });
   };
@@ -75,6 +88,31 @@ const SalesReports: React.FC<any> = () => {
     ];
   };
 
+  const getTabletSummary = () => {
+    return (
+      <Table.Summary fixed="bottom">
+        <Table.Summary.Row>
+          <Table.Summary.Cell
+            index={0}
+            colSpan={3}
+          >
+            <Text strong>
+              {t('TotalAmountAfterTranDiscount')}: {totalRecords.TotalAmountAfterTranDiscount}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell
+            index={1}
+            colSpan={3}
+          >
+            <Text strong>
+              {t('TotalRecords')}: {totalRecords.TotalRecords}
+            </Text>
+          </Table.Summary.Cell>
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  };
+
   return (
     <Layout>
       <Filters
@@ -93,13 +131,13 @@ const SalesReports: React.FC<any> = () => {
           data={salesReports}
           columns={getSaleReportsTableColumns(t, setCheckedSalesReport)}
           onDoubleClick={setCheckedSalesReport}
+          summary={getTabletSummary}
         />
       </div>
       <Modal
         className="modalStyle"
         width={1200}
         title={t('reports.saleReports.salesReportDetails.salesReportDetailsTitle')}
-        centered
         visible={!!salesReportDetails}
         onOk={() => {}}
         onCancel={() => setCheckedSalesReport(null)}

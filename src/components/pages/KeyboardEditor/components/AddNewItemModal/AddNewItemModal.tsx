@@ -6,9 +6,7 @@ import { API } from '../../../../../server';
 import { ICategory, IItem, RESPONSE_STATUSES } from '../../../../../server/models';
 import useDebounceValue from '../../../../hooks/useDebounce';
 import CustomTable from '../../../Dashboard/CustomTable';
-import { getSaleReportsTableColumns } from '../../../Reports/SalesReports/columns';
 import { getItemsColumns } from './columns';
-import set = Reflect.set;
 
 interface IGlobalModalWrapperProps {
   isVisible: boolean;

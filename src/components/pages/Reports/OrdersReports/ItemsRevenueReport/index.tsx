@@ -37,13 +37,15 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
     TotalRevenue: number;
     TotalRevenuePercent: number;
     TotalRecords: number;
+    TotalQuantity: number;
   }>({
     TotalCost: 0,
     TotalAfterVat: 0,
     TotalBeforeVat: 0,
     TotalRevenuePercent: 0,
     TotalRevenue: 0,
-    TotalRecords: 0
+    TotalRecords: 0,
+    TotalQuantity: 0
   });
   const [fieldsOrder, setFieldsOrder] = useState<FieldsViewMap[]>([]);
 
@@ -67,7 +69,8 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
           TotalBeforeVat: res.TotalBeforeVat,
           TotalCost: res.TotalCost,
           TotalRevenuePercent: res.TotalRevenuePercent,
-          TotalRecords: res.TotalRecords
+          TotalRecords: res.TotalRecords,
+          TotalQuantity: res.TotalQuantity
         });
       }
     });
@@ -92,30 +95,35 @@ const ItemsRevenueReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
         <Table.Summary.Row>
           <Table.Summary.Cell index={0}>
             <Text strong>
-              {t('TotalRecords')}: {totalRecords.TotalRecords}
-            </Text>
-          </Table.Summary.Cell>
-          <Table.Summary.Cell index={0}>
-            <Text strong>
-              {t('TotalCost')}: {totalRecords.TotalCost}
+              {t('TotalItems')}: {totalRecords.TotalQuantity}
             </Text>
           </Table.Summary.Cell>
           <Table.Summary.Cell index={1}>
             <Text strong>
-              {t('TotalBeforeVat')}: {totalRecords.TotalBeforeVat}
+              {t('TotalRecords')}: {totalRecords.TotalRecords}
             </Text>
           </Table.Summary.Cell>
           <Table.Summary.Cell index={2}>
             <Text strong>
-              {t('TotalAfterVat')}: {totalRecords.TotalAfterVat}
+              {t('TotalCost')}: {totalRecords.TotalCost}
             </Text>
           </Table.Summary.Cell>
           <Table.Summary.Cell index={3}>
             <Text strong>
+              {t('TotalBeforeVat')}: {totalRecords.TotalBeforeVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={4}>
+            <Text strong>
+              {t('TotalAfterVat')}: {totalRecords.TotalAfterVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={5}>
+            <Text strong>
               {t('TotalRevenue')}: {totalRecords.TotalRevenue}
             </Text>
           </Table.Summary.Cell>
-          <Table.Summary.Cell index={3}>
+          <Table.Summary.Cell index={6}>
             <Text strong>
               {t('TotalRevenuePercent')}: {totalRecords.TotalRevenuePercent}
             </Text>

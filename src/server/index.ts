@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import { setLoading } from '../reudux/globalLoader/action';
 import {
+  IActivityReportFiltersResponse,
+  IActivityReportsResponse,
   ICatalagCategories,
   ICatalog,
   ICatalogItem,
+  ICouponReports,
   ICreateItemValues,
   IDailyInstruction,
   IDailyStats,
@@ -35,6 +36,7 @@ import {
   ITicketReportJournalList,
   ITicketReportsBranchView,
   ITicketReportsBranchViewDetails,
+  ITimeReportsResponse,
   ITotalOrderReportList,
   IZReports,
   OrdersReportsEnum
@@ -131,7 +133,8 @@ export const API = {
           [OrdersReportsEnum.ITEMS_REPORTS]: 'AdminExportCRMItemsTotalReport2Excel.aspx',
           [OrdersReportsEnum.ORDERS_BY_PROPERTIES]: 'AdminExportCRMOrdersTotalReport2Excel.aspx',
           [OrdersReportsEnum.ORDERS_JOURNAL]: 'AdminExportCRMOrdersReport2Excel.aspx',
-          [OrdersReportsEnum.EFFICIENCY_REPORT]: 'ExportEfficiencyReport2Excel.aspx'
+          [OrdersReportsEnum.EFFICIENCY_REPORT]: 'ExportEfficiencyReport2Excel.aspx',
+          [OrdersReportsEnum.TIME_REPORTS]: 'AdminTimeClockReport2Excel.aspx'
         };
         const res = await apiConfig.post(urls[type], {
           ...getSession(),
@@ -213,6 +216,13 @@ export const API = {
         return res.data;
       },
       exportTicketsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
+        const res = await apiConfig.post('/AdminExportCRMCouponReport2Excel.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
+      exportCouponsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
         const res = await apiConfig.post('/AdminExportTickets2Excel.aspx', {
           ...getSession(),
           ...data
@@ -243,6 +253,40 @@ export const API = {
     },
     getZReports: async (data: any): Promise<IZReports> => {
       const res = await apiConfig.post('/FetchZReportList.aspx', {
+        ...getSession(),
+        ...data
+      });
+      return res.data;
+    },
+    getTimeReport: async (data: any): Promise<ITimeReportsResponse> => {
+      const res = await apiConfig.post('/AdminTimeClockReport.aspx', {
+        ...getSession(),
+        ...data
+      });
+      return res.data;
+    },
+    getActivityReportFilters: async (): Promise<IActivityReportFiltersResponse> => {
+      const res = await apiConfig.post('/ActivityReportFilters.aspx', {
+        ...getSession()
+      });
+      return res.data;
+    },
+    getActivityReport: async (data: any): Promise<IActivityReportsResponse> => {
+      const res = await apiConfig.post('/ActivityReport.aspx', {
+        ...getSession(),
+        ...data
+      });
+      return res.data;
+    },
+    changeActivityReportStatus: async (data: any): Promise<IActivityReportsResponse> => {
+      const res = await apiConfig.post('/ActivityReportUpdateStatus.aspx', {
+        ...getSession(),
+        ...data
+      });
+      return res.data;
+    },
+    getCouponReports: async (data: any): Promise<ICouponReports> => {
+      const res = await apiConfig.post('/AdminCRMCouponReport.aspx', {
         ...getSession(),
         ...data
       });

@@ -13,9 +13,9 @@ export const getSaleReportsTableColumns = (t: any): any => [
         key: 'TotalOrders'
       },
       {
-        title: t('dashboard.dailyStats.hourRedemption'),
-        dataIndex: 'HourRedemption',
-        key: 'HourRedemption'
+        title: t('dashboard.dailyStats.totalRevenueTitle'),
+        dataIndex: 'TotalRevenue',
+        key: 'TotalRevenue'
       },
       {
         title: t('dashboard.dailyStats.callsOrdersConversion'),

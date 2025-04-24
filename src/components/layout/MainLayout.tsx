@@ -10,7 +10,7 @@ import { errors } from '../../constants/errors';
 import { routes } from '../../constants/routes';
 import { setAuth } from '../../reudux/auth/action';
 import { setLoading } from '../../reudux/globalLoader/action';
-import { setDashboardAccessOnly } from '../../reudux/settings/action';
+import { setDashboardAccessOnly, setTechnicalSupportAccess } from '../../reudux/settings/action';
 import { apiConfig } from '../../server';
 import GlobalLoader from '../GlobalLoader/GlobalLoader';
 import './styles.scss';
@@ -38,9 +38,10 @@ type LayoutProps = {
   children: React.ReactNode;
   isAuth: boolean;
   lang: string;
+  isTechnicalSupportAccess: boolean;
 };
 
-const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
+const MainLayout = ({ children, isAuth, lang, isTechnicalSupportAccess }: LayoutProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -54,7 +55,10 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
       getItem(t('navMenu.ticketReports'), routes.ticketReports),
       getItem(t('navMenu.ordersReports'), routes.ordersReports),
       getItem(t('navMenu.targetReports'), routes.targetReports),
-      getItem(t('navMenu.efficiencyReport'), routes.efficiencyReport)
+      getItem(t('navMenu.efficiencyReport'), routes.efficiencyReport),
+      getItem(t('navMenu.couponReports'), routes.couponReport),
+      getItem(t('navMenu.timeReport'), routes.timeReport),
+      getItem(t('navMenu.activityReports'), routes.activityReport)
       // getItem(t('navMenu.itemsReport'), '6')
     ]),
     getItem(t('navMenu.settings'), 'sub2', null, [
@@ -115,6 +119,7 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
   const onLogout = () => {
     setIsShowConfirmLogout(false);
     dispatch(setDashboardAccessOnly(false));
+    dispatch(setTechnicalSupportAccess(false));
     localStorage.removeItem('token');
     dispatch(setAuth(false));
     history.push('/');
@@ -144,7 +149,7 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
               defaultSelectedKeys={[getDefaultSelectedKey()]}
               mode="inline"
               theme="dark"
-              items={items}
+              items={!isTechnicalSupportAccess ? items : [getItem(t('navMenu.logOut'), routes.signIn, null)]}
             />
           </div>
         </Sider>
@@ -174,7 +179,8 @@ const MainLayout = ({ children, isAuth, lang }: LayoutProps) => {
 
 const mapState = (state: any) => ({
   isAuth: state.auth.isAuth,
-  lang: state.configs.lang
+  lang: state.configs.lang,
+  isTechnicalSupportAccess: state.settings.isTechnicalSupportAccess
 });
 
 export default connect(mapState, {})(MainLayout);

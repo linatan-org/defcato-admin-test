@@ -97,7 +97,6 @@ export const EfficiencyReport = () => {
     },
     [setExpandedKeys, setDetailsData, selectedTab]
   );
-  console.log(expandedKeys, 'expandedKeys');
   return (
     <div className="ticketReportsWrapper">
       <div className="datepickerWrap">

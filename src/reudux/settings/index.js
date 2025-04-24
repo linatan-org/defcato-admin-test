@@ -1,7 +1,8 @@
 import * as types from './types';
 
 const initState = {
-  isDashboardAccessOnly: false
+  isDashboardAccessOnly: false,
+  isTechnicalSupportAccess: false
 };
 
 const settingsReducer = (state = initState, action) => {
@@ -10,6 +11,12 @@ const settingsReducer = (state = initState, action) => {
       return {
         ...state,
         isDashboardAccessOnly: action.payload
+      };
+    }
+    case types.SET_IS_TECHNICAL_SUPPORT: {
+      return {
+        ...state,
+        isTechnicalSupportAccess: action.payload
       };
     }
     default:

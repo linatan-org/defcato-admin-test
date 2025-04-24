@@ -67,7 +67,7 @@ export const getPayments = (t: any): IPaymentDataItem[] => [
     Title: t('paymentKeyboard.payments.DirectDebit')
   },
   {
-    Tender: 15,
+    Tender: 27,
     Key: 'BankTransfer',
     Title: t('paymentKeyboard.payments.BankTransfer')
   },

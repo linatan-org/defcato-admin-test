@@ -32,9 +32,11 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
   const [totalRecords, setTotalRecords] = useState<{
     TotalAfterVat: number;
     TotalRecords: number;
+    TotalQuantity: number;
   }>({
     TotalRecords: 0,
-    TotalAfterVat: 0
+    TotalAfterVat: 0,
+    TotalQuantity: 0
   });
   const [fieldsOrder, setFieldsOrder] = useState<FieldsViewMap[]>([]);
   const [tableHeight, setTableHeight] = useState(600);
@@ -52,7 +54,11 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
       if (res.ErrorCode === RESPONSE_STATUSES.OK) {
         setItemsTotalList(res.List);
         setFieldsOrder(res.FieldsViewMap);
-        setTotalRecords({ TotalAfterVat: res.TotalAfterVat, TotalRecords: res.TotalRecords });
+        setTotalRecords({
+          TotalAfterVat: res.TotalAfterVat,
+          TotalRecords: res.TotalRecords,
+          TotalQuantity: res.TotalQuantity
+        });
       }
     });
   };
@@ -79,9 +85,14 @@ const ItemsTotalReport: React.FC<Interface> = ({ ordersFiltersOptions }) => {
               {t('TotalRecords')}: {totalRecords.TotalRecords}
             </Text>
           </Table.Summary.Cell>
-          <Table.Summary.Cell index={0}>
+          <Table.Summary.Cell index={1}>
             <Text strong>
               {t('TotalAfterVat')}: {totalRecords.TotalAfterVat}
+            </Text>
+          </Table.Summary.Cell>
+          <Table.Summary.Cell index={2}>
+            <Text strong>
+              {t('TotalItems')}: {totalRecords.TotalQuantity}
             </Text>
           </Table.Summary.Cell>
         </Table.Summary.Row>
