@@ -84,7 +84,12 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
               }
             }
             // eslint-disable-next-line
-            const newValue = filter.type === 'DATE' && !isEmptyDate ? { ...value } : filter.type === 'DATE' && isEmptyDate ? {} : { [filter.key]: value };
+            const newValue =
+              filter.type === 'DATE' && !isEmptyDate
+                ? { ...value }
+                : filter.type === 'DATE' && isEmptyDate // eslint-disable-next-line
+                ? {} // eslint-disable-next-line
+                : { [filter.key]: value };
             onChange({ ...filtersValues, ...newValue });
           }}
         />

@@ -58,7 +58,8 @@ const MainLayout = ({ children, isAuth, lang, isTechnicalSupportAccess }: Layout
       getItem(t('navMenu.efficiencyReport'), routes.efficiencyReport),
       getItem(t('navMenu.couponReports'), routes.couponReport),
       getItem(t('navMenu.timeReport'), routes.timeReport),
-      getItem(t('navMenu.activityReports'), routes.activityReport)
+      getItem(t('navMenu.activityReports'), routes.activityReport),
+      getItem(t('navMenu.subscribeReports'), routes.subscribeReport)
       // getItem(t('navMenu.itemsReport'), '6')
     ]),
     getItem(t('navMenu.settings'), 'sub2', null, [

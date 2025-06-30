@@ -27,6 +27,7 @@ import { DirectionType } from 'antd/lib/config-provider';
 import i18n from '../i18n';
 import TimeReport from '../components/pages/Reports/TimeReport';
 import ActivityReport from '../components/pages/Reports/ActivityReport';
+import SubscribeReports from '../components/pages/Reports/SubscribeReports';
 
 interface Props {
   lang: string;
@@ -209,6 +210,10 @@ const AppRoutes: React.FC<Props> = ({ lang, isTechnicalSupportAccess }, props: a
               <Route
                 path={routes.activityReport}
                 component={ActivityReport}
+              />
+              <Route
+                path={routes.subscribeReport}
+                component={SubscribeReports}
               />
               {/*<Route*/}
               {/*path="*"*/}

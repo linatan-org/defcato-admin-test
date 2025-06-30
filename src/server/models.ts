@@ -669,6 +669,18 @@ export interface ICoupon {
   ProducedDate: string;
 }
 
+export interface ISubscribeReport {
+  MemberCard: string;
+  MemberName: string;
+  OpDate: string;
+  Operation: string;
+  UserName: string;
+}
+
+export interface ISubscribeReportResponse extends IGeneralResponse {
+  List: ISubscribeReport[];
+}
+
 export interface IZReport {
   AuthorizedBy: string;
   AuthorizedDate: string;

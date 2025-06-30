@@ -30,6 +30,7 @@ import {
   ISeller,
   ISellersList,
   ISignInResponse,
+  ISubscribeReportResponse,
   ITargetReportDetailsList,
   ITargetReportsList,
   ITicketFilters,
@@ -222,6 +223,13 @@ export const API = {
         });
         return res.data;
       },
+      exportSubscribesToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
+        const res = await apiConfig.post('/AdminSubscribeReport2Excel.aspx', {
+          ...getSession(),
+          ...data
+        });
+        return res.data;
+      },
       exportCouponsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
         const res = await apiConfig.post('/AdminExportTickets2Excel.aspx', {
           ...getSession(),
@@ -287,6 +295,13 @@ export const API = {
     },
     getCouponReports: async (data: any): Promise<ICouponReports> => {
       const res = await apiConfig.post('/AdminCRMCouponReport.aspx', {
+        ...getSession(),
+        ...data
+      });
+      return res.data;
+    },
+    getSubscribeReports: async (data: any): Promise<ISubscribeReportResponse> => {
+      const res = await apiConfig.post('/AdminSubscribeReport.aspx', {
         ...getSession(),
         ...data
       });

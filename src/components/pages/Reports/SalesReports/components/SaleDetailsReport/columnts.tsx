@@ -11,11 +11,15 @@ export const getItemsColumns = (t: any): any => [
         key: 'ImageURL',
         render: (v: string) =>
           v && (
-            <Image
-              preview
-              width={100}
-              src={v}
-            />
+            <div className="object-contain">
+              <Image
+                className="object-contain"
+                preview
+                width={100}
+                height={100}
+                src={v}
+              />
+            </div>
           )
       },
       {

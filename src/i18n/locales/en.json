@@ -92,6 +92,7 @@
     "targetReports": "Targers Report",
     "couponReports": "Coupon Reports",
     "activityReports": "Activity Reports",
+    "subscribeReports": "Subscribe Reports",
     "logOut": "LogOut"
   },
   "dashboard": {
@@ -139,6 +140,15 @@
     "sellersTableTitle": "Sellers"
   },
   "reports": {
+    "couponReports": {
+      "couponReportsTitle": "Coupon Reports",
+      "columns": {
+        "ProducedDate": "Produced Dateה",
+        "Number": "Number",
+        "Value": "Value",
+        "ResponsibleBranch": "Responsible Branch"
+      }
+    },
     "timeReport": {
       "title": "Time Report",
       "DateRange": "Date Range",
@@ -274,6 +284,7 @@
         }
       },
       "filters": {
+        "IncludeKitItems": "Include Kit Items",
         "CreatedDate": "Created Date",
         "SupplyDate": "Supply Date",
         "Status": "Status",

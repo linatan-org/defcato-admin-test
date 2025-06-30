@@ -92,6 +92,7 @@
     "targetReports": "דוח יעדים",
     "couponReports": "דוח פיצויים",
     "activityReports": "דוח ניתור שגיאות",
+    "subscribeReports": "דוח הסרות",
     "logOut": "יציאה"
   },
   "dashboard": {
@@ -139,12 +140,23 @@
     "sellersTableTitle": "אנשי מכירות"
   },
   "reports": {
+    "subscribeReports": {
+      "title": "דוח אישורי דיוור",
+      "columns": {
+        "Date": "תאריך",
+        "UserName": "משתמש",
+        "CustomerName": "שם לקוח",
+        "CustomerCard": "כרטיס לקוח",
+        "Operation": "פעולה"
+      }
+    },
     "couponReports": {
       "couponReportsTitle": "דוח פיצויים",
       "columns": {
         "ProducedDate": "תאריך הנפקה",
         "Number": "מספר",
-        "Value": "ערך"
+        "Value": "ערך",
+        "ResponsibleBranch": "סניף אחראי"
       }
     },
     "timeReport": {
@@ -193,9 +205,9 @@
       "memberName": "לקוח",
       "totalAmount": "סה‘כ",
       "salesReportDetails": {
-        "TransactionNumber": "מזהה עסק",
+        "TransactionNumber": "מזהה עסקה",
         "salesReportDetailsTitle": "פירוט מכירה",
-        "SaleNumber": "מספר עסק",
+        "SaleNumber": "מספר עסקה",
         "Branch": "סניף",
         "Date": "תאריך",
         "Paid": "שולם",
@@ -282,6 +294,7 @@
         }
       },
       "filters": {
+        "IncludeKitItems": "כולל פירוק ערכות",
         "CreatedDate": "תאריך פתיחה",
         "SupplyDate": "תאריך אספקה",
         "Status": "סטטוס",

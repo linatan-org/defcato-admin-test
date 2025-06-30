@@ -1,13 +1,22 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { DatePicker, Select, Input, Typography, InputNumber } from 'antd';
+import { DatePicker, Select, Input, InputNumber, Checkbox } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 const debounce = require('lodash.debounce');
 import './styles.scss';
 import useDebounceValue from '../hooks/useDebounce';
-const { Text } = Typography;
 
 // eslint-disable-next-line
-type FilterType = 'MULTI' | 'SINGLE' | 'SINGLE_API' | 'DATE' | 'MONTH_DATE' | 'SWITCH' | 'SINGLE_DATE' | 'INPUT' | 'INPUT_NUMBER';
+type FilterType =
+  | 'MULTI'
+  | 'SINGLE'
+  | 'SINGLE_API'
+  | 'DATE'
+  | 'MONTH_DATE'
+  | 'SWITCH'
+  | 'SINGLE_DATE'
+  | 'INPUT'
+  | 'INPUT_NUMBER'
+  | 'BOOLEAN';
 
 export interface IFilterItem {
   label?: string;
@@ -36,10 +45,15 @@ export interface IFilterItem {
 const { RangePicker } = DatePicker;
 const debounceTimeout = 700;
 
-const getSelectOptions = (selectValueKey?: string, selectDisplayKey?: string, values?: any[]) => {
-  // eslint-disable-next-line
-  return values ? values.map((val) => ({label: selectDisplayKey ? val[selectDisplayKey] : '', value: selectValueKey ? val[selectValueKey]: ''})) : [];
-};
+// const getSelectOptions = (selectValueKey?: string, selectDisplayKey?: string, values?: any[]) => {
+//   // eslint-disable-next-line
+//   return values
+//     ? values.map((val) => ({
+//         label: selectDisplayKey ? val[selectDisplayKey] : '',
+//         value: selectValueKey ? val[selectValueKey] : ''
+//       }))
+//     : [];
+// };
 
 export const FilterItem: React.FC<IFilterItem> = ({
   type,
@@ -99,13 +113,11 @@ export const FilterItem: React.FC<IFilterItem> = ({
       setSingleApiOptions([]);
       setLocalLoading(true);
       if (getItems) {
-        console.log(selectValueKey, 'KEY======');
         getItems(search).then((res) => {
           if (fetchId !== fetchRef.current) {
             // for fetch callback order
             return;
           }
-          console.log(res, '=======');
           setSingleApiOptions(res);
           setLocalLoading(false);
         });
@@ -222,7 +234,6 @@ export const FilterItem: React.FC<IFilterItem> = ({
             onChange={onChange}
             filterOption={(input, option) => {
               const matchedValue = searchKeys && searchKeys.map((key) => option[key]);
-              console.log(matchedValue, 'matchedValue');
               return ((matchedValue && matchedValue[0]) || '').toLowerCase().includes(input.toLowerCase());
             }}
             fieldNames={selectFieldNames}
@@ -261,6 +272,18 @@ export const FilterItem: React.FC<IFilterItem> = ({
             addonAfter={addonAfter || ''}
             addonBefore={addonBefore || ''}
           />
+        </div>
+      );
+    }
+    case 'BOOLEAN': {
+      return (
+        <div className="checkboxWrapper">
+          <Checkbox
+            disabled={!!disabled}
+            // eslint-disable-next-line
+            checked={value}
+            onChange={(e) => onChange && onChange(e.target.checked)}
+          ></Checkbox>
         </div>
       );
     }

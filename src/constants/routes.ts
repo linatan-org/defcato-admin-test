@@ -17,5 +17,6 @@ export const routes = {
   efficiencyReport: '/efficiencyReport',
   couponReport: '/couponReport',
   timeReport: '/timeReport',
-  activityReport: '/activityReport'
+  activityReport: '/activityReport',
+  subscribeReport: '/subscribeReport'
 };

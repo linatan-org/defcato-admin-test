@@ -139,3 +139,15 @@
     }
   }
 }
+
+.checkboxWrapper {
+  position: relative;
+  .ant-typography {
+    position: absolute;
+    top: -20px;
+    right: -15px;
+    width: fit-content;
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+}

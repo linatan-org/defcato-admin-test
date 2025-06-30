@@ -73,6 +73,11 @@ export const getAdditionalFilters = (filtersOptions: IOrderFilterValues | null, 
       options: filtersOptions ? filtersOptions['ItemsSummaryTypes'] : [],
       showSearch: true,
       selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'BOOLEAN',
+      key: 'IsIncludeKitItems',
+      label: t('reports.ordersReports.filters.IncludeKitItems')
     }
   ];
 };

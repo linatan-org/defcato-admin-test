@@ -16,6 +16,11 @@ export const getCouponTableColumns = (t: any): any => [
         title: t('reports.couponReports.columns.Value'),
         dataIndex: 'Amount',
         key: 'Amount'
+      },
+      {
+        title: t('reports.couponReports.columns.ResponsibleBranch'),
+        dataIndex: 'ResponsibleBranch',
+        key: 'ResponsibleBranch'
       }
     ]
   }

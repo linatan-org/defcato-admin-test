@@ -32,7 +32,6 @@ const CustomTable = <T,>(props: PropsWithChildren<DataTableProps<T>>) => {
           const checked = props.activeKey && (item as any)[props.activeKey] === props.checkedUserDeviceSysId;
           if (colorMap && colorMapKey && !checked) {
             const value = item[colorMapKey]?.toString();
-            console.log(colorMap, colorMapKey, 'colorMapKeycolorMapKeycolorMapKey', item);
             return colorMap[value];
           }
           return checked ? 'ant-table-row-active' : '';
