@@ -25,7 +25,7 @@ const Dashboard: React.FC<Props> = ({ isAuth }) => {
   const { t } = useTranslation();
   const dashboardCardsData = getDashboardCardsValues(t);
   const [checkedUserIdx, setCheckedUserIdx] = useState<string>('');
-  const [selectedDate, setSelectedDate] = useState<string>(moment().format('DD/MM/yyyy'));
+  const [selectedDate, setSelectedDate] = useState<string>(moment().format('DD-MM-YYYY'));
   const [selectedDateMoment, setSelectedDateMoment] = useState<Moment | null>(moment());
   const [dailyStats, setDailyStats] = useState<IDailyStatsData | null>(null);
   const [dailyUserStats, setDailyUserStats] = useState<IDailyUserStatsData[]>([]);
@@ -98,7 +98,7 @@ const Dashboard: React.FC<Props> = ({ isAuth }) => {
           className="w-full datePicker"
           value={selectedDateMoment}
           placeholder={t('dashboard.datePickerPlaceholder')}
-          format="DD/MM/yyyy"
+          format="DD-MM-YYYY"
           onChange={onChange}
           suffixIcon={<CalendarOutlined className="datePicker_icon" />}
         />

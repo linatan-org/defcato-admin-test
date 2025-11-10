@@ -19,6 +19,7 @@ import {
   IItemsTotalReportsList,
   IKeyBoard,
   IKeyboardList,
+  IMembersForSelect,
   IOrderFilterValues,
   IOrdersReportsList,
   IPaymentDataItem,
@@ -217,7 +218,7 @@ export const API = {
         return res.data;
       },
       exportTicketsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
-        const res = await apiConfig.post('/AdminExportCRMCouponReport2Excel.aspx', {
+        const res = await apiConfig.post('/AdminExportTickets2Excel.aspx', {
           ...getSession(),
           ...data
         });
@@ -231,7 +232,7 @@ export const API = {
         return res.data;
       },
       exportCouponsToExcel: async (data: any): Promise<IExportExcelTicketReport> => {
-        const res = await apiConfig.post('/AdminExportTickets2Excel.aspx', {
+        const res = await apiConfig.post('/AdminExportCRMCouponReport2Excel.aspx', {
           ...getSession(),
           ...data
         });
@@ -381,6 +382,13 @@ export const API = {
       const res = await apiConfig.post('/FetchItemsForKeyboard.aspx', {
         ...getSession(),
         ...{ InputData, CategoryCode, fieldName }
+      });
+      return res.data;
+    },
+    getMemberForSelect: async (param: string): Promise<IMembersForSelect> => {
+      const res = await apiConfig.post('/CRMRecognizeMembers.aspx', {
+        ...getSession(),
+        ...{ param }
       });
       return res.data;
     },

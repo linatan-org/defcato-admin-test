@@ -21,8 +21,8 @@ const SalesReports: React.FC<any> = () => {
   const [salesReportDetails, setSalesReportDetails] = useState<ISalesReportsDetails | null>(null);
   const [ordersFiltersOptions, setOrdersFiltersOptions] = useState<IOrderFilterValues | null>(null);
   const [filtersValues, setFiltersValues] = useState({
-    FromDate: moment().format('DD/MM/yyyy'),
-    ToDate: moment().format('DD/MM/yyyy')
+    FromDate: moment().format('DD-MM-YYYY'),
+    ToDate: moment().format('DD-MM-YYYY')
   });
   const [totalRecords, setTotalRecords] = useState<{
     TotalAmountAfterTranDiscount: number;

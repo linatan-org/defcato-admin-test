@@ -18,8 +18,8 @@ const JournalView: React.FC<any> = () => {
   const [journalList, setJournalList] = useState<ITicketReportJournal[]>([]);
   const [filtersOptions, setFiltersOptions] = useState<ITicketFilters | null>(null);
   const [filtersValues, setFiltersValues] = useState<any>({
-    FromDate: moment().format('DD/MM/yyyy'),
-    ToDate: moment().format('DD/MM/yyyy'),
+    FromDate: moment().format('DD-MM-YYYY'),
+    ToDate: moment().format('DD-MM-YYYY'),
     OpenDateRange: 0
   });
 
@@ -66,8 +66,8 @@ const JournalView: React.FC<any> = () => {
       delete copyFilters['FromDate'];
       delete copyFilters['ToDate'];
     } else if (oldOpenDateRange !== 0 && newOpenDateRange === 0) {
-      copyFilters['FromDate'] = moment().format('DD/MM/yyyy');
-      copyFilters['ToDate'] = moment().format('DD/MM/yyyy');
+      copyFilters['FromDate'] = moment().format('DD-MM-YYYY');
+      copyFilters['ToDate'] = moment().format('DD-MM-YYYY');
     }
     setFiltersValues(copyFilters);
   };

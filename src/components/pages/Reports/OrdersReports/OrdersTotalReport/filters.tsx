@@ -69,8 +69,8 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       }
     },
     {
-      type: 'SINGLE_API',
-      key: 'ItemCode',
+      type: 'MULTI_API',
+      key: 'ItemCodes',
       label: t('reports.ordersReports.filters.Item'),
       selectFieldNames: SELECT_FIELD_NAMES,
       getItems: async (v) => {

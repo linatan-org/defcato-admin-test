@@ -16,8 +16,8 @@ const TimeReport: React.FC<any> = () => {
   const [timeReport, setTimeReports] = useState<ITimeReport[]>([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [filtersValues, setFiltersValues] = useState({
-    FromDate: moment().format('DD/MM/yyyy'),
-    ToDate: moment().format('DD/MM/yyyy')
+    FromDate: moment().format('DD-MM-YYYY'),
+    ToDate: moment().format('DD-MM-YYYY')
   });
   useEffect(() => {
     if (expandedKeys.length) {

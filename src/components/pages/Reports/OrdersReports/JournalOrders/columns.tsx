@@ -1,6 +1,8 @@
 import moment from 'moment';
+import { ISalesReport } from '../../../../../server/models';
+import { EyeFilled } from '@ant-design/icons';
 
-export const getColumns = (t: any): any => [
+export const getColumns = (t: any, onOpenReportDetails: (r: ISalesReport) => void): any => [
   {
     title: t('reports.ordersReports.OrdersJournal'),
     children: [
@@ -15,14 +17,14 @@ export const getColumns = (t: any): any => [
         width: 100,
         dataIndex: 'CreatedDate',
         key: 'CreatedDate',
-        render: (v: string) => moment(v).format('DD/MM/yyyy')
+        render: (v: string) => moment(v).format('DD-MM-YYYY')
       },
       {
         title: t('reports.ordersReports.JournalReports.columns.PrintedDate'),
         width: 100,
         dataIndex: 'PrintedDate',
         key: 'PrintedDate',
-        render: (v: string) => moment(v).format('DD/MM/yyyy')
+        render: (v: string) => moment(v).format('DD-MM-YYYY')
       },
       {
         title: t('reports.ordersReports.JournalReports.columns.OrderNumber'),
@@ -101,14 +103,14 @@ export const getColumns = (t: any): any => [
         width: 100,
         dataIndex: 'DeliveryDate',
         key: 'DeliveryDate',
-        render: (v: string) => moment(v).format('DD/MM/yyyy')
+        render: (v: string) => moment(v).format('DD-MM-YYYY')
       },
       {
         title: t('reports.ordersReports.JournalReports.columns.SuppliedDate'),
         width: 100,
         dataIndex: 'SuppliedDate',
         key: 'SuppliedDate',
-        render: (v: string) => moment(v).format('DD/MM/yyyy')
+        render: (v: string) => moment(v).format('DD-MM-YYYY')
       },
       {
         title: t('reports.ordersReports.JournalReports.columns.SuppliedHour'),
@@ -121,6 +123,20 @@ export const getColumns = (t: any): any => [
         width: 100,
         dataIndex: 'CancelReason',
         key: 'CancelReason'
+      },
+      {
+        title: '',
+        dataIndex: 'icons',
+        key: 'icons',
+        width: 50,
+        render: (a: any, r: ISalesReport) => (
+          <div>
+            <EyeFilled
+              className="text-lg rtl:mr-4 ltr:ml-4"
+              onClick={() => onOpenReportDetails(r)}
+            />
+          </div>
+        )
       }
     ]
   }

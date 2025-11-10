@@ -26,8 +26,8 @@ const ActivityReport: React.FC<any> = () => {
   const [filtersOptions, setFiltersOptions] = useState<IActivityReportFiltersResponse>({} as IActivityReportFiltersResponse);
   const [infoDetails, setInfoDetails] = useState('');
   const [filtersValues, setFiltersValues] = useState<any>({
-    FromDate: moment().subtract(20, 'days').format('DD/MM/YYYY'),
-    ToDate: moment().format('DD/MM/yyyy')
+    FromDate: moment().subtract(20, 'days').format('DD-MM-YYYY'),
+    ToDate: moment().format('DD-MM-YYYY')
   });
 
   console.log(filtersValues, 'filtersValues', filtersOptions);

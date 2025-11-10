@@ -38,7 +38,9 @@ const Filters: React.FC<IFilters> = ({ filters, onChange, filtersValues, onSearc
     }
     switch (filter.type) {
       case 'DATE': {
-        return filter.type === 'DATE' && replacedFrom && replacedTo ? [moment(replacedFrom), moment(replacedTo)] : null;
+        return filter.type === 'DATE' && replacedFrom && replacedTo
+          ? [moment(replacedFrom, 'DD-MM-YYYY'), moment(replacedTo, 'DD-MM-YYYY')]
+          : null;
       }
       default:
         return filtersValues.value || filtersValues[filter.key];

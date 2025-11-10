@@ -15,8 +15,8 @@ const SubscribeReports: React.FC<any> = () => {
   const { t } = useTranslation();
   const [salesReports, setSalesReport] = useState<ISubscribeReport[]>([]);
   const [filtersValues, setFiltersValues] = useState({
-    FromCreatedDate: moment().format('DD/MM/yyyy'),
-    ToCreatedDate: moment().format('DD/MM/yyyy')
+    FromCreatedDate: moment().format('DD-MM-YYYY'),
+    ToCreatedDate: moment().format('DD-MM-YYYY')
   });
 
   const onExportToExcel = (filters: any) => {

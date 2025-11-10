@@ -100,5 +100,10 @@ export const getPayments = (t: any): IPaymentDataItem[] => [
     Tender: 22,
     Key: 'MultiPass',
     Title: t('paymentKeyboard.payments.MultiPass')
+  },
+  {
+    Tender: 28,
+    Key: 'SendPaymentLink',
+    Title: t('paymentKeyboard.payments.SendPaymentLink')
   }
 ];

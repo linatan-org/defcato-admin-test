@@ -7,6 +7,11 @@ const SELECT_FIELD_NAMES = {
   value: 'Key'
 };
 
+const SELECT_FIELD_NAMES_MEMBERS = {
+  label: 'CardWithName',
+  value: 'SysId'
+};
+
 export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): IFilterItem[] => {
   return [
     {
@@ -73,10 +78,24 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       showSearch: true,
       selectFieldNames: SELECT_FIELD_NAMES
     },
+    // {
+    //   type: 'INPUT',
+    //   key: 'MemberSysId',
+    //   label: t('reports.ordersReports.filters.Customer')
+    // },
     {
-      type: 'INPUT',
-      key: 'MemberSysId',
-      label: t('reports.ordersReports.filters.Customer')
+      type: 'MULTI_API',
+      key: 'Members',
+      label: t('reports.ordersReports.filters.Customer'),
+      selectFieldNames: SELECT_FIELD_NAMES_MEMBERS,
+      getItems: async (v) => {
+        return await API.keyboard.getMemberForSelect(v).then((res) => {
+          if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+            return res.Members || [];
+          }
+          return [];
+        });
+      }
     },
     {
       type: 'INPUT',
@@ -98,8 +117,8 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       }
     },
     {
-      type: 'SINGLE_API',
-      key: 'ItemCode',
+      type: 'MULTI_API',
+      key: 'ItemCodes',
       label: t('reports.ordersReports.filters.Item'),
       selectFieldNames: SELECT_FIELD_NAMES,
       getItems: async (v) => {
@@ -142,6 +161,14 @@ export const getFilters = (filtersOptions: IOrderFilterValues | null, t: any): I
       key: 'SellerDepartment',
       label: t('reports.ordersReports.filters.SellerDepartments'),
       options: filtersOptions ? filtersOptions['SellerDepartments'] : [],
+      showSearch: true,
+      selectFieldNames: SELECT_FIELD_NAMES
+    },
+    {
+      type: 'SINGLE',
+      key: 'BranchFormat',
+      label: t('reports.ordersReports.filters.BranchFormat'),
+      options: filtersOptions ? filtersOptions['BranchFormats'] : [],
       showSearch: true,
       selectFieldNames: SELECT_FIELD_NAMES
     }

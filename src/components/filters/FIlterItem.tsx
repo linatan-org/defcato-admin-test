@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { DatePicker, Select, Input, InputNumber, Checkbox } from 'antd';
+import { DatePicker, Select, Input, InputNumber, Checkbox, Tooltip } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 const debounce = require('lodash.debounce');
 import './styles.scss';
@@ -16,6 +16,7 @@ type FilterType =
   | 'SINGLE_DATE'
   | 'INPUT'
   | 'INPUT_NUMBER'
+  | 'MULTI_API'
   | 'BOOLEAN';
 
 export interface IFilterItem {
@@ -143,7 +144,7 @@ export const FilterItem: React.FC<IFilterItem> = ({
             disabled={!!disabled}
             className="datePickerRangePicker"
             value={!value ? null : value}
-            format={dateFormat || 'DD/MM/yyyy'}
+            format={'DD-MM-YYYY'}
             suffixIcon={<CalendarOutlined className="datePicker_icon" />}
             onChange={(v, s) => {
               if (onChange) {
@@ -223,22 +224,64 @@ export const FilterItem: React.FC<IFilterItem> = ({
     case 'MULTI': {
       return (
         <div className="filterSelectWrapper">
-          <Select
-            mode="multiple"
-            maxTagCount="responsive"
-            disabled={!!disabled}
-            showSearch={showSearch}
-            optionFilterProp="children"
-            allowClear
-            value={value}
-            onChange={onChange}
-            filterOption={(input, option) => {
-              const matchedValue = searchKeys && searchKeys.map((key) => option[key]);
-              return ((matchedValue && matchedValue[0]) || '').toLowerCase().includes(input.toLowerCase());
-            }}
-            fieldNames={selectFieldNames}
-            options={options}
-          />
+          <Tooltip
+            title={`${
+              value && selectFieldNames
+                ? options // eslint-disable-next-line
+                    ?.filter((v) => value.includes(v[selectFieldNames.value])) // eslint-disable-next-line
+                    .map((v) => v[selectFieldNames.label]) // eslint-disable-next-line
+                    .toString()
+                : ''
+            }`}
+          >
+            <Select
+              mode="multiple"
+              maxTagCount="responsive"
+              disabled={!!disabled}
+              showSearch={showSearch}
+              optionFilterProp="children"
+              allowClear
+              value={value}
+              onChange={onChange}
+              filterOption={(input, option) => {
+                const matchedValue: any = searchKeys && searchKeys.map((key) => option[key]);
+                return ((matchedValue && matchedValue[0]) || '').toLowerCase().includes(input.toLowerCase());
+              }}
+              fieldNames={selectFieldNames}
+              options={options}
+            />
+          </Tooltip>
+        </div>
+      );
+    }
+    case 'MULTI_API': {
+      return (
+        <div className="filterSelectWrapper">
+          <Tooltip
+            title={`${
+              value && selectFieldNames
+                ? singleApiOptions // eslint-disable-next-line
+                    ?.filter((v) => value.includes(v[selectFieldNames.value])) // eslint-disable-next-line
+                    .map((v) => v[selectFieldNames.label]) // eslint-disable-next-line
+                    .toString()
+                : ''
+            }`}
+          >
+            <Select
+              mode="multiple"
+              maxTagCount="responsive"
+              disabled={!!disabled}
+              showSearch={showSearch}
+              optionFilterProp="children"
+              allowClear
+              value={value}
+              onChange={onChange}
+              onSearch={debounceFetcher}
+              fieldNames={selectFieldNames}
+              options={singleApiOptions}
+              filterOption={false}
+            />
+          </Tooltip>
         </div>
       );
     }

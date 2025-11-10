@@ -74,7 +74,19 @@ const MainLayout = ({ children, isAuth, lang, isTechnicalSupportAccess }: Layout
   // TODO Refactor to provider
   useEffect(() => {
     apiConfig.interceptors.request.use(
-      (config) => {
+      (config: any) => {
+        if (config?.data) {
+          Object.keys(config?.data).forEach((key) => {
+            if (key.includes('Date')) {
+              const isDateKey = key.includes('Date');
+              if (isDateKey) {
+                const replacedDate = config?.data[key].replaceAll('-', '/');
+                // @ts-ignore
+                config.data[key] = replacedDate;
+              }
+            }
+          });
+        }
         dispatch(setLoading(true));
         return config;
       },

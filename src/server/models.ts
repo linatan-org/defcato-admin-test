@@ -183,6 +183,7 @@ export interface ISalesReportDetailsMember {
   BranchNetCode: string;
   CardNumber: string;
   CardStatus: number;
+  CardWithName?: string;
   Classification1: string;
   Classification2: string;
   Comments: string;
@@ -502,6 +503,7 @@ export interface IGeneralFilterValue {
 
 export interface IOrderFilterValues extends IGeneralResponse {
   BranchList: IGeneralFilterValue[];
+  BranchFormats: IGeneralFilterValue[];
   CancelReasons: IGeneralFilterValue[];
   Cities: IGeneralFilterValue[];
   DeliveryBranchList: IGeneralFilterValue[];
@@ -808,6 +810,7 @@ export interface IKeyboardItem {
   StockOnHand: number;
   TargetType: number;
   TargetValue: number;
+  IsReferenceItem?: boolean;
 }
 
 export interface IKeyBoard {
@@ -858,6 +861,10 @@ export interface IItem {
 export interface ICreateItemValues extends IGeneralResponse {
   Categories: ICategory[];
   Items: IItem[];
+}
+
+export interface IMembersForSelect extends IGeneralResponse {
+  Members: ISalesReportDetailsMember[];
 }
 
 export interface ICatalogItem {

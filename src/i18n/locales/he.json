@@ -318,6 +318,7 @@
         "Promotion": "מבצע",
         "Invoice": "חשבונית מס",
         "SellerDepartments": "מחלקות עובדים",
+        "BranchFormat": "פורמט סניפים",
         "OrdersSortTypes": "שיטת מיון",
         "OrdersSummaryTypes": "שיטת ריכוז",
         "ItemsSummaryTypes": "שיטת ריכוז"
@@ -465,7 +466,8 @@
       "Praxell": "פרקסל",
       "PowerCard": "PowerCard",
       "DTS": "DTS",
-      "MultiPass": "MultiPass"
+      "MultiPass": "MultiPass",
+      "SendPaymentLink": " שליחת קישור לתשלום"
     }
   },
   "addKeyboardItemModal": {
@@ -475,6 +477,6 @@
     "product": "פריט",
     "areYouSureDeleteProduct": "האם אתה בטוח?",
     "areYouSureDeleteCategory": "שים לב , הקטגוריה תמחק כולל הפריטים, הם להמשיך את הפעולה?",
-    "areYouSureGoBackWithoutSave": "שים לב , השינויים שנעשו לא ישמרו , הטם להמשיך?"
+    "areYouSureGoBackWithoutSave": "שים לב , השינויים שנעשו לא ישמרו , האם להמשיך?"
   }
 }

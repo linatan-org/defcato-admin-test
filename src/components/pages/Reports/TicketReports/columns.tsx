@@ -19,7 +19,7 @@ export const getSaleReportsTableColumns = (t: any): any => [
         title: t('reports.saleReports.tranDate'),
         dataIndex: 'TranDate',
         key: 'TranDate',
-        render: (v: string) => moment(v).format('DD/MM/yyyy')
+        render: (v: string) => moment(v).format('DD-MM-YYYY')
       },
       {
         title: t('reports.saleReports.operatorNumber'),

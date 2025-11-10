@@ -57,7 +57,7 @@ export const SaleDetailsReportHeader: React.FC<Props> = ({ saleReport }) => {
           >
             {t('reports.saleReports.salesReportDetails.Date')} &nbsp;
           </Text>
-          <Text strong>{moment(saleReport.TranDate).format('DD/MM/yyyy')}</Text>
+          <Text strong>{moment(saleReport.TranDate).format('DD-MM-YYYY')}</Text>
         </div>
       </div>
     </div>

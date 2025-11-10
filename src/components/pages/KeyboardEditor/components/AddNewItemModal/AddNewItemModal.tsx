@@ -71,8 +71,6 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
     if (forbiddenCreateCategory) {
       setIsCategory(false);
     }
-    // eslint-disable-next-line
-    console.log(isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory, 'isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory');
   }, [isAddRefItems, forbiddenCreateProduct, forbiddenCreateCategory]);
 
   useEffect(() => {
@@ -184,7 +182,9 @@ const AddNewItemModal: React.FC<IGlobalModalWrapperProps> = ({
         <Checkbox
           disabled={isAddTopCategory || isAddRefItems || !!editableItem || forbiddenCreateCategory || forbiddenCreateProduct}
           // eslint-disable-next-line
-          checked={forbiddenCreateCategory ? !forbiddenCreateCategory : forbiddenCreateProduct ? forbiddenCreateProduct : isCategory}
+          checked={
+            forbiddenCreateCategory ? !forbiddenCreateCategory : forbiddenCreateProduct ? forbiddenCreateProduct : isCategory
+          }
           onChange={(e) => {
             setCategoryName('');
             setCheckedItem([]);

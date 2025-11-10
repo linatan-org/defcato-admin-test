@@ -95,6 +95,7 @@ const KeyboardEditor: React.FC = () => {
     setIsMultiNewItems(false);
     setIsVisibleAddNewItemModal(false);
     setCheckedRowInfo(null);
+    setEditableItem(null);
   };
 
   const onAddNewItem = async (item: IItem) => {
@@ -234,6 +235,15 @@ const KeyboardEditor: React.FC = () => {
 
   const isForbiddenCreateCategory = (item: IKeyboardItem | null, isReff: boolean): boolean => {
     const refs = item?.References;
+    const isCategory = item && item.IsCategory;
+    const isAllChildrenReferencesItems = item?.children?.every((ch) => ch.IsReferenceItem);
+    if (
+      item &&
+      ((item.children && item.children.length === 0) || !item.children || isAllChildrenReferencesItems) &&
+      isCategory
+    ) {
+      return false;
+    }
     const isAllProducts =
       item &&
       item.IsCategory &&
@@ -246,20 +256,32 @@ const KeyboardEditor: React.FC = () => {
 
   const isForbiddenCreateProduct = (item: IKeyboardItem | null, isReff: boolean): boolean => {
     const refs = item?.References;
+    const isCategory = item && item.IsCategory;
+    const isAllChildrenReferencesItems = item?.children?.every((ch) => ch.IsReferenceItem);
+    if (
+      item &&
+      ((item.children && item.children.length === 0) || !item.children || isAllChildrenReferencesItems) &&
+      isCategory
+    ) {
+      return false;
+    }
     const isAllCategories =
       item &&
       item.IsCategory &&
       item.children &&
       item.children.length &&
       item.children.filter((c) => !refs?.includes(c.ItemCode)).every((c) => c.IsCategory);
-    const isCategory = item && item.IsCategory;
     return (!!isAllCategories || !!isCategory) && !IsAllowDefineItemOnCategoryLevel && !isReff;
   };
 
   const addButton = (rowInfo: GenerateNodePropsParams, isAddTopCategory?: boolean, isAddRefItems?: boolean) => {
     const tooltipText =
       // eslint-disable-next-line
-      rowInfo.node.IsCategory && isAddRefItems ? t('keyboard.refItems') : rowInfo.node.IsCategory ? t('keyboard.addProductTooltip') : t('keyboard.addSubProductTooltip');
+      rowInfo.node.IsCategory && isAddRefItems
+        ? t('keyboard.refItems')
+        : rowInfo.node.IsCategory // eslint-disable-next-line
+        ? t('keyboard.addProductTooltip') // eslint-disable-next-line
+        : t('keyboard.addSubProductTooltip');
     return (
       <Tooltip
         key={tooltipText}
@@ -275,7 +297,9 @@ const KeyboardEditor: React.FC = () => {
           key={rowInfo.node.IsCategory && isAddRefItems ? 'addRefToCat' : 'addButton'}
           type="primary"
           onClick={() => {
-            if (!isAddTopCategory || isAddRefItems) {
+            const item = rowInfo.node;
+            const isCategory = item && item.IsCategory;
+            if (isCategory || isAddRefItems) {
               setCheckedRowInfo(rowInfo);
             }
             if (isAddRefItems) {
@@ -345,13 +369,12 @@ const KeyboardEditor: React.FC = () => {
   };
 
   const onAddReffItems = (data: { References: string[]; Items: IItem[] }) => {
-    console.log(data, 'datadatadata', checkedRowInfo);
     let newTree: any;
     if (isAddRefItems && checkedRowInfo) {
       const copyInfo = { ...checkedRowInfo };
       const oldRefs = copyInfo.node.References;
       copyInfo.node.References = oldRefs ? [...oldRefs, ...data.References] : [...data.References];
-      copyInfo.node.Items = copyInfo.node.IsCategory ? [...data.Items, ...copyInfo.node.children] : [...data.Items];
+      copyInfo.node.Items = copyInfo.node.IsCategory ? [...data.Items, ...(copyInfo.node.children ?? [])] : [...data.Items];
       newTree = changeNodeAtPath({
         treeData: newTreeData,
         path: checkedRowInfo.path,
@@ -424,10 +447,11 @@ const KeyboardEditor: React.FC = () => {
               ${rowinfo.node.IsReferenceItem && 'referenceItem'}
               ${!rowinfo.node.IsCategory && 'productItem'}
               ${rowinfo.node.IsReferenceItem && 'categoryItemWithRefItems'}
-              ${(
-                !rowinfo.node.IsCategory && rowinfo.node.Items && rowinfo.node.Items.length
-                || !rowinfo.node.IsCategory && rowinfo.node.children && rowinfo.node.children.length
-              ) && 'productItemWithRefItems' }
+              ${
+                ((!rowinfo.node.IsCategory && rowinfo.node.Items && rowinfo.node.Items.length) ||
+                  (!rowinfo.node.IsCategory && rowinfo.node.children && rowinfo.node.children.length)) &&
+                'productItemWithRefItems'
+              }
             `
             /* eslint-disable */
           })}

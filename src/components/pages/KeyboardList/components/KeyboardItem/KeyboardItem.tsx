@@ -58,12 +58,12 @@ export const KeyboardItem: React.FC<IKeyboardItemProps> = ({ keyboard, onEdit, o
         <div>
           <Text strong>{t('keyboardList.fromDate')}:</Text>
           &nbsp;
-          <Text>{moment(keyboard.FromDate).format('DD/MM/yyyy')}</Text>
+          <Text>{moment(keyboard.FromDate).format('DD-MM-YYYY')}</Text>
         </div>
         <div>
           <Text strong>{t('keyboardList.toDate')}:</Text>
           &nbsp;
-          <Text>{moment(keyboard.ToDate).format('DD/MM/yyyy')}</Text>
+          <Text>{moment(keyboard.ToDate).format('DD-MM-YYYY')}</Text>
         </div>
         <div>
           <Text strong>{t('keyboardList.activeHours')}:</Text>

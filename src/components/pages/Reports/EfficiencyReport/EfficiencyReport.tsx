@@ -25,7 +25,7 @@ export const EfficiencyReport = () => {
   const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState(REASON_TYPE.BY_USER);
   const [selectedDateMoment, setSelectedDateMoment] = useState<Moment | null>(moment());
-  const [selectedDate, setSelectedDate] = useState<string>(moment().format('DD/MM/yyyy'));
+  const [selectedDate, setSelectedDate] = useState<string>(moment().format('DD-MM-YYYY'));
   const [efficiencyData, setEfficiencyData] = useState<IEfficiencyData>();
   const [detailsData, setDetailsData] = useState<IEfficiencyCancelsByReason[] | IEfficiencyCancelsByUser[]>([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
@@ -104,7 +104,7 @@ export const EfficiencyReport = () => {
           className="w-full datePicker"
           value={selectedDateMoment}
           placeholder={t('dashboard.datePickerPlaceholder')}
-          format="DD/MM/yyyy"
+          format="DD-MM-YYYY"
           onChange={onChange}
           suffixIcon={<CalendarOutlined className="datePicker_icon" />}
         />

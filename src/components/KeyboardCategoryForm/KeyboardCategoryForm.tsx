@@ -53,7 +53,7 @@ const KeyboardCategoryForm: React.FC<KeyboardCategoryFormProps> = ({ form, handl
               rules={[{ required: true }]}
             >
               <RangePicker
-                format={'DD/MM/yyyy'}
+                format={'DD-MM-YYYY'}
                 onChange={(v, s) => {
                   const FromDate = s[0];
                   const ToDate = s[1];

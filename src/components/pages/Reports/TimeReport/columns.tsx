@@ -26,19 +26,19 @@ export const getDetailsColumns = (t: any): any => [
         title: t('reports.timeReport.columns.Date'),
         dataIndex: 'ShiftDate',
         key: 'ShiftDate',
-        render: (v: string) => v && moment(v).format('HH:mm DD/MM/YYYY')
+        render: (v: string) => v && moment(v).format('HH:mm DD-MM-YYYY')
       },
       {
         title: t('reports.timeReport.columns.EnterTime'),
         dataIndex: 'EnterTime',
         key: 'EnterTime',
-        render: (v: string) => v && moment(v).format('HH:mm DD/MM/YYYY')
+        render: (v: string) => v && moment(v).format('HH:mm DD-MM-YYYY')
       },
       {
         title: t('reports.timeReport.columns.DepartureTime'),
         dataIndex: 'DepartureTime',
         key: 'DepartureTime',
-        render: (v: string) => v && moment(v).format('HH:mm DD/MM/YYYY')
+        render: (v: string) => v && moment(v).format('HH:mm DD-MM-YYYY')
       },
       {
         title: t('reports.timeReport.columns.TotalHours'),

@@ -308,6 +308,7 @@
         "Promotion": "Promotion",
         "Invoice": "Invoice",
         "SellerDepartments": "Seller Departments",
+        "BranchFormat": "Branch Format",
         "OrdersSortTypes": "Sort By",
         "OrdersSummaryTypes": "Summary By",
         "ItemsSummaryTypes": "Summary By"
@@ -455,7 +456,8 @@
       "Praxell": "Praxell",
       "PowerCard": "PowerCard",
       "DTS": "DTS",
-      "MultiPass": "MultiPass"
+      "MultiPass": "MultiPass",
+      "SendPaymentLink": "Send Payment Link"
     }
   },
   "addKeyboardItemModal": {

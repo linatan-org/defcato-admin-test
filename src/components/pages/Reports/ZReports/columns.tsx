@@ -25,7 +25,7 @@ export const getZReportsTableColumns = (
         title: t('reports.ZReports.Date'),
         dataIndex: 'ReportParams',
         key: 'ReportParams',
-        render: (v: IZReportParams) => v.ReportDate && moment(v.ReportDate).format('DD/MM/yyyy')
+        render: (v: IZReportParams) => v.ReportDate && moment(v.ReportDate).format('DD-MM-YYYY')
       },
       {
         title: t('reports.ZReports.Refunds'),

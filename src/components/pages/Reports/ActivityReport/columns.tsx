@@ -20,7 +20,7 @@ export const getColumns = (
         title: 'Report Date',
         dataIndex: 'ReportDate',
         key: 'ReportDate',
-        render: (v: string) => moment(v).format('DD/MM/yyyy')
+        render: (v: string) => moment(v).format('DD-MM-YYYY')
       },
       {
         title: 'Site Name',
