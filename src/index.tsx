@@ -1,18 +1,27 @@
 import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
+import MainLayout from './components/layout/MainLayout';
 import AppRoutes from './routes/AppRoutes';
-import './assets/styles/index.css';
-import AuthProvider from './contexts/auth/provider';
+import { Provider } from 'react-redux';
+import './assets/styles/index.scss';
+import AppProvider from './contexts/auth/provider';
 import { BrowserRouter } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import './i18n';
-// React setup
+import { store, persistor } from './reudux';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
-// Root render
 root.render(
-  <BrowserRouter>
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <AppProvider>
+        <HashRouter>
+          <MainLayout>
+            <AppRoutes />
+          </MainLayout>
+        </HashRouter>
+      </AppProvider>
+    </BrowserRouter>
+  </Provider>
 );

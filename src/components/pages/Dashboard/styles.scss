@@ -1,0 +1,48 @@
+@import '../../../assets/styles/index.scss';
+
+.userDailyStatsBtn {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  z-index: 100;
+}
+
+.block {
+  background: $gray2;
+  padding: 45px 0 25px 0;
+  position: relative;
+}
+
+.datePicker_icon {
+  color: $primaryGreen;
+  font-size: 1.1rem;
+}
+.datepickerWrap {
+  width: 370px;
+  .ant-picker {
+    border-color: $borderGray;
+    border-radius: 4px;
+  }
+  .datePicker {
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $primaryGreen;
+      opacity: 1 !important; /* Firefox */
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: $primaryGreen !important;
+    }
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      color: $primaryGreen !important;
+    }
+  }
+}
+
+.datePicker {
+  direction: ltr;
+  input {
+    text-align: end;
+    margin-right: 15px;
+    font-size: 18px;
+    color: $primaryGreen;
+  }
+}

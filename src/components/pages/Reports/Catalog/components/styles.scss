@@ -1,0 +1,94 @@
+@import '../../../../../assets/styles/index.scss';
+
+.dataImageContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.codesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.codeContainer {
+  display: flex;
+  flex-direction: row;
+  //align-items: center;
+}
+
+.inputNumber {
+  width: 100%;
+}
+
+.checkboxWrapper {
+  position: relative;
+  .ant-typography {
+    position: absolute;
+    top: -20px;
+    right: -15px;
+    width: fit-content;
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+}
+
+.title {
+  margin-left: 20px;
+  min-width: 70px;
+  margin-top: 5px;
+}
+
+.addCategoryBtn {
+  position: absolute !important;
+  right: -32px !important;
+  top: 0.5px !important;
+}
+
+.imageWrapper {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  min-width: 80px;
+  min-height: 80px;
+  .imageMaskHover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 99%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 1;
+    .uploadContainer {
+      width: 100%;
+      height: 100%;
+      display: block;
+      .ant-upload {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .hide {
+    display: none;
+  }
+  .editImgBtn {
+    min-width: 80px;
+    min-height: 80px;
+    width: 100%;
+    height: 100%;
+    background: transparent !important;
+  }
+  .editImgBtn:hover {
+    svg {
+      fill: white;
+    }
+  }
+}
+
+.imageWrapper:hover {
+  .hide {
+    display: block;
+  }
+  cursor: pointer;
+}

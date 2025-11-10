@@ -1,0 +1,15 @@
+@import '../../../../assets/styles/index.scss';
+
+.ant-table-row {
+    cursor: pointer;
+    &-active {
+        .ant-table-cell {
+            background: $primaryGreen !important;
+        }
+    }
+}
+.IsManualDiscountItem {
+    .ant-table-cell {
+        background-color: $primaryGreean4 !important;
+    }
+}

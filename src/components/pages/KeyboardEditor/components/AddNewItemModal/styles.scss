@@ -1,0 +1,12 @@
+@import '../../../../../assets/styles/index.scss';
+.select {
+  width: 40%;
+}
+
+.removeIcon {
+  font-size: 1.5rem;
+}
+
+.removeIcon:hover {
+  color: $primaryBlue;
+}

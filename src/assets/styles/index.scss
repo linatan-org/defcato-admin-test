@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'antd/dist/antd.css';
+@import 'react-toastify/dist/ReactToastify.css';
+@import "@nosferatu500/react-sortable-tree/style.css";
+
+@layer base {
+  html {
+    font-weight: 500;
+  }
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  //font-family: OpenSansHebrew, monospace;
+  //letter-spacing: 0.01px !important;
+}
+
+.ant-image-preview-img-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+$darkText: #2E341E;
+$lightGray: #F5F7FB;
+$lightGray2: #F8FAFB;
+$primaryBlue: #1890ff;
+$primaryGreen: #215731;
+$primaryGreean2: #D2D8C0;
+$primaryGreean3: rgba(46, 52, 30, 0.6);
+$primaryGreean4: #E9ECE4;
+$primaryGreenDark: #215731;
+$primaryGreenLight: #43bf70;
+$primaryGreenHovered: #36a15d;
+$primaryRed: #ff4d4f;
+$borderGray: #9D9D9E;
+$gray2: #fafafa;
+$gray3: #f5f5f5;
+$gray8: #595959;
+$gray6: #bfbfbf;
+$gray4: #f0f0f0;
+$yellow6: #fadb14;
+$gold6: #faad14;
+
+:root {
+  --primary-color: $primaryGreen;
+  --primary-color-darken: $primaryGreenDark;
+  --primary-hover-color: #36a15d;
+  --primary-disabled-btn-color: #bfbfbf;
+
+}
+
+// MENU SIDER
+
+.primary-green-bg {
+  background: $primaryGreen;
+}
+
+.primary-text-green {
+  color: $primaryGreen;
+}
+
+.ant-menu {
+  margin-top: 25px;
+}
+
+.ant-menu-sub {
+  background: $primaryGreean4 !important;
+}
+
+.ant-menu-item:first-child {
+  margin-top: 0;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+  background-color: $primaryGreen !important;
+  color: white !important;
+}
+
+.ant-layout-sider {
+  background: $primaryGreean2;
+  font-weight: bold;
+}
+
+.ant-menu.ant-menu-dark {
+  background: $primaryGreean3;
+}
+
+.ant-menu-item {
+  background: $primaryGreean4;
+  color: $darkText !important;
+  font-weight: bold;
+}
+
+.toastError {
+  color: red;
+  font-weight: bold;
+}
+
+// END MENU SIDER
+
+
+// TABLE
+.ant-table {
+  table {
+    border-spacing: 0 3px !important;
+  }
+}
+
+.ant-table-thead {
+  tr:first-child {
+    th {
+      color: $darkText !important;
+      background: $lightGray !important;
+    }
+  }
+  tr > th {
+    color: $darkText !important;
+    border-right: none !important;
+    border-bottom-color: $primaryGreean2 !important;
+    border-bottom-width: 0.5px;
+  }
+  tr:nth-child(2) {
+    th {
+      border-bottom-width: 0px;
+    }
+    font-size: 12px;
+  }
+}
+
+.ant-table-tbody {
+  tr {
+    font-size: 14px;
+  }
+  .ant-table-row {
+    .ant-table-cell {
+      background: $lightGray2;
+    }
+    .ant-table-cell {
+      color: $darkText;
+      border-right: none !important;
+      border-bottom-color: $primaryGreean2 !important;
+      border-bottom-width: 0.5px;
+    }
+    &-active {
+      .ant-table-cell {
+        background: $primaryGreen !important;
+        color: white;
+      }
+    }
+  }
+}
+
+//.ant-table-cell {
+//  background: white !important;
+//}
+
+.ant-table-thead > tr > th {
+  color: $primaryGreenDark !important;
+}
+
+// END TABLE
+
+.ant-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ant-btn.ant-btn-primary, .ant-btn-primary {
+  border-color: $primaryGreen;
+  background: $primaryGreen;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+  &:hover {
+    background-color: var(--primary-hover-color) !important;
+    border-color: var(--primary-hover-color) !important;
+  }
+  &:disabled {
+    color: var(--primary-disabled-btn-color) !important;
+  }
+}
+
+.ant-progress-circle-trail {
+  stroke: rgb(204, 204, 204);
+}
+
+

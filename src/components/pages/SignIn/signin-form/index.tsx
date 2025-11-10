@@ -1,20 +1,48 @@
-import { Form, Input, Button } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { UserOutlined, LockOutlined, EnterOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import connect from 'react-redux/es/components/connect';
 import useAuth from '../../../../contexts/auth/hook';
-import { AUTH_URL } from '../../../../constants/data';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API } from '../../../../server';
+import axios from 'axios';
+import { AUTH_URL } from '../../../../constants/data';
+import { RESPONSE_STATUSES } from '../../../../server/models';
+import { setAuth } from '../../../../reudux/auth/action';
+import { onChangeLang } from '../../../../reudux/configs/action';
+import { setTechnicalSupportAccess } from '../../../../reudux/settings/action';
+
+const SELECT_FIELD_NAMES = {
+  label: 'key',
+  value: 'value'
+};
+
+const LANGS = [
+  {
+    key: 'Hebrew',
+    value: 'he'
+  },
+  {
+    key: 'English',
+    value: 'en'
+  }
+];
 
 type EnterForm = {
   username?: string;
   password?: string;
 };
 
-export default function SigninForm() {
-  const authContext = useAuth();
-  console.log(sessionStorage.key !== null);
+interface Props {
+  lang: string;
+}
+
+const SigninForm: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
   const [loadingButton, setLoadingButton] = useState<boolean>();
+  const [currentLang, setCurrentLang] = useState(props.lang || 'he');
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
@@ -23,36 +51,42 @@ export default function SigninForm() {
     });
   }, [form]);
 
+  useEffect(() => {
+    // i18n.changeLanguage(currentLang);
+    dispatch(onChangeLang(currentLang));
+  }, [currentLang]);
+
   const onFinish = (values: EnterForm) => {
     const { username, password } = values;
     setLoadingButton(true);
-    axios
-      .post(AUTH_URL, {
-        User: username,
-        Password: password
-      })
-      .then(function (res) {
-        if (
-          res.status === 200 &&
-          res.data.ErrorCode === 0 &&
-          res.data.ErrorMessage === ''
-        ) {
-          sessionStorage.setItem('token', res.data.SessionKey);
-          authContext.setIsSignedIn(true);
-        } else {
+    if (username && password) {
+      API.auth
+        .signIn(username, password)
+        .then((res) => {
+          if (res.ErrorCode === RESPONSE_STATUSES.OK) {
+            localStorage.setItem('token', res.SessionKey);
+            dispatch(setAuth(true));
+            if (res.IsTechnicalSupport) {
+              dispatch(setTechnicalSupportAccess(true));
+            }
+          } else {
+            setLoadingButton(false);
+            form.resetFields();
+          }
+        })
+        .catch((err) => {
           setLoadingButton(false);
-          toast(res.data.ErrorMessage);
-          form.resetFields();
-        }
-      })
-      .catch(function (error) {
-        setLoadingButton(false);
-        console.log(error);
-      });
+          console.log(err);
+        });
+    }
   };
   return (
     <div className="flex items-center justify-center h-screen">
-      <Form onFinish={onFinish} form={form} className="w-96">
+      <Form
+        onFinish={onFinish}
+        form={form}
+        className="w-96"
+      >
         <Form.Item
           name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}
@@ -79,6 +113,16 @@ export default function SigninForm() {
             placeholder="password"
           />
         </Form.Item>
+        <div className="w-full mb-5 h-12">
+          <Select
+            className="w-full h-12 selectLangWrapper"
+            optionFilterProp="children"
+            value={currentLang}
+            onChange={setCurrentLang}
+            fieldNames={SELECT_FIELD_NAMES}
+            options={LANGS}
+          />
+        </div>
         <Form.Item>
           <Button
             icon={<EnterOutlined />}
@@ -93,4 +137,11 @@ export default function SigninForm() {
       </Form>
     </div>
   );
-}
+};
+
+const mapState = (state: any) => ({
+  isAuth: state.auth.isAuth,
+  lang: state.configs.lang
+});
+
+export default connect(mapState, {})(SigninForm);

@@ -1,0 +1,15 @@
+@import '../../../../assets/styles/index.scss';
+
+.userDailyStatsBtn {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  z-index: 10000;
+}
+
+
+.actions-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

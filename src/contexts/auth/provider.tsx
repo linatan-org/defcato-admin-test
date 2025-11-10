@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import ctx from './context';
 
-function AuthProvider({ children }: any) {
+function AppProvider({ children }: any) {
   const [isSignedIn, setIsSignedIn] = useState(false);
-
   const isAuthenticated = () => isSignedIn;
 
   return (
@@ -19,4 +18,4 @@ function AuthProvider({ children }: any) {
   );
 }
 
-export default AuthProvider;
+export default AppProvider;

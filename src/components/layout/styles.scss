@@ -1,0 +1,21 @@
+@import '../../assets/styles/index.scss';
+
+.rtl-menu {
+  .ant-menu-item {
+    padding-right: 34px;
+    .ant-menu-title-content {
+      text-align: right;
+    }
+  }
+  .ant-menu-submenu {
+    .ant-menu-submenu-title {
+      .ant-menu-submenu-arrow {
+        right: unset;
+        left: 26px;
+      }
+      .ant-menu-title-content {
+        text-align: right;
+      }
+    }
+  }
+}
